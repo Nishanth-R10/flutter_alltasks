@@ -35,7 +35,11 @@ class ReferEarnContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildDescription(),
+          // Limit the width of description to prevent overlap
+          Container(
+            width: MediaQueryUtils.w(200), // Added width constraint
+            child: _buildDescription(),
+          ),
           SizedBox(height: MediaQueryUtils.h(12)),
           _buildReferralCodeSection(),
         ],
@@ -133,12 +137,12 @@ class ReferEarnContent extends StatelessWidget {
 
   Widget _buildGiftImage() {
     return Positioned(
-      top: MediaQueryUtils.h(-30),  
-      right: MediaQueryUtils.w(20), 
+      top: MediaQueryUtils.h(-35),  
+      right: MediaQueryUtils.w(10), 
       child: Image.asset(
         'assets/images/gift.png',
-        width: MediaQueryUtils.w(86), 
-        height: MediaQueryUtils.h(82), 
+        width: MediaQueryUtils.w(100), 
+        height: MediaQueryUtils.h(100), 
       ),
     );
   }
