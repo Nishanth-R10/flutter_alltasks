@@ -112,7 +112,7 @@ class OfferItem extends StatelessWidget {
         style: GoogleFonts.poppins(
           fontSize: MediaQueryUtils.sp(9.5),
           fontWeight: FontWeight.w600,
-          height: 1.6,
+          height: 1.4,
         ),
         maxLines: 2,
         overflow: TextOverflow.visible,
