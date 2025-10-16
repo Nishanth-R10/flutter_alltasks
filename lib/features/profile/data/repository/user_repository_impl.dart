@@ -34,11 +34,11 @@ class UserRepositoryImpl implements UserRepository {
       
       // Parse the DUMMY API response like real API
       final user = _parseApiResponse(dummyApiResponse);
-      print('✅ Dummy API Success: User data loaded');
+      print(' Dummy API Success: User data loaded');
       return Right(user);
       
     } catch (e) {
-      print('❌ Dummy API Error: $e');
+      print(' Dummy API Error: $e');
       return Left('API Error: $e');
     }
   }
@@ -50,7 +50,7 @@ class UserRepositoryImpl implements UserRepository {
       
       return UserEntity.fromJson(userData);
     } catch (e) {
-      print('❌ Parsing error: $e');
+      print(' Parsing error: $e');
       throw Exception('Failed to parse API response: $e');
     }
   }
@@ -78,4 +78,5 @@ class UserRepositoryImpl implements UserRepository {
       return Left('Update Error: $e');
     }
   }
+
 }
