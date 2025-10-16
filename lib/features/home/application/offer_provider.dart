@@ -13,6 +13,7 @@ final offersProvider = Provider<List<OfferEntity>>((ref) {
   final repository = ref.read(offerRepositoryProvider);
   final offers = repository.getOffers();
   
-  print('✅ Offers Provider: Loaded ${offers.length} hardcoded offers');
+  print(' Offers Provider: Loaded ${offers.length} hardcoded offers');
   return offers;
+
 });
