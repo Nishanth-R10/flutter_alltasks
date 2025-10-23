@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // lib/core/network/api_constants.dart
 class ApiConstants {
 
@@ -21,4 +22,12 @@ class ApiConstants {
   
   static const Duration connectTimeout = Duration(seconds: 30);
   static const Duration receiveTimeout = Duration(seconds: 30);
+=======
+class ApiConstants {
+  // DummyJSON API - Working API (No Authentication Required)
+  static const String baseUrl = 'https://dummyjson.com';
+  
+  static const Duration connectTimeout = Duration(seconds: 30);
+  static const Duration receiveTimeout = Duration(seconds: 30);
+>>>>>>> ca8d16a5f8fdb0094cc2c7dc674066d5db562641
 }

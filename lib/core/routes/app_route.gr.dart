@@ -10,8 +10,13 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i4;
+<<<<<<< HEAD
 import 'package:tasks/features/home/home_screen.dart' as _i1;
 import 'package:tasks/features/profile/profile_screen.dart' as _i2;
+=======
+import 'package:tasks/features/home/presentation/home_screen.dart' as _i1;
+import 'package:tasks/features/profile/presentation/profile_screen.dart' as _i2;
+>>>>>>> ca8d16a5f8fdb0094cc2c7dc674066d5db562641
 import 'package:tasks/features/search/presentation/widgets/unified_searchscreen.dart'
     as _i3;
 

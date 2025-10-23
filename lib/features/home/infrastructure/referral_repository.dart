@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // lib/features/home/infrastructure/referral_repository.dart
 import 'package:fpdart/fpdart.dart';
 import 'package:tasks/core/network/api_service.dart';
@@ -39,4 +40,15 @@ class ReferralRepository {
       friendsReferred: 8,
     );
   }
+=======
+import '../domain/entities/referral_entity.dart';
+
+class ReferralRepository {
+  ReferralEntity getReferralDetails() {
+    return const ReferralEntity(
+      referralCode: "FRIEND2024",
+      rewardPoints: 50,
+    );
+  }
+>>>>>>> ca8d16a5f8fdb0094cc2c7dc674066d5db562641
 }
