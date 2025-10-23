@@ -14,3 +14,27 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+ Simple Flow:
+
+Call API → Get dummy data (looks real)
+
+Show in UI → With loading/error states
+
+Ready for real API → Just replace dummy data
+
+What We Have:
+
+User API → Profile data
+
+Flights API → Flight offers
+
+Search API → Services & suggestions
+
+overall:
+
+Using dummy API structure (not real calls)
+
+Same format as real backend will use
+
+Easy to switch to real API later

@@ -1,11 +1,8 @@
-// File: lib/features/search/data/repositories/search_repository.dart
-import '../../domain/entities/search_entity.dart';
+// lib/features/search/data/repository/search_repository.dart
+import 'package:fpdart/fpdart.dart';
+import 'package:tasks/features/search/domain/entities/search_entity.dart';
 
-class SearchRepository {
-  List<SearchEntity> getSearchSuggestions() {
-    return [
-      SearchEntity(title: "Discovery Feature", imagePath: "assets/images/discovery.png"),
-      SearchEntity(title: "Discovery Feature", imagePath: "assets/images/discovery.png"),
-    ];
-  }
+abstract class SearchRepository {
+  Future<Either<String, List<SearchEntity>>> getSearchSuggestions(String searchQuery);
+  Future<Either<String, List<String>>> getSearchOptions(String userType);
 }

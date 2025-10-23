@@ -1,17 +1,24 @@
-import 'dart:math';
-import 'package:tasks/features/profile/domain/entities/user.dart';
+// import 'package:tasks/core/constants/app_strings/default_string.dart';
+// import 'package:tasks/features/profile/domain/entities/user.dart';
 
-class UserRepository {
-  Future<User> fetchUser() async {
-    // Simulate network delay
-    await Future.delayed(const Duration(seconds: 2));
+
+// class UserRepository {
+//   Future<User> fetchUser() async {
+//     await Future.delayed(const Duration(seconds: 2),
+//     );
     
-    // Return hardcoded user data without random failures
-    return User(
-      name: "Alqabiadi",
-      email: "aliahmed@example.com",
-      location: "alabama",
-      id: "00052321",
-    );
-  }
+//     return User(
+//       name: DefaultString.instance.userName,
+//       email: DefaultString.instance.userEmail,
+//       location: DefaultString.instance.userLocation,
+//       id: DefaultString.instance.userId,
+//     );
+//   }
+// }
+import 'package:fpdart/fpdart.dart';
+import 'package:tasks/features/profile/domain/entities/user_entity.dart';
+
+abstract class UserRepository {
+  Future<Either<String, UserEntity>> fetchUser();
+  Future<Either<String, UserEntity>> updateUser(UserEntity user);
 }

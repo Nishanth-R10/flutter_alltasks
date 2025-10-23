@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tasks/features/profile/presentation/app_size.dart';
@@ -30,18 +29,14 @@ class BigCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              
-              Container(
-                width: AppSizes.s40, 
-                height: AppSizes.s64, 
-                decoration: BoxDecoration(
-                  color: Colors.blue.shade50,
-                  shape: BoxShape.circle,
-                ),
+             
+              ClipRRect(
+                borderRadius: BorderRadius.circular(AppSizes.s8),
                 child: Image.asset(
                   imageAsset,
-                  width: AppSizes.s48, 
-                  height: AppSizes.s48, 
+                  width: AppSizes.s80,
+                  height: AppSizes.s80,
+                  fit: BoxFit.cover,
                 ),
               ),
               
@@ -52,16 +47,20 @@ class BigCard extends StatelessWidget {
                     child: Text(
                       title,
                       style: GoogleFonts.poppins(
+                        color: Color(0xFF4197CB),
                         fontSize: fontScale,
                         fontWeight: FontWeight.w600,
-                        color: Color.fromARGB(255, 80, 140, 245)
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.visible,
                     ),
                   ),
                   const SizedBox(width: AppSizes.s4),
-                  Icon(Icons.north_east, size: 14, color: Color.fromARGB(255, 80, 140, 245)),
+                  Icon(
+                    Icons.north_east,
+                    size: 14,
+                    color: Color(0xFF4197CB),
+                  ),
                 ],
               ),
             ],

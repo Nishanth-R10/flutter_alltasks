@@ -1,22 +1,38 @@
-
-
+// lib/features/profile/application/user_notifier.dart
 import 'package:flutter_riverpod/legacy.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:tasks/features/profile/data/repository/user_repository.dart';
-import 'package:tasks/features/profile/domain/entities/user_state.dart';
+import 'package:tasks/features/profile/application/user_state.dart';
+import 'package:tasks/features/profile/domain/entities/user_entity.dart';
 
 class UserNotifier extends StateNotifier<UserState> {
-  final UserRepository repository;
-  
-  UserNotifier(this.repository) : super(const UserInitial());
+  final UserRepository _userRepository;
+
+  UserNotifier(this._userRepository) : super(UserState.initial());
 
   Future<void> fetchUser() async {
-    state = const UserLoading();
+    state = state.copyWith(isLoading: true, userResult: const None());
     
-    try {
-      final user = await repository.fetchUser();
-      state = UserLoaded(user);
-    } catch (e) {
-      state = UserError(e.toString());
-    }
+    final result = await _userRepository.fetchUser();
+    
+    state = state.copyWith(
+      isLoading: false,
+      userResult: Some(result),
+    );
+  }
+
+  Future<void> updateUser(UserEntity user) async {
+    state = state.copyWith(isLoading: true);
+    
+    final result = await _userRepository.updateUser(user);
+    
+    state = state.copyWith(
+      isLoading: false,
+      userResult: Some(result),
+    );
+  }
+
+  void clearError() {
+    state = state.copyWith(userResult: const None());
   }
 }

@@ -1,35 +1,41 @@
+// main.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tasks/features/home/presentation/home_screen.dart';
-
-//import 'package:tasks/features/home/presentation/home_screen.dart';
-import 'package:tasks/features/profile/presentation/profile_screen.dart';
-import 'package:tasks/features/search/presentation/pages/search_screen.dart';
+import 'package:tasks/core/routes/app_route.dart';
 
 void main() {
-  runApp(ProviderScope(child: MyApp())); // Remove 'const' before MyApp()
+  runApp(
+    ProviderScope(
+      child: i18nBinder(
+        child: MyApp(),
+      ),
+    ),
+  );
+}
+
+
+class i18nBinder extends StatelessWidget {
+  final Widget child;
+  
+  const i18nBinder({super.key, required this.child});
+  
+  @override
+  Widget build(BuildContext context) {
+    return child;
+  }
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final _appRouter = AppRouter();
+  
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return 
-       ScreenUtilInit(  designSize: const Size(393, 852),
-      builder: (_, __) =>
-          MaterialApp(debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            useMaterial3: true,
-          ),
-        //  home: const SearchScreen(isReturningUser: true),
-         // home: ProfileScreen(),
-           home:HomeScreen() ,
-               ),
-       );
-    
+    return MaterialApp.router(
+      title: 'Tasks App',
+      debugShowCheckedModeBanner: false,
+      routerConfig: _appRouter.config(),
+    );
   }
 }

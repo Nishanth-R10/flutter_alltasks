@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tasks/features/profile/presentation/app_size.dart';
@@ -60,13 +59,13 @@ class SettingCard extends StatelessWidget {
                   style: GoogleFonts.poppins(
                     fontSize: fontScale,
                     fontWeight: FontWeight.w600,
-                    color:Color.fromARGB(255, 80, 140, 245)
+                   color:Color(0xFF4197CB),
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-              Icon(Icons.north_east, size: 16, color: Color.fromARGB(255, 80, 140, 245)),
+              Icon(Icons.north_east, size: 16, color:Color(0xFF4197CB),),
             ],
           ),
         ),
