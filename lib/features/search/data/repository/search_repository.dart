@@ -1,19 +1,10 @@
-<<<<<<< HEAD
-// lib/features/search/data/repository/search_repository.dart
-import 'package:fpdart/fpdart.dart';
-import 'package:tasks/features/search/domain/entities/search_entity.dart';
-
-abstract class SearchRepository {
-  Future<Either<String, List<SearchEntity>>> getSearchSuggestions(String searchQuery);
-  Future<Either<String, List<String>>> getSearchOptions(String userType);
-=======
 import 'package:fpdart/fpdart.dart';
 import 'package:tasks/core/constants/app_strings/default_string.dart';
 import '../../domain/entities/search_entity.dart';
 
 class SearchRepository {
   
-  Future<Either<String, List<SearchEntity>>> getSearchSuggestions() async {
+  Future<Either<String, List<SearchEntity>>> getSearchSuggestions(String searchQuery) async {
     try {
       print('🔄 Fetching search suggestions from API...');
       
@@ -66,5 +57,6 @@ class SearchRepository {
       throw Exception('Failed to parse API response: $e');
     }
   }
->>>>>>> ca8d16a5f8fdb0094cc2c7dc674066d5db562641
+
+  Future getSearchOptions(String userType) async {}
 }

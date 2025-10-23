@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 // lib/features/search/presentation/widgets/financial_services/feature_container.dart
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,13 +17,21 @@ class FeatureContainerRow extends ConsumerWidget {
 
     return whatsNewResult.when(
       loading: () => _buildShimmerFeatures(),
-      error: (error, stack) => _buildFallbackFeatures(),
-      data: (features) => _buildFeaturesFromApi(features),
+      error: (error, stack) {
+        // Log error and show fallback
+        debugPrint('FeatureContainerRow error: $error');
+        return _buildFallbackFeatures();
+      },
+      data: (features) {
+        if (features.isEmpty) {
+          return _buildFallbackFeatures();
+        }
+        return _buildFeaturesFromApi(features);
+      },
     );
   }
 
   Widget _buildFeaturesFromApi(List<WhatsNewEntity> features) {
-    
     final displayFeatures = features.take(2).toList();
     
     return Row(
@@ -47,6 +52,9 @@ class FeatureContainerRow extends ConsumerWidget {
             ),
           ),
         ],
+        // If only one feature, add empty container to maintain layout
+        if (displayFeatures.length == 1)
+          Expanded(child: Container()),
       ],
     );
   }
@@ -141,7 +149,6 @@ class FeatureContainerRow extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-         
           ClipRRect(
             borderRadius: BorderRadius.circular(MediaQueryUtils.r(8)),
             child: Image.asset(
@@ -149,11 +156,25 @@ class FeatureContainerRow extends ConsumerWidget {
               width: MediaQueryUtils.w(80),
               height: MediaQueryUtils.h(80),
               fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                // Fallback if image fails to load
+                return Container(
+                  width: MediaQueryUtils.w(80),
+                  height: MediaQueryUtils.h(80),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(MediaQueryUtils.r(8)),
+                  ),
+                  child: Icon(
+                    Icons.image,
+                    size: MediaQueryUtils.w(40),
+                    color: Colors.grey[400],
+                  ),
+                );
+              },
             ),
           ),
           SizedBox(height: MediaQueryUtils.h(8)),
-          
-        
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -166,6 +187,8 @@ class FeatureContainerRow extends ConsumerWidget {
                     color: Colors.black87,
                     fontWeight: FontWeight.w600,
                   ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               Icon(
@@ -179,98 +202,4 @@ class FeatureContainerRow extends ConsumerWidget {
       ),
     );
   }
-=======
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:tasks/core/constants/app_strings/default_string.dart';
-
-class FeatureContainerRow extends StatelessWidget {
-  final double baseSize;
-
-  const FeatureContainerRow({
-    super.key,
-    required this.baseSize,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: _buildFeatureContainer(
-            DefaultString.instance.trackSpends,
-            "assets/images/discovery.png",
-            baseSize,
-          ),
-        ),
-        SizedBox(width: baseSize * 3),
-        Expanded(
-          child: _buildFeatureContainer(
-            DefaultString.instance.trackForex,
-            "assets/images/discovery.png",
-            baseSize,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildFeatureContainer(String title, String imagePath, double baseSize) {
-    return Container(
-      padding: EdgeInsets.all(baseSize * 1),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(baseSize * 3),
-        border: Border.all(color: Colors.grey.shade300),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Image with rounded corners - no grey background
-          ClipRRect(
-            borderRadius: BorderRadius.circular(baseSize * 2),
-            child: Image.asset(
-              "assets/images/discovery.png",
-              width: baseSize * 25,
-              height: baseSize * 25,
-              fit: BoxFit.cover,
-            ),
-          ),
-          
-          SizedBox(height: baseSize * 2),
-          
-          // Title and arrow at the bottom
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Text(
-                  title,
-                  style: GoogleFonts.roboto(
-                    fontSize: baseSize * 3.5,
-                    color: Colors.black87,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              Icon(
-                Icons.north_east,
-                size: baseSize * 3.5,
-                color: Colors.black87,
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
->>>>>>> ca8d16a5f8fdb0094cc2c7dc674066d5db562641
 }

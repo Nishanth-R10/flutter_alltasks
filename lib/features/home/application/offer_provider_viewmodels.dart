@@ -1,3 +1,4 @@
+// lib/features/home/application/offer_provider_viewmodels.dart
 part of 'offer_provider.dart';
 
 // View model to carry UI metadata (discount badge, icon asset) alongside the API OfferEntity
@@ -14,7 +15,7 @@ final offersViewProvider = FutureProvider<List<OfferViewModel>>((ref) async {
   final offers = await ref.watch(offersFutureProvider.future);
   final views = <OfferViewModel>[];
   for (final o in offers) {
-    //
+    // Heuristic: if title mentions flight, apply flight discount and use a flight asset
     final title = o.title.toLowerCase();
     String? discount;
     String? asset;

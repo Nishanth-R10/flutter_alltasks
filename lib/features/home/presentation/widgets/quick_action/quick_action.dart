@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import 'package:flutter/material.dart';
 import 'package:tasks/core/utils/media_query_utils.dart';
 import 'quick_actions_header.dart';
@@ -18,25 +17,4 @@ class QuickActions extends StatelessWidget {
       ],
     );
   }
-=======
-import 'package:flutter/material.dart';
-import 'package:tasks/core/utils/media_query_utils.dart';
-import 'quick_actions_header.dart';
-import 'quick_actions_grid.dart';
-
-class QuickActions extends StatelessWidget {
-  const QuickActions({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const QuickActionsHeader(),
-        SizedBox(height: MediaQueryUtils.h(16)),
-        const QuickActionsGrid(),
-      ],
-    );
-  }
->>>>>>> ca8d16a5f8fdb0094cc2c7dc674066d5db562641
 }

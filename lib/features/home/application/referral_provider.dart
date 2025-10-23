@@ -1,6 +1,7 @@
-<<<<<<< HEAD
+
 // lib/features/referral/application/referral_provider.dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tasks/core/network/api_service.dart';
 import 'package:tasks/features/home/domain/entities/referral_entity.dart';
 import 'package:tasks/features/home/infrastructure/referral_repository.dart';
 import 'package:tasks/features/search/providers/search_providers.dart';
@@ -8,8 +9,8 @@ import 'package:tasks/features/search/providers/search_providers.dart';
 
 // Repository Provider
 final referralRepositoryProvider = Provider<ReferralRepository>((ref) {
-  final dioClient = ref.read(dioClientProvider);
-  return ReferralRepository(dioClient);
+  final apiService = ref.read(apiServiceProvider);
+  return ReferralRepository(apiService);
 });
 
 // Main Provider
@@ -22,12 +23,5 @@ final referralFutureProvider = FutureProvider<ReferralEntity>((ref) async {
     (referral) => referral,
   );
 });
-=======
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../domain/entities/referral_entity.dart';
-import '../infrastructure/referral_repository.dart';
 
-final referralProvider = Provider<ReferralEntity>((ref) {
-  return ReferralRepository().getReferralDetails();
-});
->>>>>>> ca8d16a5f8fdb0094cc2c7dc674066d5db562641
+

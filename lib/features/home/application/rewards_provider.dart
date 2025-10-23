@@ -1,5 +1,6 @@
 // lib/features/rewards/application/rewards_provider.dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tasks/core/network/api_service.dart';
 import 'package:tasks/features/home/domain/entities/rewards_entity.dart';
 import 'package:tasks/features/home/infrastructure/rewards_repository.dart';
 import 'package:tasks/features/search/providers/search_providers.dart';
@@ -7,8 +8,8 @@ import 'package:tasks/features/search/providers/search_providers.dart';
 
 // Repository Provider
 final rewardsRepositoryProvider = Provider<RewardsRepository>((ref) {
-  final dioClient = ref.read(dioClientProvider);
-  return RewardsRepository(dioClient);
+  final apiService = ref.read(apiServiceProvider);
+  return RewardsRepository(apiService);
 });
 
 // Main Provider
