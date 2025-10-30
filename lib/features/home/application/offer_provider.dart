@@ -16,7 +16,7 @@ part 'offer_provider_repositories.dart';
 part 'offer_provider_futures.dart';
 part 'offer_provider_viewmodels.dart';
 
-// Dio Client Provider
+
 final apiServiceProvider = Provider<ApiService>((ref) {
   return ApiService();
 });
