@@ -27,13 +27,13 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildUserTypeToggle(ref),
-              SizedBox(height: MediaQueryUtils.h(20)),
+              //_buildUserTypeToggle(ref),
+             // SizedBox(height: MediaQueryUtils.h(20)),
               
-              _buildApiTestSection(context, ref),
-              SizedBox(height: MediaQueryUtils.h(20)),
+              //_buildApiTestSection(context, ref),
+             /// SizedBox(height: MediaQueryUtils.h(20)),
               
-              _buildCreditCardOfferSection(context, ref),
+              //_buildCreditCardOfferSection(context, ref),
               SizedBox(height: MediaQueryUtils.h(20)),
               
               const QuickActions(),

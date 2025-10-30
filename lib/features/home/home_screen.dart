@@ -17,8 +17,8 @@ import 'package:tasks/features/offers/application/offer_service.dart';
 import 'package:tasks/features/offers/application/offer_provider.dart';
 
 part 'presentation/pages/home_screen_content.dart';
-part 'presentation/pages/home_screen_parts.dart';
-part 'presentation/pages/home_screen_api_section.dart';
+//part 'presentation/pages/home_screen_parts.dart';
+//part 'presentation/pages/home_screen_api_section.dart';
 part 'presentation/pages/home_screen_navigation.dart';
 
 @RoutePage()

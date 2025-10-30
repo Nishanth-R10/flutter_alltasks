@@ -1,7 +1,6 @@
 // lib/features/home/infrastructure/referral_repository.dart
 import 'package:fpdart/fpdart.dart';
 import 'package:tasks/core/network/api_service.dart';
-import 'package:tasks/core/network/dio_client.dart';
 import 'package:tasks/features/home/domain/entities/referral_entity.dart';
 
 class ReferralRepository {

@@ -2,7 +2,6 @@
 // lib/features/home/application/offer_provider.dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tasks/core/network/api_service.dart';
-import 'package:tasks/core/network/dio_client.dart';
 import 'package:tasks/features/home/domain/entities/flight_offer_entity.dart';
 import 'package:tasks/features/home/domain/entities/gold_offer_entity.dart';
 import 'package:tasks/features/home/domain/entities/investment_offer_entity.dart';

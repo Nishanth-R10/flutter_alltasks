@@ -116,8 +116,8 @@ class _UnifiedSearchScreenState extends ConsumerState<UnifiedSearchScreen> {
                         userType: userType,
                         baseSize: baseSize,
                         searchController: _searchController,
-                        financialResults: financialSearchResults, // ✅ ADD THIS
-                        newUserResults: newUserSearchResults, // ✅ ADD THIS
+                        financialResults: financialSearchResults, 
+                        newUserResults: newUserSearchResults, 
                       ),
               ),
             ],

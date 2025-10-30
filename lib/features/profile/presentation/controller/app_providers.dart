@@ -2,7 +2,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:tasks/core/network/api_service.dart';
-import 'package:tasks/core/network/dio_client.dart';
 import 'package:tasks/features/profile/application/user_notification.dart';
 import 'package:tasks/features/profile/application/user_state.dart';
 import 'package:tasks/features/profile/data/repository/user_repository.dart';
