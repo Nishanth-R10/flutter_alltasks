@@ -19,32 +19,27 @@ class NewUserSearchResults extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    
-    if (searchController.text.isEmpty) {
-      return _buildEmptyState(context, isDark);
-    }
 
-    if (searchResults.isEmpty) {
-      return _buildNoResults(context, isDark);
-    }
+    if (searchController.text.isEmpty) return _buildEmptyState(context, isDark);
+    if (searchResults.isEmpty) return _buildNoResults(context, isDark);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           DefaultString.instance.searchResults,
-          style: GoogleFonts.poppins(
-            fontSize: baseSize * 4.2,
-            fontWeight: FontWeight.w600,
-            color: isDark ? Colors.white : Colors.black, // Your exact color
-          ),
+          style: _buildTitleStyle(isDark),
         ),
         SizedBox(height: baseSize * 2),
         Expanded(
           child: ListView.builder(
             itemCount: searchResults.length,
             itemBuilder: (context, index) {
-              return _buildSearchResultItem(context, searchResults[index], isDark);
+              return _buildSearchResultItem(
+                context,
+                searchResults[index],
+                isDark,
+              );
             },
           ),
         ),
@@ -52,38 +47,48 @@ class NewUserSearchResults extends StatelessWidget {
     );
   }
 
-  Widget _buildSearchResultItem(BuildContext context, String service, bool isDark) {
+  Widget _buildSearchResultItem(
+    BuildContext context,
+    String service,
+    bool isDark,
+  ) {
     final searchQuery = searchController.text.toLowerCase();
-    
+
     return Container(
       margin: EdgeInsets.only(bottom: baseSize * 2),
       padding: EdgeInsets.all(baseSize * 3),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E1E1E) : Colors.white, // Your white color
+        color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
         borderRadius: BorderRadius.circular(baseSize * 2),
-        border: Border.all(color: isDark ? Colors.grey.shade700 : Colors.grey.shade300), // Your grey shades
+        border: Border.all(
+          color: isDark ? Colors.grey.shade700 : Colors.grey.shade300,
+        ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
             child: searchQuery.isEmpty
-                ? Text(
-                    service,
-                    style: GoogleFonts.poppins(
-                      fontSize: baseSize * 3.5,
-                      fontWeight: FontWeight.w500,
-                      color: AppConstants.kBorderBlue, // Your exact blue color
-                    ),
-                  )
+                ? _buildNormalText(service)
                 : _buildHighlightedText(service, searchQuery, isDark),
           ),
           Icon(
             Icons.north_east,
             size: baseSize * 7,
-            color: Colors.blue.shade900, // Your exact blue shade
+            color: Colors.blue.shade900,
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildNormalText(String text) {
+    return Text(
+      text,
+      style: GoogleFonts.poppins(
+        fontSize: baseSize * 3.5,
+        fontWeight: FontWeight.w500,
+        color: AppConstants.kBorderBlue,
       ),
     );
   }
@@ -92,52 +97,51 @@ class NewUserSearchResults extends StatelessWidget {
     final textSpans = <TextSpan>[];
     final pattern = RegExp(query, caseSensitive: false);
     final matches = pattern.allMatches(text);
-
     int currentIndex = 0;
-    
+
     for (final match in matches) {
       if (match.start > currentIndex) {
         textSpans.add(
           TextSpan(
             text: text.substring(currentIndex, match.start),
-            style: GoogleFonts.poppins(
-              fontSize: baseSize * 3.5,
-              fontWeight: FontWeight.w500,
-              color: AppConstants.kBorderBlue, // Your exact blue color
-            ),
+            style: _buildTextStyle(FontWeight.w500, AppConstants.kBorderBlue),
           ),
         );
       }
-      
       textSpans.add(
         TextSpan(
           text: text.substring(match.start, match.end),
-          style: GoogleFonts.poppins(
-            fontSize: baseSize * 3.5,
-            fontWeight: FontWeight.w600,
-            color: Colors.blue.shade900, // Your exact blue shade
-          ),
+          style: _buildTextStyle(FontWeight.w600, Colors.blue.shade900),
         ),
       );
-      
       currentIndex = match.end;
     }
-    
+
     if (currentIndex < text.length) {
       textSpans.add(
         TextSpan(
           text: text.substring(currentIndex),
-          style: GoogleFonts.poppins(
-            fontSize: baseSize * 3.5,
-            fontWeight: FontWeight.w500,
-            color: AppConstants.kBorderBlue, // Your exact blue color
-          ),
+          style: _buildTextStyle(FontWeight.w500, AppConstants.kBorderBlue),
         ),
       );
     }
-    
-    return RichText(
-      text: TextSpan(children: textSpans),
+
+    return RichText(text: TextSpan(children: textSpans));
+  }
+
+  TextStyle _buildTextStyle(FontWeight fontWeight, Color color) {
+    return GoogleFonts.poppins(
+      fontSize: baseSize * 3.5,
+      fontWeight: fontWeight,
+      color: color,
+    );
+  }
+
+  TextStyle _buildTitleStyle(bool isDark) {
+    return GoogleFonts.poppins(
+      fontSize: baseSize * 4.2,
+      fontWeight: FontWeight.w600,
+      color: isDark ? Colors.white : Colors.black,
     );
   }
 
@@ -149,24 +153,17 @@ class NewUserSearchResults extends StatelessWidget {
           Icon(
             Icons.search,
             size: baseSize * 20,
-            color: isDark ? Colors.grey.shade600 : Colors.grey.shade300, // Your grey shades
+            color: isDark ? Colors.grey.shade600 : Colors.grey.shade300,
           ),
           SizedBox(height: baseSize * 3),
           Text(
             DefaultString.instance.searchForServices,
-            style: GoogleFonts.poppins(
-              fontSize: baseSize * 4,
-              color: isDark ? Colors.grey.shade400 : Colors.grey.shade600, // Your grey shades
-              fontWeight: FontWeight.w500,
-            ),
+            style: _buildSubtitleStyle(isDark, FontWeight.w500),
           ),
           SizedBox(height: baseSize * 1),
           Text(
             DefaultString.instance.tryMobileBillsOffers,
-            style: GoogleFonts.poppins(
-              fontSize: baseSize * 3.2,
-              color: isDark ? Colors.grey.shade500 : Colors.grey.shade500, // Your grey shades
-            ),
+            style: _buildSubtitleStyle(isDark, FontWeight.normal),
           ),
         ],
       ),
@@ -181,27 +178,28 @@ class NewUserSearchResults extends StatelessWidget {
           Icon(
             Icons.search_off,
             size: baseSize * 15,
-            color: isDark ? Colors.grey.shade500 : Colors.grey.shade400, // Your grey shades
+            color: isDark ? Colors.grey.shade500 : Colors.grey.shade400,
           ),
           SizedBox(height: baseSize * 2),
           Text(
             "${DefaultString.instance.noResultsFound} '${searchController.text}'",
-            style: GoogleFonts.poppins(
-              fontSize: baseSize * 4,
-              color: isDark ? Colors.grey.shade400 : Colors.grey.shade600, // Your grey shades
-              fontWeight: FontWeight.w500,
-            ),
+            style: _buildSubtitleStyle(isDark, FontWeight.w500),
           ),
           SizedBox(height: baseSize * 1),
           Text(
             DefaultString.instance.tryDifferentKeywords,
-            style: GoogleFonts.poppins(
-              fontSize: baseSize * 3.2,
-              color: isDark ? Colors.grey.shade500 : Colors.grey.shade500, // Your grey shades
-            ),
+            style: _buildSubtitleStyle(isDark, FontWeight.normal),
           ),
         ],
       ),
+    );
+  }
+
+  TextStyle _buildSubtitleStyle(bool isDark, FontWeight fontWeight) {
+    return GoogleFonts.poppins(
+      fontSize: baseSize * (fontWeight == FontWeight.w500 ? 4 : 3.2),
+      color: isDark ? Colors.grey.shade400 : Colors.grey.shade600,
+      fontWeight: fontWeight,
     );
   }
 }

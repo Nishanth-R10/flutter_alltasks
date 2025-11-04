@@ -4,8 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tasks/core/utils/media_query_utils.dart';
 import 'package:tasks/features/search/domain/entities/whats_new_entity.dart';
 import 'package:tasks/features/search/presentation/widgets/common/shimmer_loading.dart';
-import 'package:tasks/features/search/providers/search_providers.dart';
-
+import 'package:tasks/features/search/presentation/search_provider.dart';
+//FOR NEW USER CONTAINER
 class FeatureContainerRow extends ConsumerWidget {
   const FeatureContainerRow({super.key});
 
@@ -18,16 +18,8 @@ class FeatureContainerRow extends ConsumerWidget {
 
     return whatsNewResult.when(
       loading: () => _buildShimmerFeatures(context, isDark),
-      error: (error, stack) {
-        debugPrint('FeatureContainerRow error: $error');
-        return _buildFallbackFeatures(context, isDark);
-      },
-      data: (features) {
-        if (features.isEmpty) {
-          return _buildFallbackFeatures(context, isDark);
-        }
-        return _buildFeaturesFromApi(context, features, isDark);
-      },
+      error: (error, stack) => _buildFallbackFeatures(context, isDark),
+      data: (features) => features.isEmpty ? _buildFallbackFeatures(context, isDark) : _buildFeaturesFromApi(context, features, isDark),
     );
   }
 
@@ -36,28 +28,12 @@ class FeatureContainerRow extends ConsumerWidget {
     
     return Row(
       children: [
-        if (displayFeatures.isNotEmpty)
-          Expanded(
-            child: _buildFeatureContainer(
-              context,
-              displayFeatures[0].title,
-              displayFeatures[0].imagePath,
-              isDark,
-            ),
-          ),
+        if (displayFeatures.isNotEmpty) Expanded(child: _buildFeatureContainer(context, displayFeatures[0].title, displayFeatures[0].imagePath, isDark)),
         if (displayFeatures.length > 1) ...[
           SizedBox(width: MediaQueryUtils.w(12)),
-          Expanded(
-            child: _buildFeatureContainer(
-              context,
-              displayFeatures[1].title,
-              displayFeatures[1].imagePath,
-              isDark,
-            ),
-          ),
+          Expanded(child: _buildFeatureContainer(context, displayFeatures[1].title, displayFeatures[1].imagePath, isDark)),
         ],
-        if (displayFeatures.length == 1)
-          Expanded(child: Container()),
+        if (displayFeatures.length == 1) Expanded(child: Container()),
       ],
     );
   }
@@ -65,23 +41,9 @@ class FeatureContainerRow extends ConsumerWidget {
   Widget _buildFallbackFeatures(BuildContext context, bool isDark) {
     return Row(
       children: [
-        Expanded(
-          child: _buildFeatureContainer(
-            context,
-            'Track Spends',
-            'assets/images/discovery.png',
-            isDark,
-          ),
-        ),
+        Expanded(child: _buildFeatureContainer(context, 'Track Spends', 'assets/images/discovery.png', isDark)),
         SizedBox(width: MediaQueryUtils.w(12)),
-        Expanded(
-          child: _buildFeatureContainer(
-            context,
-            'Track Forex',
-            'assets/images/discovery.png',
-            isDark,
-          ),
-        ),
+        Expanded(child: _buildFeatureContainer(context, 'Track Forex', 'assets/images/discovery.png', isDark)),
       ],
     );
   }
@@ -89,19 +51,9 @@ class FeatureContainerRow extends ConsumerWidget {
   Widget _buildShimmerFeatures(BuildContext context, bool isDark) {
     return Row(
       children: [
-        Expanded(
-          child: ShimmerLoading(
-            isLoading: true,
-            child: _buildShimmerContainer(context, isDark),
-          ),
-        ),
+        Expanded(child: ShimmerLoading(isLoading: true, child: _buildShimmerContainer(context, isDark))),
         SizedBox(width: MediaQueryUtils.w(12)),
-        Expanded(
-          child: ShimmerLoading(
-            isLoading: true,
-            child: _buildShimmerContainer(context, isDark),
-          ),
-        ),
+        Expanded(child: ShimmerLoading(isLoading: true, child: _buildShimmerContainer(context, isDark))),
       ],
     );
   }
@@ -110,29 +62,21 @@ class FeatureContainerRow extends ConsumerWidget {
     return Container(
       padding: EdgeInsets.all(MediaQueryUtils.w(8)),
       decoration: BoxDecoration(
-        color: isDark ? Colors.grey.shade800 : Colors.grey[300], // Your grey shades
+        color: isDark ? Colors.grey.shade800 : Colors.grey[300],
         borderRadius: BorderRadius.circular(MediaQueryUtils.r(12)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: MediaQueryUtils.w(80),
-            height: MediaQueryUtils.h(80),
-            decoration: BoxDecoration(
-              color: isDark ? Colors.grey.shade700 : Colors.grey[400], // Your grey shades
-              borderRadius: BorderRadius.circular(MediaQueryUtils.r(8)),
-            ),
-          ),
+          Container(width: MediaQueryUtils.w(80), height: MediaQueryUtils.h(80), decoration: BoxDecoration(
+            color: isDark ? Colors.grey.shade700 : Colors.grey[400],
+            borderRadius: BorderRadius.circular(MediaQueryUtils.r(8)),
+          )),
           SizedBox(height: MediaQueryUtils.h(8)),
-          Container(
-            width: double.infinity,
-            height: MediaQueryUtils.h(16),
-            decoration: BoxDecoration(
-              color: isDark ? Colors.grey.shade700 : Colors.grey[400], // Your grey shades
-              borderRadius: BorderRadius.circular(MediaQueryUtils.r(4)),
-            ),
-          ),
+          Container(width: double.infinity, height: MediaQueryUtils.h(16), decoration: BoxDecoration(
+            color: isDark ? Colors.grey.shade700 : Colors.grey[400],
+            borderRadius: BorderRadius.circular(MediaQueryUtils.r(4)),
+          )),
         ],
       ),
     );
@@ -142,70 +86,37 @@ class FeatureContainerRow extends ConsumerWidget {
     return Container(
       padding: EdgeInsets.all(MediaQueryUtils.w(8)),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E1E1E) : Colors.white, // Your white color
+        color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
         borderRadius: BorderRadius.circular(MediaQueryUtils.r(12)),
-        border: Border.all(color: isDark ? Colors.grey.shade700 : Colors.grey.shade300), // Your grey shades
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: MediaQueryUtils.r(8),
-            offset: Offset(0, MediaQueryUtils.h(4)),
-          ),
-        ],
+        border: Border.all(color: isDark ? Colors.grey.shade700 : Colors.grey.shade300),
+        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: MediaQueryUtils.r(8), offset: Offset(0, MediaQueryUtils.h(4)))],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(MediaQueryUtils.r(8)),
-            child: Image.asset(
-              imagePath,
-              width: MediaQueryUtils.w(80),
-              height: MediaQueryUtils.h(80),
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  width: MediaQueryUtils.w(80),
-                  height: MediaQueryUtils.h(80),
-                  decoration: BoxDecoration(
-                    color: isDark ? Colors.grey.shade800 : Colors.grey[200], // Your grey shades
-                    borderRadius: BorderRadius.circular(MediaQueryUtils.r(8)),
-                  ),
-                  child: Icon(
-                    Icons.image,
-                    size: MediaQueryUtils.w(40),
-                    color: isDark ? Colors.grey.shade600 : Colors.grey[400], // Your grey shades
-                  ),
-                );
-              },
-            ),
+            child: Image.asset(imagePath, width: MediaQueryUtils.w(80), height: MediaQueryUtils.h(80), fit: BoxFit.cover, errorBuilder: (context, error, stackTrace) {
+              return Container(
+                width: MediaQueryUtils.w(80), height: MediaQueryUtils.h(80),
+                decoration: BoxDecoration(color: isDark ? Colors.grey.shade800 : Colors.grey[200], borderRadius: BorderRadius.circular(MediaQueryUtils.r(8))),
+                child: Icon(Icons.image, size: MediaQueryUtils.w(40), color: isDark ? Colors.grey.shade600 : Colors.grey[400]),
+              );
+            }),
           ),
           SizedBox(height: MediaQueryUtils.h(8)),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Text(
-                  title,
-                  style: GoogleFonts.roboto(
-                    fontSize: MediaQueryUtils.sp(14),
-                    color: isDark ? Colors.white : Colors.black87, // Your exact color
-                    fontWeight: FontWeight.w600,
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              Icon(
-                Icons.north_east,
-                size: MediaQueryUtils.sp(14),
-                color: isDark ? Colors.white : Colors.black87, // Your exact color
-              ),
-            ],
-          ),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
+            Expanded(child: Text(title, style: _buildTitleStyle(isDark), maxLines: 2, overflow: TextOverflow.ellipsis)),
+            Icon(Icons.north_east, size: MediaQueryUtils.sp(14), color: _getIconColor(isDark)),
+          ]),
         ],
       ),
     );
   }
+
+  TextStyle _buildTitleStyle(bool isDark) {
+    return GoogleFonts.roboto(fontSize: MediaQueryUtils.sp(14), color: isDark ? Colors.white : Colors.black87, fontWeight: FontWeight.w600);
+  }
+
+  Color _getIconColor(bool isDark) => isDark ? Colors.white : Colors.black87;
 }

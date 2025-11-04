@@ -1,14 +1,11 @@
-// lib/features/search/application/search_providers.dart
+// lib/features/search/presentation/search_provider.dart
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:tasks/core/network/api_service.dart';
 import 'package:tasks/features/search/data/repository/search_repository.dart';
-import 'package:tasks/features/search/data/repository/search_repository_impl.dart';
-import 'package:tasks/features/search/data/repository/whats_new_repository.dart';
-import 'package:tasks/features/search/data/repository/whats_new_repository_impl.dart';
-import 'package:tasks/features/search/domain/entities/search_entity.dart';
-import 'package:tasks/features/search/domain/entities/whats_new_entity.dart';
+import '../domain/entities/search_entity.dart'; // ← ADD THIS IMPORT
+import '../domain/entities/whats_new_entity.dart'; // ← ADD THIS IMPORT
 
 // Repositories
 final searchRepositoryProvider = Provider<SearchRepository>((ref) {
@@ -25,7 +22,7 @@ final whatsNewRepositoryProvider = Provider<WhatsNewRepository>((ref) {
 final newUserSearchQueryProvider = StateProvider<String>((ref) => '');
 final financialSearchQueryProvider = StateProvider<String>((ref) => '');
 
-// SIMPLIFIED: Search Options Provider - Remove complex error handling
+// Search Options Provider
 final searchOptionsProvider = FutureProvider.autoDispose
     .family<List<String>, String>((ref, userType) async {
   
@@ -33,21 +30,17 @@ final searchOptionsProvider = FutureProvider.autoDispose
   final result = await repository.getSearchOptions(userType);
   
   return result.fold(
-    (error) {
-      // This should rarely happen since we return Right in repository
-      if (kDebugMode) print('Search options provider error: $error');
-      return _getFallbackOptions(userType);
-    },
+    (error) => _getFallbackOptions(userType),
     (options) => options,
   );
 });
 
-// SIMPLIFIED: New User Services Provider
+// New User Services Provider
 final newUserServicesProvider = FutureProvider.autoDispose<List<String>>((ref) {
   return ref.read(searchOptionsProvider('new_user').future);
 });
 
-// SIMPLIFIED: Financial Services Provider  
+// Financial Services Provider  
 final financialServicesProvider = FutureProvider.autoDispose<List<String>>((ref) {
   return ref.read(searchOptionsProvider('returning_user').future);
 });
@@ -64,10 +57,7 @@ final searchSuggestionsProvider = FutureProvider.autoDispose
   final result = await repository.getSearchSuggestions(searchQuery);
   
   return result.fold(
-    (error) {
-      if (kDebugMode) print('Search suggestions error: $error');
-      return [];
-    },
+    (error) => [],
     (suggestions) => suggestions,
   );
 });
@@ -79,10 +69,7 @@ final filteredNewUserServicesProvider = Provider.autoDispose<List<String>>((ref)
   
   return allServices.when(
     loading: () => [],
-    error: (error, stack) {
-      if (kDebugMode) print('Filtered new user services error: $error');
-      return _filterServices(_getFallbackNewUserServices(), query);
-    },
+    error: (error, stack) => _filterServices(_getFallbackNewUserServices(), query),
     data: (services) => _filterServices(services, query),
   );
 });
@@ -93,10 +80,7 @@ final filteredFinancialServicesProvider = Provider.autoDispose<List<String>>((re
   
   return allServices.when(
     loading: () => [],
-    error: (error, stack) {
-      if (kDebugMode) print('Filtered financial services error: $error');
-      return _filterServices(_getFallbackFinancialServices(), query);
-    },
+    error: (error, stack) => _filterServices(_getFallbackFinancialServices(), query),
     data: (services) => _filterServices(services, query),
   );
 });

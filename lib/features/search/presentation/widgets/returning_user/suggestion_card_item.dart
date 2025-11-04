@@ -23,51 +23,41 @@ class SuggestionCardItem extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(MediaQueryUtils.w(8)),
         decoration: BoxDecoration(
-          color: isDark ? const Color(0xFF1E1E1E) : Colors.white, // Your white color
+          color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
           borderRadius: BorderRadius.circular(MediaQueryUtils.r(12)),
-          border: Border.all(color: isDark ? Colors.grey.shade700 : Colors.grey.shade300), // Your grey shades
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: MediaQueryUtils.r(8),
-              offset: const Offset(0, 4),
-            ),
-          ],
+          border: Border.all(color: isDark ? Colors.grey.shade700 : Colors.grey.shade300),
+          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: MediaQueryUtils.r(8), offset: const Offset(0, 4))],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(MediaQueryUtils.r(8)),
-              child: Image.asset(
-                "assets/images/discovery.png",
-                width: MediaQueryUtils.w(80),
-                height: MediaQueryUtils.h(80),
-                fit: BoxFit.cover,
-              ),
+              child: Image.asset("assets/images/discovery.png", width: MediaQueryUtils.w(80), height: MediaQueryUtils.h(80), fit: BoxFit.cover),
             ),
             SizedBox(height: MediaQueryUtils.h(8)),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  title,
-                  style: GoogleFonts.poppins(
-                    fontSize: MediaQueryUtils.sp(14),
-                    color: isDark ? Colors.white : const Color.fromARGB(255, 3, 3, 3), // Your exact color
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                Icon(
-                  Icons.north_east,
-                  size: MediaQueryUtils.sp(16),
-                  color: isDark ? Colors.white : const Color.fromARGB(255, 3, 3, 3), // Your exact color
-                ),
+                Text(title, style: _buildTextStyle(isDark)),
+                Icon(Icons.north_east, size: MediaQueryUtils.sp(16), color: _getIconColor(isDark)),
               ],
             ),
           ],
         ),
       ),
     );
+  }
+
+  TextStyle _buildTextStyle(bool isDark) {
+    return GoogleFonts.poppins(
+      fontSize: MediaQueryUtils.sp(14),
+      color: isDark ? Colors.white : const Color.fromARGB(255, 3, 3, 3),
+      fontWeight: FontWeight.w500,
+    );
+  }
+
+  Color _getIconColor(bool isDark) {
+    return isDark ? Colors.white : const Color.fromARGB(255, 3, 3, 3);
   }
 }

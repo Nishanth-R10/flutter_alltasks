@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tasks/features/home/application/user_provider.dart';
+import 'package:tasks/features/search/application/search_user_provider.dart';
 import 'package:tasks/features/search/presentation/widgets/financial_services/financial_services_result.dart';
-import 'package:tasks/features/search/presentation/widgets/unified_search/new_user_interface.dart';
-import 'package:tasks/features/search/presentation/widgets/unified_search/returning_user_interface.dart';
-import 'package:tasks/features/search/presentation/widgets/unified_search/new_user_search_results.dart';
+import 'package:tasks/features/search/presentation/widgets/new_user/new_user_interface.dart';
+import 'package:tasks/features/search/presentation/widgets/new_user/new_user_search_results.dart';
+import 'package:tasks/features/search/presentation/widgets/returning_user/returning_user_interface.dart';
 
 class SearchContentManager extends StatelessWidget {
   final bool isSearching;

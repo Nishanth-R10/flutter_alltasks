@@ -18,15 +18,9 @@ class SearchChipRow extends StatelessWidget {
     
     return Row(
       children: [
-        SearchChipItem(
-          title: titles[0],
-          icon: icons[0],
-        ),
+        SearchChipItem(title: titles[0], icon: icons[0]),
         SizedBox(width: MediaQueryUtils.w(12)),
-        SearchChipItem(
-          title: titles[1],
-          icon: icons[1],
-        ),
+        SearchChipItem(title: titles[1], icon: icons[1]),
       ],
     );
   }

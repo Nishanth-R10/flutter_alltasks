@@ -77,5 +77,4 @@ class OfferEntity {
     );
   }
 
-  // Rest of your existing methods remain the same...
 }

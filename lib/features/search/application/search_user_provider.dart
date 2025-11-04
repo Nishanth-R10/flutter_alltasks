@@ -1,6 +1,6 @@
+// lib/features/search/application/search_user_provider.dart
 
-
-// lib/core/providers/user_provider.dart
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
 enum UserType {

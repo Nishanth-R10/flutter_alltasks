@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tasks/core/network/api_service.dart';
 import 'package:tasks/features/home/domain/entities/rewards_entity.dart';
 import 'package:tasks/features/home/infrastructure/rewards_repository.dart';
-import 'package:tasks/features/search/providers/search_providers.dart';
 
 
 // Repository Provider

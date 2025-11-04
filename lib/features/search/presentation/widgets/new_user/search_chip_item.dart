@@ -20,37 +20,28 @@ class SearchChipItem extends StatelessWidget {
     MediaQueryUtils.init(context);
     
     return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: MediaQueryUtils.w(16),
-        vertical: MediaQueryUtils.h(8),
-      ),
+      padding: EdgeInsets.symmetric(horizontal: MediaQueryUtils.w(16), vertical: MediaQueryUtils.h(8)),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E1E1E) : Colors.white, // Your white color
+        color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
         borderRadius: BorderRadius.circular(MediaQueryUtils.r(25)),
-        border: Border.all(
-          color: AppConstants.kBorderBlue, // Your exact blue color
-          width: 1.5,
-        ),
+        border: Border.all(color: AppConstants.kBorderBlue, width: 1.5),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            icon,
-            size: MediaQueryUtils.sp(16),
-            color: AppConstants.kBorderBlue, // Your exact blue color
-          ),
+          Icon(icon, size: MediaQueryUtils.sp(16), color: AppConstants.kBorderBlue),
           SizedBox(width: MediaQueryUtils.w(8)),
-          Text(
-            title,
-            style: GoogleFonts.poppins(
-              fontSize: MediaQueryUtils.sp(12),
-              fontWeight: FontWeight.w500,
-              color: AppConstants.kBorderBlue, // Your exact blue color
-            ),
-          ),
+          Text(title, style: _buildTextStyle()),
         ],
       ),
+    );
+  }
+
+  TextStyle _buildTextStyle() {
+    return GoogleFonts.poppins(
+      fontSize: MediaQueryUtils.sp(12),
+      fontWeight: FontWeight.w500,
+      color: AppConstants.kBorderBlue,
     );
   }
 }
