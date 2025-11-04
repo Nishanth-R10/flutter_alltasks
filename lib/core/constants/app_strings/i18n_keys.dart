@@ -32,7 +32,7 @@ class I18nKeys {
   // Refer & Earn
   static const String referEarn = 'referEarn';
   static const String inviteFriends = 'inviteFriends';
-  static const String yourReferralCode = 'yourReferralCode';
+  static const String yourReferralCode = 'A successful referral earns you 50 points!';
   static const String shareLink = 'shareLink';
   
   // Profile Screen Strings

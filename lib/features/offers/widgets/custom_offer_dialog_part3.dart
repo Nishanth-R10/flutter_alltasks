@@ -3,6 +3,9 @@ part of 'custom_offer_dialog.dart';
 
 extension CustomOfferDialogButtons on _CustomOfferDialogState {
   List<Widget> _buildDontShowAgainSection() {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    
     return [
       Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -28,7 +31,7 @@ extension CustomOfferDialogButtons on _CustomOfferDialogState {
                   };
                 }
               },
-              activeColor: const Color(0xFF003D82),
+              activeColor: const Color(0xFF003D82), 
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(MediaQueryUtils.r(4)),
               ),
@@ -41,7 +44,7 @@ extension CustomOfferDialogButtons on _CustomOfferDialogState {
               style: GoogleFonts.poppins(
                 fontSize: MediaQueryUtils.sp(12),
                 fontWeight: FontWeight.w400,
-                color: Colors.grey.shade700,
+                color: isDark ? Colors.grey.shade400 : Colors.grey.shade700, 
               ),
             ),
           ),
@@ -59,7 +62,7 @@ extension CustomOfferDialogButtons on _CustomOfferDialogState {
           widget.onPrimaryButtonPressed();
         },
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF003D82),
+          backgroundColor: const Color(0xFF003D82), 
           foregroundColor: Colors.white,
           padding: EdgeInsets.symmetric(vertical: MediaQueryUtils.h(14)),
           shape: RoundedRectangleBorder(
@@ -86,6 +89,9 @@ extension CustomOfferDialogButtons on _CustomOfferDialogState {
   }
 
   Widget _buildSecondaryButton() {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    
     return SizedBox(
       width: double.infinity,
       child: OutlinedButton(
@@ -97,21 +103,21 @@ extension CustomOfferDialogButtons on _CustomOfferDialogState {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(MediaQueryUtils.r(25)),
           ),
-          side: const BorderSide(color: Color(0xFF003D82), width: 1.5),
+          side: const BorderSide(color: Color(0xFF003D82), width: 1.5), 
         ),
         child: Text(
           widget.secondaryButtonText,
           style: GoogleFonts.poppins(
             fontSize: MediaQueryUtils.sp(16),
             fontWeight: FontWeight.w600,
-            color: const Color(0xFF003D82),
+            color: isDark ? Colors.white : const Color(0xFF003D82), 
           ),
         ),
       ),
     );
   }
 
-  List<TextSpan> _parseDescription(String description) {
+  List<TextSpan> _parseDescription(String description, bool isDark) {
     final words = description.split(' ');
     List<TextSpan> spans = [];
 
@@ -127,6 +133,7 @@ extension CustomOfferDialogButtons on _CustomOfferDialogState {
           text: word + (i < words.length - 1 ? ' ' : ''),
           style: GoogleFonts.poppins(
             fontWeight: isBold ? FontWeight.w700 : FontWeight.w400,
+            color: isDark ? Colors.white : Colors.black, 
           ),
         ),
       );

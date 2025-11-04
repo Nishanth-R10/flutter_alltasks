@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:tasks/core/constants/app_strings/default_string.dart';
 import 'package:tasks/core/routes/app_route.gr.dart';
 import 'package:tasks/features/profile/application/user_state.dart';

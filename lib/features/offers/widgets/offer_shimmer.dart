@@ -1,6 +1,5 @@
-
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart'; // Add shimmer package
+import 'package:shimmer/shimmer.dart';
 import 'package:tasks/core/utils/media_query_utils.dart';
 
 class OfferShimmer extends StatelessWidget {
@@ -10,18 +9,20 @@ class OfferShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     MediaQueryUtils.init(context);
     
     return Dialog(
       backgroundColor: Colors.transparent,
       insetPadding: EdgeInsets.symmetric(horizontal: MediaQueryUtils.w(24)),
       child: Shimmer.fromColors(
-        baseColor: Colors.grey[300]!,
-        highlightColor: Colors.grey[100]!,
+        baseColor: isDark ? Colors.grey[800]! : Colors.grey[300]!,
+        highlightColor: isDark ? Colors.grey[700]! : Colors.grey[100]!,
         child: Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: isDark ? const Color(0xFF1E1E1E) : Colors.white, 
             borderRadius: BorderRadius.circular(MediaQueryUtils.r(16)),
             boxShadow: [
               BoxShadow(
@@ -41,7 +42,7 @@ class OfferShimmer extends StatelessWidget {
                   width: MediaQueryUtils.w(200),
                   height: MediaQueryUtils.h(24),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: isDark ? Colors.grey[700] : Colors.white,
                     borderRadius: BorderRadius.circular(MediaQueryUtils.r(8)),
                   ),
                 ),
@@ -65,7 +66,7 @@ class OfferShimmer extends StatelessWidget {
                               width: MediaQueryUtils.w(75),
                               height: MediaQueryUtils.h(50),
                               decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: isDark ? Colors.grey[700] : Colors.white,
                                 borderRadius: BorderRadius.circular(MediaQueryUtils.r(8)),
                               ),
                             ),
@@ -78,7 +79,7 @@ class OfferShimmer extends StatelessWidget {
                               width: MediaQueryUtils.w(75),
                               height: MediaQueryUtils.h(50),
                               decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: isDark ? Colors.grey[700] : Colors.white,
                                 borderRadius: BorderRadius.circular(MediaQueryUtils.r(8)),
                               ),
                             ),
@@ -97,7 +98,7 @@ class OfferShimmer extends StatelessWidget {
                             width: double.infinity,
                             height: MediaQueryUtils.h(16),
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: isDark ? Colors.grey[700] : Colors.white,
                               borderRadius: BorderRadius.circular(MediaQueryUtils.r(4)),
                             ),
                           ),
@@ -106,7 +107,7 @@ class OfferShimmer extends StatelessWidget {
                             width: MediaQueryUtils.w(150),
                             height: MediaQueryUtils.h(16),
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: isDark ? Colors.grey[700] : Colors.white,
                               borderRadius: BorderRadius.circular(MediaQueryUtils.r(4)),
                             ),
                           ),
@@ -115,7 +116,7 @@ class OfferShimmer extends StatelessWidget {
                             width: MediaQueryUtils.w(120),
                             height: MediaQueryUtils.h(16),
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: isDark ? Colors.grey[700] : Colors.white,
                               borderRadius: BorderRadius.circular(MediaQueryUtils.r(4)),
                             ),
                           ),
@@ -133,7 +134,7 @@ class OfferShimmer extends StatelessWidget {
                       width: MediaQueryUtils.w(20),
                       height: MediaQueryUtils.h(20),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: isDark ? Colors.grey[700] : Colors.white,
                         borderRadius: BorderRadius.circular(MediaQueryUtils.r(4)),
                       ),
                     ),
@@ -142,7 +143,7 @@ class OfferShimmer extends StatelessWidget {
                       width: MediaQueryUtils.w(150),
                       height: MediaQueryUtils.h(16),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: isDark ? Colors.grey[700] : Colors.white,
                         borderRadius: BorderRadius.circular(MediaQueryUtils.r(4)),
                       ),
                     ),
@@ -157,7 +158,7 @@ class OfferShimmer extends StatelessWidget {
                       width: double.infinity,
                       height: MediaQueryUtils.h(50),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: isDark ? Colors.grey[700] : Colors.white,
                         borderRadius: BorderRadius.circular(MediaQueryUtils.r(25)),
                       ),
                     ),
@@ -166,7 +167,7 @@ class OfferShimmer extends StatelessWidget {
                       width: double.infinity,
                       height: MediaQueryUtils.h(50),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: isDark ? Colors.grey[700] : Colors.white,
                         borderRadius: BorderRadius.circular(MediaQueryUtils.r(25)),
                       ),
                     ),
@@ -180,4 +181,3 @@ class OfferShimmer extends StatelessWidget {
     );
   }
 }
-

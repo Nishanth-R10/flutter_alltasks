@@ -20,7 +20,7 @@ class OfferRepository {
         imageUrl: "",
         offerType: "gold",
         iconAsset: "assets/images/gold-bars.jpg",
-        // discountText: "15% OFF",
+         discountText: "15% OFF",
       ),
       OfferEntity(
         id: "3",
@@ -29,17 +29,17 @@ class OfferRepository {
         imageUrl: "",
         offerType: "tours",
         iconAsset: "assets/images/tourist.jpg",
-        // discountText: "25% OFF",
+         discountText: "25% OFF",
       ),
-      OfferEntity(
-        id: "4",
-        title: "Invest & Earn",
-        description: "Grow your wealth with smart investments",
-        imageUrl: "", 
-        offerType: "invest",
-        iconAsset: "assets/images/inevest.jpg",
-        // discountText: "20% OFF",
-      ),
+      // OfferEntity(
+      //   id: "4",
+      //   title: "Invest & Earn",
+      //   description: "Grow your wealth with smart investments",
+      //   imageUrl: "", 
+      //   offerType: "invest",
+      //   iconAsset: "assets/images/inevest.jpg",
+      //   // discountText: "20% OFF",
+      // ),
     ];
   }
 }

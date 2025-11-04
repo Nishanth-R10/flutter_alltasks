@@ -1,4 +1,3 @@
-// File: lib/features/search/presentation/widgets/suggestion_card_item.dart
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tasks/core/utils/media_query_utils.dart';
@@ -15,6 +14,8 @@ class SuggestionCardItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     MediaQueryUtils.init(context);
     
     return GestureDetector(
@@ -22,9 +23,9 @@ class SuggestionCardItem extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(MediaQueryUtils.w(8)),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: isDark ? const Color(0xFF1E1E1E) : Colors.white, // Your white color
           borderRadius: BorderRadius.circular(MediaQueryUtils.r(12)),
-          border: Border.all(color: Colors.grey.shade300),
+          border: Border.all(color: isDark ? Colors.grey.shade700 : Colors.grey.shade300), // Your grey shades
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.05),
@@ -53,14 +54,14 @@ class SuggestionCardItem extends StatelessWidget {
                   title,
                   style: GoogleFonts.poppins(
                     fontSize: MediaQueryUtils.sp(14),
-                    color: const Color.fromARGB(255, 3, 3, 3),
+                    color: isDark ? Colors.white : const Color.fromARGB(255, 3, 3, 3), // Your exact color
                     fontWeight: FontWeight.w500,
                   ),
                 ),
                 Icon(
                   Icons.north_east,
                   size: MediaQueryUtils.sp(16),
-                  color: const Color.fromARGB(255, 3, 3, 3),
+                  color: isDark ? Colors.white : const Color.fromARGB(255, 3, 3, 3), // Your exact color
                 ),
               ],
             ),

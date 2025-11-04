@@ -18,13 +18,16 @@ class FinancialServicesSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    
     return Row(
       children: [
         Expanded(
           child: Container(
             height: baseSize * 12,
             decoration: BoxDecoration(
-              border: Border.all(color: AppConstants.kBorderBlue),
+              border: Border.all(color: AppConstants.kBorderBlue), // Your exact blue color
               borderRadius: BorderRadius.circular(baseSize * 6),
             ),
             child: Row(
@@ -33,7 +36,7 @@ class FinancialServicesSearchBar extends StatelessWidget {
                 Icon(
                   Icons.search,
                   size: baseSize * 5,
-                  color: Colors.grey.shade600,
+                  color: isDark ? Colors.grey.shade400 : Colors.grey.shade600, // Your grey shades
                 ),
                 SizedBox(width: baseSize * 2),
                 Expanded(
@@ -45,12 +48,12 @@ class FinancialServicesSearchBar extends StatelessWidget {
                       hintText: DefaultString.instance.searchDotDotDot,
                       hintStyle: GoogleFonts.poppins(
                         fontSize: baseSize * 3.5,
-                        color: Colors.grey.shade500,
+                        color: isDark ? Colors.grey.shade400 : Colors.grey.shade500, // Your grey shades
                       ),
                     ),
                     style: GoogleFonts.poppins(
                       fontSize: baseSize * 3.5,
-                      color: Colors.black,
+                      color: isDark ? Colors.white : Colors.black, // Your exact color
                     ),
                   ),
                 ),
@@ -59,15 +62,15 @@ class FinancialServicesSearchBar extends StatelessWidget {
                   width: SizingUtils.dynamicHeight(0.03, context),
                   height: SizingUtils.dynamicHeight(0.03, context),
                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 129, 129, 129),
+                    color: const Color.fromARGB(255, 129, 129, 129), // Your exact grey color
                     shape: BoxShape.circle,
-                    border: Border.all(color: const Color.fromARGB(255, 128, 127, 127), width: 1.5),
+                    border: Border.all(color: const Color.fromARGB(255, 128, 127, 127), width: 1.5), // Your exact grey color
                   ),
                   child: IconButton(
                     icon: Icon(
                       Icons.close,
                       size: SizingUtils.dynamicFont(0.014, context),
-                      color: const Color.fromARGB(255, 255, 253, 253),
+                      color: const Color.fromARGB(255, 255, 253, 253), // Your exact color
                     ),
                     onPressed: onClear,
                     padding: EdgeInsets.zero,
@@ -84,7 +87,7 @@ class FinancialServicesSearchBar extends StatelessWidget {
           child: Text(
             DefaultString.instance.cancel,
             style: GoogleFonts.poppins(
-              color: AppConstants.kBorderBlue,
+              color: AppConstants.kBorderBlue, // Your exact blue color
               fontSize: baseSize * 3.5,
               fontWeight: FontWeight.w500,
             ),

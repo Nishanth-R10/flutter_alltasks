@@ -3,6 +3,9 @@ part of '../../home_screen.dart';
 
 extension HomeScreenNavigation on HomeScreenState {
   Widget _buildNavigationSection(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -14,7 +17,7 @@ extension HomeScreenNavigation on HomeScreenState {
             style: GoogleFonts.poppins(
               fontSize: MediaQueryUtils.sp(19),
               fontWeight: FontWeight.w700,
-              color: Colors.black,
+              color: isDark ? Colors.white : Colors.black,
             ),
           ),
         ),
@@ -29,6 +32,7 @@ extension HomeScreenNavigation on HomeScreenState {
                 title: DefaultString.instance.search,
                 icon: Icons.search,
                 onTap: () => context.pushRoute(const UnifiedSearchRoute()),
+                isDark: isDark,
               ),
             ),
             SizedBox(width: MediaQueryUtils.w(12)),
@@ -38,6 +42,7 @@ extension HomeScreenNavigation on HomeScreenState {
                 title: DefaultString.instance.profile,
                 icon: Icons.person,
                 onTap: () => context.pushRoute(const ProfileRoute()),
+                isDark: isDark,
               ),
             ),
           ],
@@ -51,13 +56,14 @@ extension HomeScreenNavigation on HomeScreenState {
     required String title,
     required IconData icon,
     required VoidCallback onTap,
+    required bool isDark,
   }) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: EdgeInsets.all(MediaQueryUtils.w(16)),
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 235, 235, 235),
+          color: isDark ? const Color(0xFF2A2A2A) : const Color.fromARGB(255, 235, 235, 235),
           borderRadius: BorderRadius.circular(MediaQueryUtils.r(12)),
           boxShadow: [
             BoxShadow(
@@ -75,6 +81,7 @@ extension HomeScreenNavigation on HomeScreenState {
               style: GoogleFonts.poppins(
                 fontWeight: FontWeight.w600,
                 fontSize: MediaQueryUtils.sp(14),
+                color: isDark ? Colors.white : Colors.black,
               ),
               textAlign: TextAlign.center,
             ),

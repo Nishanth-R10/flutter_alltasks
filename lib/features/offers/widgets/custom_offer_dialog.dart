@@ -89,15 +89,18 @@ class _CustomOfferDialogState extends ConsumerState<CustomOfferDialog> {
   }
 
   Widget _buildDialogContent() {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    
     return Container(
       width: double.infinity,
-      decoration: _buildDialogDecoration(),
+      decoration: _buildDialogDecoration(isDark),
       child: Padding(
         padding: EdgeInsets.all(MediaQueryUtils.w(24)),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _buildTitle(),
+            _buildTitle(isDark),
             SizedBox(height: MediaQueryUtils.h(20)),
             _buildContentRow(),
             SizedBox(height: MediaQueryUtils.h(24)),
@@ -111,9 +114,9 @@ class _CustomOfferDialogState extends ConsumerState<CustomOfferDialog> {
     );
   }
 
-  BoxDecoration _buildDialogDecoration() {
+  BoxDecoration _buildDialogDecoration(bool isDark) {
     return BoxDecoration(
-      color: Colors.white,
+      color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
       borderRadius: BorderRadius.circular(MediaQueryUtils.r(16)),
       boxShadow: [
         BoxShadow(

@@ -88,6 +88,9 @@ flutter:
     - assets/images/track_forex.png
     - assets/images/visa.png
     - assets/images/credit.png
+    - assets/images/black.png
+    - assets/images/robot.gif
+    - assets/images/recommendation.gif
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

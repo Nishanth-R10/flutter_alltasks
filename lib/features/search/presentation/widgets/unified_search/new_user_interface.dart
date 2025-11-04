@@ -1,4 +1,3 @@
-// lib/features/search/presentation/widgets/unified_search/new_user_interface.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,8 +17,9 @@ class NewUserInterface extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     MediaQueryUtils.init(context);
-    
     
     final sectionTitle = "What's new?"; 
 
@@ -32,7 +32,7 @@ class NewUserInterface extends ConsumerWidget {
             style: GoogleFonts.poppins(
               fontSize: MediaQueryUtils.sp(16),
               fontWeight: FontWeight.w600,
-              color: const Color.fromARGB(255, 7, 7, 7),
+              color: isDark ? Colors.white : const Color.fromARGB(255, 7, 7, 7), // Your exact color
             ),
           ),
           SizedBox(height: MediaQueryUtils.h(8)),
@@ -60,7 +60,7 @@ class NewUserInterface extends ConsumerWidget {
             style: GoogleFonts.poppins(
               fontSize: MediaQueryUtils.sp(16),
               fontWeight: FontWeight.w600,
-              color: const Color.fromARGB(255, 7, 7, 7),
+              color: isDark ? Colors.white : const Color.fromARGB(255, 7, 7, 7), // Your exact color
             ),
           ),
           SizedBox(height: MediaQueryUtils.h(16)),

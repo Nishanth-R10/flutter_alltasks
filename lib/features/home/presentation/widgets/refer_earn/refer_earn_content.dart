@@ -1,30 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tasks/core/constants/app_strings/default_string.dart';
 import 'package:tasks/core/utils/media_query_utils.dart';
+import 'package:tasks/core/providers/theme_provider.dart';
 
-class ReferEarnContent extends StatelessWidget {
+class ReferEarnContent extends ConsumerWidget {
   const ReferEarnContent({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(themeProvider);
     MediaQueryUtils.init(context);
     
     return Stack(
       clipBehavior: Clip.none, 
       children: [
-        _buildContentCard(),
+        _buildContentCard(context, ref),
         _buildGiftImage(),
       ],
     );
   }
 
-  Widget _buildContentCard() {
+  Widget _buildContentCard(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(themeProvider);
+    
     return Container(
-      padding: EdgeInsets.all(MediaQueryUtils.w(15)),
+      padding: EdgeInsets.all(MediaQueryUtils.w(9)),
       decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 235, 235, 235),
-        borderRadius: BorderRadius.circular(MediaQueryUtils.r(12)),
+        color: theme.brightness == Brightness.dark 
+            ? const Color(0xFF2A2A2A) 
+            : const Color.fromARGB(255, 202, 208, 245),
+        borderRadius: BorderRadius.circular(MediaQueryUtils.r(15)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.03), 
@@ -35,114 +42,92 @@ class ReferEarnContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Limit the width of description to prevent overlap
           SizedBox(
-            width: MediaQueryUtils.w(220), // Added width constraint
-            child: _buildDescription(),
+            width: MediaQueryUtils.w(220),
+            child: _buildDescription(ref),
           ),
           SizedBox(height: MediaQueryUtils.h(12)),
-          _buildReferralCodeSection(),
+          _buildReferralCodeSection(ref),
         ],
       ),
     );
   }
 
-  Widget _buildDescription() {
-    return Text(
-      DefaultString.instance.inviteFriends,
-      style: TextStyle(
-        fontFamily: 'Diodrum Arabic',
-        fontWeight: FontWeight.w500,
-        fontSize: MediaQueryUtils.sp(14),
-        height: 1.4,
-       
-        letterSpacing: 0,
-        color: Colors.black,
+  Widget _buildDescription(WidgetRef ref) {
+    final theme = ref.watch(themeProvider);
+    
+    return SizedBox(
+      width: MediaQueryUtils.w(220),
+      child: Column(
+        children: [
+          Text(  
+            DefaultString.instance.inviteFriends,
+            style: TextStyle(
+              fontFamily: 'Diodrum Arabic',
+              fontWeight: FontWeight.w600,
+              fontSize: MediaQueryUtils.sp(15),
+              height: 1.3,
+              letterSpacing: 0,
+              color: theme.colorScheme.onSurface,
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildReferralCodeSection() {
+  Widget _buildReferralCodeSection(WidgetRef ref) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _buildReferralCode(),
-        _buildShareButton(),
+        _buildReferralCode(ref),
       ],
     );
   }
 
-  Widget _buildReferralCode() {
+  Widget _buildReferralCode(WidgetRef ref) {
+    final theme = ref.watch(themeProvider);
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: MediaQueryUtils.w(100),
           child: Text(
             DefaultString.instance.yourReferralCode,
-            textAlign: TextAlign.center,
             style: TextStyle(
               fontFamily: 'Diodrum Arabic',
               fontWeight: FontWeight.w500,
               fontSize: MediaQueryUtils.sp(12),
               height: 1.2,
               letterSpacing: 0,
-              color: Colors.black
+              color: theme.colorScheme.onSurface,
             ),
           ),
         ),
-        SizedBox(height: MediaQueryUtils.h(6)),
         Row(
           children: [
             Text(
-              'F R I E N D 2 0 2 4',
+              '',
               style: GoogleFonts.poppins(
                 fontSize: MediaQueryUtils.sp(14),
                 fontWeight: FontWeight.w600,
                 letterSpacing: 1.5,
+                color: theme.colorScheme.onSurface,
               ),
             ),
-            SizedBox(width: MediaQueryUtils.w(6)),
-            Icon(
-              Icons.copy,
-              size: MediaQueryUtils.sp(18),
-              color: const Color(0xFF4197CB),
-            ),
           ],
-        ),
+        ),  
       ],
-    );
-  }
-
-  Widget _buildShareButton() {
-    return TextButton(
-      onPressed: () {},
-      child: Row(
-        children: [
-          Text(
-            DefaultString.instance.shareLink,
-            style: GoogleFonts.poppins(
-              color: const Color(0xFF4197CB),
-              fontWeight: FontWeight.w600
-            ),
-          ),
-          SizedBox(width: MediaQueryUtils.w(4)),
-          const Icon(
-            Icons.share,
-            color: Color(0xFF4197CB),
-          ),
-        ],
-      ),
     );
   }
 
   Widget _buildGiftImage() {
     return Positioned(
       top: MediaQueryUtils.h(-35),  
-      right: MediaQueryUtils.w(10), 
+      right: MediaQueryUtils.w(-40), 
       child: Image.asset(
         'assets/images/gift.png',
-        width: MediaQueryUtils.w(100), 
+        width: MediaQueryUtils.w(200), 
         height: MediaQueryUtils.h(100), 
       ),
     );

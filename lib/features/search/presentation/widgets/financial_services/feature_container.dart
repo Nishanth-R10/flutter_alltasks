@@ -1,4 +1,3 @@
-// lib/features/search/presentation/widgets/financial_services/feature_container.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,26 +11,27 @@ class FeatureContainerRow extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     MediaQueryUtils.init(context);
     final whatsNewResult = ref.watch(whatsNewFeaturesProvider);
 
     return whatsNewResult.when(
-      loading: () => _buildShimmerFeatures(),
+      loading: () => _buildShimmerFeatures(context, isDark),
       error: (error, stack) {
-        // Log error and show fallback
         debugPrint('FeatureContainerRow error: $error');
-        return _buildFallbackFeatures();
+        return _buildFallbackFeatures(context, isDark);
       },
       data: (features) {
         if (features.isEmpty) {
-          return _buildFallbackFeatures();
+          return _buildFallbackFeatures(context, isDark);
         }
-        return _buildFeaturesFromApi(features);
+        return _buildFeaturesFromApi(context, features, isDark);
       },
     );
   }
 
-  Widget _buildFeaturesFromApi(List<WhatsNewEntity> features) {
+  Widget _buildFeaturesFromApi(BuildContext context, List<WhatsNewEntity> features, bool isDark) {
     final displayFeatures = features.take(2).toList();
     
     return Row(
@@ -39,71 +39,78 @@ class FeatureContainerRow extends ConsumerWidget {
         if (displayFeatures.isNotEmpty)
           Expanded(
             child: _buildFeatureContainer(
+              context,
               displayFeatures[0].title,
               displayFeatures[0].imagePath,
+              isDark,
             ),
           ),
         if (displayFeatures.length > 1) ...[
           SizedBox(width: MediaQueryUtils.w(12)),
           Expanded(
             child: _buildFeatureContainer(
+              context,
               displayFeatures[1].title,
               displayFeatures[1].imagePath,
+              isDark,
             ),
           ),
         ],
-        // If only one feature, add empty container to maintain layout
         if (displayFeatures.length == 1)
           Expanded(child: Container()),
       ],
     );
   }
 
-  Widget _buildFallbackFeatures() {
+  Widget _buildFallbackFeatures(BuildContext context, bool isDark) {
     return Row(
       children: [
         Expanded(
           child: _buildFeatureContainer(
+            context,
             'Track Spends',
             'assets/images/discovery.png',
+            isDark,
           ),
         ),
         SizedBox(width: MediaQueryUtils.w(12)),
         Expanded(
           child: _buildFeatureContainer(
+            context,
             'Track Forex',
             'assets/images/discovery.png',
+            isDark,
           ),
         ),
       ],
     );
   }
 
-  Widget _buildShimmerFeatures() {
+  Widget _buildShimmerFeatures(BuildContext context, bool isDark) {
     return Row(
       children: [
         Expanded(
           child: ShimmerLoading(
             isLoading: true,
-            child: _buildShimmerContainer(),
+            child: _buildShimmerContainer(context, isDark),
           ),
         ),
         SizedBox(width: MediaQueryUtils.w(12)),
         Expanded(
           child: ShimmerLoading(
             isLoading: true,
-            child: _buildShimmerContainer(),
+            child: _buildShimmerContainer(context, isDark),
           ),
         ),
       ],
     );
   }
 
-  Widget _buildShimmerContainer() {
+  Widget _buildShimmerContainer(BuildContext context, bool isDark) {
     return Container(
       padding: EdgeInsets.all(MediaQueryUtils.w(8)),
       decoration: BoxDecoration(
-        color: Colors.grey[300],
+        color: isDark ? Colors.grey.shade800 : Colors.grey[300], // Your grey shades
         borderRadius: BorderRadius.circular(MediaQueryUtils.r(12)),
       ),
       child: Column(
@@ -113,7 +120,7 @@ class FeatureContainerRow extends ConsumerWidget {
             width: MediaQueryUtils.w(80),
             height: MediaQueryUtils.h(80),
             decoration: BoxDecoration(
-              color: Colors.grey[400],
+              color: isDark ? Colors.grey.shade700 : Colors.grey[400], // Your grey shades
               borderRadius: BorderRadius.circular(MediaQueryUtils.r(8)),
             ),
           ),
@@ -122,7 +129,7 @@ class FeatureContainerRow extends ConsumerWidget {
             width: double.infinity,
             height: MediaQueryUtils.h(16),
             decoration: BoxDecoration(
-              color: Colors.grey[400],
+              color: isDark ? Colors.grey.shade700 : Colors.grey[400], // Your grey shades
               borderRadius: BorderRadius.circular(MediaQueryUtils.r(4)),
             ),
           ),
@@ -131,13 +138,13 @@ class FeatureContainerRow extends ConsumerWidget {
     );
   }
 
-  Widget _buildFeatureContainer(String title, String imagePath) {
+  Widget _buildFeatureContainer(BuildContext context, String title, String imagePath, bool isDark) {
     return Container(
       padding: EdgeInsets.all(MediaQueryUtils.w(8)),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? const Color(0xFF1E1E1E) : Colors.white, // Your white color
         borderRadius: BorderRadius.circular(MediaQueryUtils.r(12)),
-        border: Border.all(color: Colors.grey.shade300),
+        border: Border.all(color: isDark ? Colors.grey.shade700 : Colors.grey.shade300), // Your grey shades
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
@@ -157,18 +164,17 @@ class FeatureContainerRow extends ConsumerWidget {
               height: MediaQueryUtils.h(80),
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
-                // Fallback if image fails to load
                 return Container(
                   width: MediaQueryUtils.w(80),
                   height: MediaQueryUtils.h(80),
                   decoration: BoxDecoration(
-                    color: Colors.grey[200],
+                    color: isDark ? Colors.grey.shade800 : Colors.grey[200], // Your grey shades
                     borderRadius: BorderRadius.circular(MediaQueryUtils.r(8)),
                   ),
                   child: Icon(
                     Icons.image,
                     size: MediaQueryUtils.w(40),
-                    color: Colors.grey[400],
+                    color: isDark ? Colors.grey.shade600 : Colors.grey[400], // Your grey shades
                   ),
                 );
               },
@@ -184,7 +190,7 @@ class FeatureContainerRow extends ConsumerWidget {
                   title,
                   style: GoogleFonts.roboto(
                     fontSize: MediaQueryUtils.sp(14),
-                    color: Colors.black87,
+                    color: isDark ? Colors.white : Colors.black87, // Your exact color
                     fontWeight: FontWeight.w600,
                   ),
                   maxLines: 2,
@@ -194,7 +200,7 @@ class FeatureContainerRow extends ConsumerWidget {
               Icon(
                 Icons.north_east,
                 size: MediaQueryUtils.sp(14),
-                color: Colors.black87,
+                color: isDark ? Colors.white : Colors.black87, // Your exact color
               ),
             ],
           ),

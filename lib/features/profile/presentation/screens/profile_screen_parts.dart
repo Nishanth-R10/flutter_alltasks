@@ -6,26 +6,140 @@ extension ProfileScreenParts on _ProfileScreenState {
     context.replaceRoute(const HomeRoute());
   }
 
-  Widget _buildBody(UserState userState) {
+  Widget _buildBody(UserState userState, bool isDark) {
     if (userState.isLoading) {
-      return const Center(child: CircularProgressIndicator());
+      return _buildShimmerProfileContent(isDark);
     }
 
     return userState.userResult.match(
-      () => const Center(child: CircularProgressIndicator()),
+      () => _buildShimmerProfileContent(isDark),
       (result) => result.match(
-        (error) => _buildErrorWidget(error),
-        (user) => _buildProfileContent(user),
+        (error) => _buildErrorWidget(error, isDark),
+        (user) => _buildProfileContent(user, isDark),
       ),
     );
   }
 
-  Widget _buildErrorWidget(String error) {
+  Widget _buildShimmerProfileContent(bool isDark) {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: AppSizes.s16),
+        child: Column(
+          children: [
+            const SizedBox(height: AppSizes.s16),
+            // Shimmer for profile avatar
+            Shimmer.fromColors(
+              baseColor: isDark ? Colors.grey[800]! : Colors.grey[300]!,
+              highlightColor: isDark ? Colors.grey[700]! : Colors.grey[100]!,
+              child: CircleAvatar(
+                radius: AppSizes.s40,
+                backgroundColor: isDark ? Colors.grey[700] : Colors.grey[300],
+              ),
+            ),
+            const SizedBox(height: AppSizes.s16),
+            // Shimmer for name
+            Shimmer.fromColors(
+              baseColor: isDark ? Colors.grey[800]! : Colors.grey[300]!,
+              highlightColor: isDark ? Colors.grey[700]! : Colors.grey[100]!,
+              child: Container(
+                width: 150,
+                height: 20,
+                decoration: BoxDecoration(
+                  color: isDark ? Colors.grey[700] : Colors.white,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+            ),
+            const SizedBox(height: AppSizes.s8),
+            // Shimmer for location and ID
+            Shimmer.fromColors(
+              baseColor: isDark ? Colors.grey[800]! : Colors.grey[300]!,
+              highlightColor: isDark ? Colors.grey[700]! : Colors.grey[100]!,
+              child: Container(
+                width: 200,
+                height: 14,
+                decoration: BoxDecoration(
+                  color: isDark ? Colors.grey[700] : Colors.white,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+            ),
+            const SizedBox(height: AppSizes.s16),
+            // Shimmer for cards
+            Row(
+              children: [
+                Expanded(
+                  child: SettingCard(
+                    title: '',
+                    fontScale: 14,
+                    isLoading: true,
+                  ),
+                ),
+                const SizedBox(width: AppSizes.s16),
+                Expanded(
+                  child: SettingCard(
+                    title: '',
+                    fontScale: 14,
+                    isLoading: true,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: AppSizes.s16),
+            Row(
+              children: [
+                Expanded(
+                  child: BigCard(
+                    title: '',
+                    imageAsset: "assets/images/discovery.png",
+                    fontScale: 12,
+                    isLoading: true,
+                  ),
+                ),
+                const SizedBox(width: AppSizes.s16),
+                Expanded(
+                  child: BigCard(
+                    title: '',
+                    imageAsset: "assets/images/discovery.png",
+                    fontScale: 12,
+                    isLoading: true,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: AppSizes.s16),
+            GroupCard(
+              titles: [],
+              fontScale: 14,
+              isLoading: true,
+            ),
+            const SizedBox(height: AppSizes.s16),
+            SettingCard(
+              title: '',
+              showCircle: true,
+              fontScale: 14,
+              isLoading: true,
+            ),
+            const SizedBox(height: AppSizes.s8),
+            SettingCard(
+              title: '',
+              showCircle: true,
+              fontScale: 14,
+              isLoading: true,
+            ),
+            const SizedBox(height: AppSizes.s24),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildErrorWidget(String error, bool isDark) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.error_outline, color: Colors.red, size: 48),
+          Icon(Icons.error_outline, color: Colors.red, size: 48),
           const SizedBox(height: 16),
           Text(
             'Failed to load user data',
@@ -40,7 +154,7 @@ extension ProfileScreenParts on _ProfileScreenState {
             'Error: $error',
             style: GoogleFonts.poppins(
               fontSize: 12,
-              color: Colors.grey,
+              color: isDark ? Colors.grey.shade400 : Colors.grey,
             ),
             textAlign: TextAlign.center,
           ),
@@ -58,7 +172,7 @@ extension ProfileScreenParts on _ProfileScreenState {
     );
   }
 
-  Widget _buildProfileContent(UserEntity user) {
+  Widget _buildProfileContent(UserEntity user, bool isDark) {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: AppSizes.s16),
@@ -67,8 +181,8 @@ extension ProfileScreenParts on _ProfileScreenState {
             const SizedBox(height: AppSizes.s16),
             CircleAvatar(
               radius: AppSizes.s40,
-              backgroundColor: Colors.grey.shade300,
-              child: const Icon(Icons.person, size: 40, color: Colors.grey),
+              backgroundColor: isDark ? Colors.grey.shade700 : Colors.grey.shade300,
+              child: Icon(Icons.person, size: 40, color: isDark ? Colors.grey.shade400 : Colors.grey),
             ),
             const SizedBox(height: AppSizes.s8),
             Text(
@@ -76,6 +190,7 @@ extension ProfileScreenParts on _ProfileScreenState {
               style: GoogleFonts.poppins(
                 fontSize: 20,
                 fontWeight: FontWeight.w800,
+                color: isDark ? Colors.white : Colors.black,
               ),
             ),
             const SizedBox(height: AppSizes.s4),
@@ -83,7 +198,7 @@ extension ProfileScreenParts on _ProfileScreenState {
               "${user.location} • ${user.id}",
               style: GoogleFonts.poppins(
                 fontSize: 14,
-                color: Colors.grey,
+                color: isDark ? Colors.grey.shade400 : Colors.grey,
               ),
             ),
             // ignore: unnecessary_null_comparison
@@ -93,7 +208,7 @@ extension ProfileScreenParts on _ProfileScreenState {
                 user.email,
                 style: GoogleFonts.poppins(
                   fontSize: 14,
-                  color: Colors.grey,
+                  color: isDark ? Colors.grey.shade400 : Colors.grey,
                 ),
               ),
             ],

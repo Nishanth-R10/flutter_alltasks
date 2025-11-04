@@ -27,24 +27,26 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              //_buildUserTypeToggle(ref),
-             // SizedBox(height: MediaQueryUtils.h(20)),
-              
-              //_buildApiTestSection(context, ref),
-             /// SizedBox(height: MediaQueryUtils.h(20)),
-              
-              //_buildCreditCardOfferSection(context, ref),
               SizedBox(height: MediaQueryUtils.h(20)),
               
               const QuickActions(),
               SizedBox(height: MediaQueryUtils.h(40)), 
-              const RewardsSection(),
-              SizedBox(height: MediaQueryUtils.h(40)), 
               const OffersSection(),
-              SizedBox(height: MediaQueryUtils.h(20)),
+              SizedBox(height: MediaQueryUtils.h(40)), 
               const ReferEarnCard(),
+              SizedBox(height: MediaQueryUtils.h(20)),
+              const RewardsSection(),
+              
+              // 🆕 Add Feedback Cards here
+              SizedBox(height: MediaQueryUtils.h(40)),
+              const FeedbackCards(),
               
               SizedBox(height: MediaQueryUtils.h(40)),
+              const CustomizeDashboardCard(),
+              SizedBox(height: MediaQueryUtils.h(20)),
+              const WealthAdvisorySection(),
+              SizedBox(height: MediaQueryUtils.h(40)),
+
               _buildNavigationSection(context),
               SizedBox(height: MediaQueryUtils.h(20)),
             ],

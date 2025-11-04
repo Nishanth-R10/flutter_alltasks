@@ -1,5 +1,4 @@
 // lib/core/network/api_service.dart
-import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'api_service_base.dart';

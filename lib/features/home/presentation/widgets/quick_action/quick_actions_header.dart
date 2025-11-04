@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tasks/core/constants/app_strings/default_string.dart';
 import 'package:tasks/core/utils/media_query_utils.dart';
+import 'package:tasks/core/providers/theme_provider.dart';
 
-class QuickActionsHeader extends StatelessWidget {
+class QuickActionsHeader extends ConsumerWidget {
   const QuickActionsHeader({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(themeProvider);
     MediaQueryUtils.init(context);
     
     return SizedBox(
@@ -21,18 +24,20 @@ class QuickActionsHeader extends StatelessWidget {
             style: GoogleFonts.dmSans(
               fontSize: MediaQueryUtils.sp(19),
               fontWeight: FontWeight.w600,
-              color: Colors.black,
+              color: theme.colorScheme.onSurface,
               letterSpacing: 0,
               height: 1.2,
             ),
           ),
-          _buildCustomizeButton(),
+          _buildCustomizeButton(context, ref),
         ],
       ),
     );
   }
 
-  Widget _buildCustomizeButton() {
+  Widget _buildCustomizeButton(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(themeProvider);
+    
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: MediaQueryUtils.w(12),
@@ -46,7 +51,7 @@ class QuickActionsHeader extends StatelessWidget {
               fontFamily: 'Diodrum Arabic',
               fontWeight: FontWeight.w600,
               fontSize: MediaQueryUtils.sp(12),
-              color: const Color.fromARGB(255, 4, 0, 255),
+              color: theme.colorScheme.primary,
               height: 1.2,
               letterSpacing: 0,
             ),
@@ -55,7 +60,7 @@ class QuickActionsHeader extends StatelessWidget {
           Icon(
             Icons.north_east,
             size: MediaQueryUtils.sp(12),
-            color: const Color.fromARGB(255, 4, 0, 255),
+            color: theme.colorScheme.primary,
           ),
         ],
       ),

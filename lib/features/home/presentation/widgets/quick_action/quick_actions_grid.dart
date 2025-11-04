@@ -1,34 +1,40 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tasks/core/constants/app_strings/default_string.dart';
 import 'package:tasks/core/utils/media_query_utils.dart';
-import 'gradient_border_painter.dart';
+import 'package:tasks/core/providers/theme_provider.dart';
+import 'package:tasks/features/home/presentation/widgets/quick_action/gradient_border_painter.dart';
 
-class QuickActionsGrid extends StatelessWidget {
+class QuickActionsGrid extends ConsumerWidget {
   const QuickActionsGrid({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(themeProvider);
     MediaQueryUtils.init(context);
     
     return Stack(
       children: [
-        _buildGridContainer(),
+        _buildGridContainer(ref),
         _buildGradientBorder(),
       ],
     );
   }
 
-  Widget _buildGridContainer() {
+  Widget _buildGridContainer(WidgetRef ref) {
+    final theme = ref.watch(themeProvider);
+    
     return Container(
       width: MediaQueryUtils.w(343),
       height: MediaQueryUtils.h(92),
       padding: EdgeInsets.all(MediaQueryUtils.w(12)),
       decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 235, 235, 235),
+        color: theme.brightness == Brightness.dark 
+            ? const Color(0xFF2A2A2A) 
+            : const Color.fromARGB(255, 235, 235, 235),
         borderRadius: BorderRadius.circular(MediaQueryUtils.r(16)),
         border: Border.all(
-          color: Colors.grey[400]!,
+          color: theme.dividerColor!,
           width: MediaQueryUtils.w(1),
         ),
         boxShadow: [
@@ -42,10 +48,10 @@ class QuickActionsGrid extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _actionButton(icon: Icons.swap_horiz, label: DefaultString.instance.transfer),
-          _actionButton(icon: Icons.list, label: DefaultString.instance.request),
-          _actionButton(icon: Icons.trending_up, label: DefaultString.instance.stocks),
-          _actionButton(icon: Icons.auto_awesome, label: DefaultString.instance.products),
+          _actionButton(ref, icon: Icons.swap_horiz, label: DefaultString.instance.transfer),
+          _actionButton(ref, icon: Icons.list, label: DefaultString.instance.request),
+          _actionButton(ref, icon: Icons.trending_up, label: DefaultString.instance.stocks),
+          _actionButton(ref, icon: Icons.auto_awesome, label: DefaultString.instance.products),
         ],
       ),
     );
@@ -70,7 +76,9 @@ class QuickActionsGrid extends StatelessWidget {
     );
   }
 
-  Widget _actionButton({required IconData icon, required String label}) {
+  Widget _actionButton(WidgetRef ref, {required IconData icon, required String label}) {
+    final theme = ref.watch(themeProvider);
+    
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -78,14 +86,16 @@ class QuickActionsGrid extends StatelessWidget {
           width: MediaQueryUtils.w(48),
           height: MediaQueryUtils.w(48),
           decoration: BoxDecoration(
-            color: const Color(0xFFF3F6FF),
+            color: theme.brightness == Brightness.dark 
+                ? const Color(0xFF3A3A3A) 
+                : const Color(0xFFF3F6FF),
             borderRadius: BorderRadius.circular(MediaQueryUtils.r(12)),
           ),
           child: Center(
             child: Icon(
               icon,
               size: MediaQueryUtils.sp(24),
-              color: const Color(0xFF131B20),
+              color: theme.colorScheme.onSurface,
             ),
           ),
         ),
@@ -101,6 +111,7 @@ class QuickActionsGrid extends StatelessWidget {
               fontSize: MediaQueryUtils.sp(11),
               height: 1.2,
               letterSpacing: 0,
+              color: theme.colorScheme.onSurface,
             ),
           ),
         ),

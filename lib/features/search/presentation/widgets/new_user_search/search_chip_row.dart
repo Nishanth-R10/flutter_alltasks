@@ -1,4 +1,3 @@
-// File: lib/features/search/presentation/widgets/search_chip_row.dart
 import 'package:flutter/material.dart';
 import 'package:tasks/core/utils/media_query_utils.dart';
 import 'search_chip_item.dart';

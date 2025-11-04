@@ -1,4 +1,3 @@
-// lib/features/search/presentation/widgets/common/shimmer_loading.dart
 import 'package:flutter/material.dart';
 
 class ShimmerLoading extends StatefulWidget {
@@ -36,6 +35,8 @@ class _ShimmerLoadingState extends State<ShimmerLoading>
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    
     if (!widget.isLoading) {
       return widget.child;
     }
@@ -48,9 +49,9 @@ class _ShimmerLoadingState extends State<ShimmerLoading>
           shaderCallback: (bounds) {
             return LinearGradient(
               colors: [
-                Colors.grey[300]!,
-                Colors.grey[100]!,
-                Colors.grey[300]!,
+                theme.colorScheme.onSurface.withOpacity(0.1),
+                theme.colorScheme.surface.withOpacity(0.2),
+                theme.colorScheme.onSurface.withOpacity(0.1),
               ],
               stops: const [0.0, 0.5, 1.0],
               begin: Alignment(-1.0 + (_controller.value * 2), 0.0),

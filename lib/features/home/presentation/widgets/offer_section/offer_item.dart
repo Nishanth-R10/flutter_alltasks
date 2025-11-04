@@ -1,12 +1,11 @@
-
-// lib/features/home/presentation/widgets/offer_section/offer_item.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tasks/core/utils/media_query_utils.dart';
 import 'package:tasks/features/offers/domain/entities/offer_entity.dart';
+import 'package:tasks/core/providers/theme_provider.dart';
 
-class OfferItem extends StatelessWidget {
-  final dynamic offerView; // OfferViewModel
+class OfferItem extends ConsumerWidget {
+  final dynamic offerView;
   final VoidCallback? onTap;
 
   const OfferItem({super.key, required this.offerView, this.onTap});
@@ -15,8 +14,6 @@ class OfferItem extends StatelessWidget {
     switch (title) {
       case "Invest in Gold":
         return "Invest\nin Gold";
-      case "Invest & Earn":
-        return "Invest\n& Earn";
       case "Tours & Attractions":
         return "Tours &\nAttractions";
       case "Offers on Flight Booking":
@@ -27,53 +24,59 @@ class OfferItem extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    MediaQueryUtils.init(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(themeProvider);
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        width: MediaQueryUtils.w(80),
+      child: SizedBox(
+        width: screenWidth * 0.2,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              height: MediaQueryUtils.h(75),
+            SizedBox(
+              height: screenHeight * 0.07,
               child: Stack(
                 clipBehavior: Clip.none,
-                alignment: Alignment.bottomCenter,
+                alignment: Alignment.center,
                 children: [
-                  _buildOfferCircle(),
-                  if ((offerView?.discountText as String?)?.isNotEmpty ?? false) _buildDiscountBadge(),
-                  SizedBox(height: MediaQueryUtils.h(15)),
-                  _buildOfferTitle(),
+                  _buildOfferCircle(context, ref),
+                  if ((offerView?.discountText as String?)?.isNotEmpty ?? false) 
+                    _buildDiscountBadge(context, ref),
                 ],
               ),
             ),
+            SizedBox(height: screenHeight * 0.006),
+            _buildOfferTitle(context, ref),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildOfferCircle() {
+  Widget _buildOfferCircle(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(themeProvider);
+    final screenWidth = MediaQuery.of(context).size.width;
+    
     return Container(
-      width: MediaQueryUtils.w(80),
-      height: MediaQueryUtils.w(80),
+      width: screenWidth * 0.15,
+      height: screenWidth * 0.15,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(
-          color: const Color(0xFF4197CB),
-          width: MediaQueryUtils.w(2),
+          color: theme.colorScheme.primary,
+          width: 2,
         ),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
-            blurRadius: MediaQueryUtils.r(6),
+            blurRadius: 6,
           ),
         ],
       ),
-        child: ClipOval(
+      child: ClipOval(
         child: Builder(builder: (context) {
           final entity = offerView?.entity as OfferEntity?;
           final asset = offerView?.iconAsset ?? entity?.imageUrl ?? '';
@@ -89,23 +92,26 @@ class OfferItem extends StatelessWidget {
     );
   }
 
-  Widget _buildDiscountBadge() {
+  Widget _buildDiscountBadge(BuildContext context, WidgetRef ref) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    
     return Positioned(
-      bottom: MediaQueryUtils.h(-3),
+      bottom: 0,
       child: Container(
         padding: EdgeInsets.symmetric(
-          horizontal: MediaQueryUtils.w(8),
-          vertical: MediaQueryUtils.h(3),
+          horizontal: screenWidth * 0.02,
+          vertical: screenHeight * 0.004,
         ),
         decoration: BoxDecoration(
           color: const Color(0xFFC321DC),
-          borderRadius: BorderRadius.circular(MediaQueryUtils.r(12)),
+          borderRadius: BorderRadius.circular(12),
         ),
         child: Text(
           (offerView?.discountText as String?) ?? '',
           style: GoogleFonts.poppins(
             color: Colors.white,
-            fontSize: MediaQueryUtils.sp(7.5),
+            fontSize: screenWidth * 0.02,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -113,21 +119,23 @@ class OfferItem extends StatelessWidget {
     );
   }
 
-  Widget _buildOfferTitle() {
-    return Container(
-      width: MediaQueryUtils.w(80),
-      height: MediaQueryUtils.h(0),
-      alignment: Alignment.center,
+  Widget _buildOfferTitle(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(themeProvider);
+    final screenWidth = MediaQuery.of(context).size.width;
+    
+    return SizedBox(
+      width: screenWidth * 0.2,
       child: Text(
         _formatTitle((offerView?.entity?.title as String?) ?? ''),
         textAlign: TextAlign.center,
         style: GoogleFonts.poppins(
-          fontSize: MediaQueryUtils.sp(9.5),
+          fontSize: screenWidth * 0.028,
           fontWeight: FontWeight.w600,
+          color: theme.colorScheme.onSurface,
           height: 1.4,
         ),
         maxLines: 2,
-        overflow: TextOverflow.visible,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }

@@ -33,10 +33,10 @@ final offersFutureProvider = FutureProvider<List<OfferEntity>>((ref) async {
   final flightAsync = ref.read(flightOffersFutureProvider.future);
   final goldAsync = ref.read(goldOffersFutureProvider.future);
   final tourAsync = ref.read(tourOffersFutureProvider.future);
-  final investmentAsync = ref.read(investmentOffersFutureProvider.future);
+  //final investmentAsync = ref.read(investmentOffersFutureProvider.future);
 
   //  for all APIs 
-  final results = await Future.wait([flightAsync, goldAsync, tourAsync, investmentAsync]);
+  final results = await Future.wait([flightAsync, goldAsync, tourAsync, ]);
   
   // Combine all offers into one list (maintaining your exact order)
   final allOffers = <OfferEntity>[];

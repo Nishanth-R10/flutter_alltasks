@@ -34,8 +34,8 @@ extension AllStrings on DefaultString {
   
   // Refer & Earn
   String get referEarn => _getString(I18nKeys.referEarn, fallback: 'Refer & Earn');
-  String get inviteFriends => _getString(I18nKeys.inviteFriends, fallback: 'Invite friends and earn 50 points for each successful referral!');
-  String get yourReferralCode => _getString(I18nKeys.yourReferralCode, fallback: 'Your Referral Code');
+  String get inviteFriends => _getString(I18nKeys.inviteFriends, fallback: 'Help your friends to grow with their wealth');
+  String get yourReferralCode => _getString(I18nKeys.yourReferralCode, fallback: 'A successful referral earns you 50 points!');
   String get shareLink => _getString(I18nKeys.shareLink, fallback: 'Share Link');
   
   // Profile Screen Strings

@@ -12,6 +12,7 @@ class SearchBarWidget extends ConsumerWidget {
   final VoidCallback onClear;
   final double baseSize;
   final bool showSearchResults;
+  final bool isNewUser;
 
   const SearchBarWidget({
     super.key,
@@ -19,18 +20,22 @@ class SearchBarWidget extends ConsumerWidget {
     required this.onCancel,
     required this.onClear,
     required this.baseSize,
-    this.showSearchResults = false, required bool isNewUser,
+    this.showSearchResults = false,
+    required this.isNewUser,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    
     return Row(
       children: [
         Expanded(
           child: Container(
             height: SizingUtils.dynamicHeight(0.055, context),
             decoration: BoxDecoration(
-              border: Border.all(color: AppConstants.kBorderBlue),
+              border: Border.all(color: AppConstants.kBorderBlue), // Your exact blue color
               borderRadius: BorderRadius.circular(50),
             ),
             child: Row(
@@ -39,7 +44,7 @@ class SearchBarWidget extends ConsumerWidget {
                 Icon(
                   Icons.search,
                   size: SizingUtils.dynamicFont(0.024, context),
-                  color: Colors.grey.shade600,
+                  color: isDark ? Colors.grey.shade400 : Colors.grey.shade600, // Your grey shades
                 ),
                 SizedBox(width: SizingUtils.dynamicWidth(0.02, context)),
                 Expanded(
@@ -50,12 +55,12 @@ class SearchBarWidget extends ConsumerWidget {
                       hintText: DefaultString.instance.searchDotDotDot,
                       hintStyle: GoogleFonts.poppins(
                         fontSize: SizingUtils.dynamicFont(0.016, context),
-                        color: Colors.grey.shade500,
+                        color: isDark ? Colors.grey.shade400 : Colors.grey.shade500, // Your grey shades
                       ),
                     ),
                     style: GoogleFonts.poppins(
                       fontSize: SizingUtils.dynamicFont(0.016, context),
-                      color: Colors.black,
+                      color: isDark ? Colors.white : Colors.black, // Your exact color
                     ),
                     onChanged: (value) {
                       if (showSearchResults) {
@@ -70,15 +75,15 @@ class SearchBarWidget extends ConsumerWidget {
                   width: SizingUtils.dynamicHeight(0.03, context),
                   height: SizingUtils.dynamicHeight(0.03, context),
                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 129, 129, 129),
+                    color: const Color.fromARGB(255, 129, 129, 129), // Your exact grey color
                     shape: BoxShape.circle,
-                    border: Border.all(color: const Color.fromARGB(255, 128, 127, 127), width: 1.5),
+                    border: Border.all(color: const Color.fromARGB(255, 128, 127, 127), width: 1.5), // Your exact grey color
                   ),
                   child: IconButton(
                     icon: Icon(
                       Icons.close,
                       size: SizingUtils.dynamicFont(0.014, context),
-                      color: const Color.fromARGB(255, 255, 253, 253),
+                      color: const Color.fromARGB(255, 255, 253, 253), // Your exact color
                     ),
                     onPressed: onClear,
                     padding: EdgeInsets.zero,
@@ -95,7 +100,7 @@ class SearchBarWidget extends ConsumerWidget {
           child: Text(
             DefaultString.instance.cancel,
             style: GoogleFonts.poppins(
-              color: AppConstants.kBorderBlue,
+              color: AppConstants.kBorderBlue, // Your exact blue color
               fontSize: SizingUtils.dynamicFont(0.018, context),
               fontWeight: FontWeight.w500,
             ),

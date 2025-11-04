@@ -1,4 +1,3 @@
-// lib/features/search/presentation/widgets/unified_searchscreen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:auto_route/auto_route.dart';
@@ -32,7 +31,6 @@ class _UnifiedSearchScreenState extends ConsumerState<UnifiedSearchScreen> {
       _isSearching = query.isNotEmpty;
     });
     
-    // Update the correct provider based on current user type
     final userType = ref.read(userTypeProvider);
     if (userType == UserType.newUser) {
       ref.read(newUserSearchQueryProvider.notifier).state = query;
@@ -47,7 +45,6 @@ class _UnifiedSearchScreenState extends ConsumerState<UnifiedSearchScreen> {
       _isSearching = false;
     });
     
-    // Clear both providers
     ref.read(financialSearchQueryProvider.notifier).state = '';
     ref.read(newUserSearchQueryProvider.notifier).state = '';
   }
@@ -58,16 +55,17 @@ class _UnifiedSearchScreenState extends ConsumerState<UnifiedSearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     final userType = ref.watch(userTypeProvider);
     final Size screenSize = MediaQuery.of(context).size;
     final double baseSize = screenSize.width * 0.01;
     
-    // ✅ ADD THESE - Get the results from providers
     final financialSearchResults = ref.watch(filteredFinancialServicesProvider);
     final newUserSearchResults = ref.watch(filteredNewUserServicesProvider);
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: isDark ? const Color(0xFF121212) : Colors.white, // Your exact colors
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(baseSize * 4),
@@ -86,13 +84,12 @@ class _UnifiedSearchScreenState extends ConsumerState<UnifiedSearchScreen> {
               ),
               SizedBox(height: baseSize * 3),
               
-              // Search Results Count
               if (_isSearching)
                 Padding(
                   padding: EdgeInsets.only(bottom: baseSize * 2),
                   child: Row(
                     children: [
-                      Icon(Icons.search, size: baseSize * 4, color: Colors.blue),
+                      Icon(Icons.search, size: baseSize * 4, color: Colors.blue), // Your exact blue color
                       SizedBox(width: baseSize * 2),
                       Text(
                         userType == UserType.newUser
@@ -100,7 +97,7 @@ class _UnifiedSearchScreenState extends ConsumerState<UnifiedSearchScreen> {
                             : 'Found ${financialSearchResults.length} results for "${_searchController.text}"',
                         style: TextStyle(
                           fontSize: baseSize * 3,
-                          color: Colors.blue,
+                          color: Colors.blue, // Your exact blue color
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -110,7 +107,7 @@ class _UnifiedSearchScreenState extends ConsumerState<UnifiedSearchScreen> {
               
               Expanded(
                 child: _isSearching 
-                    ? _buildRealSearchResults(baseSize, userType, financialSearchResults, newUserSearchResults)
+                    ? _buildRealSearchResults(baseSize, userType, financialSearchResults, newUserSearchResults, isDark)
                     : SearchContentManager(
                         isSearching: _isSearching,
                         userType: userType,
@@ -127,12 +124,12 @@ class _UnifiedSearchScreenState extends ConsumerState<UnifiedSearchScreen> {
     );
   }
 
-  // ✅ UPDATE THIS METHOD TO ACCEPT PARAMETERS
   Widget _buildRealSearchResults(
     double baseSize, 
     UserType userType, 
     List<String> financialResults, 
-    List<String> newUserResults
+    List<String> newUserResults,
+    bool isDark
   ) {
     final searchQuery = _searchController.text.trim();
     
@@ -142,7 +139,7 @@ class _UnifiedSearchScreenState extends ConsumerState<UnifiedSearchScreen> {
           'Type to start searching...',
           style: TextStyle(
             fontSize: baseSize * 3.5,
-            color: Colors.grey.shade500,
+            color: isDark ? Colors.grey.shade400 : Colors.grey.shade500, // Your grey shades
           ),
         ),
       );
@@ -153,8 +150,8 @@ class _UnifiedSearchScreenState extends ConsumerState<UnifiedSearchScreen> {
       userType: userType,
       baseSize: baseSize,
       searchController: _searchController,
-      financialResults: financialResults, // ✅ ADD THIS
-      newUserResults: newUserResults, // ✅ ADD THIS
+      financialResults: financialResults,
+      newUserResults: newUserResults,
     );
   }
 

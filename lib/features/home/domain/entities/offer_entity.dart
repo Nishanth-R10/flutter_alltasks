@@ -21,12 +21,12 @@ class OfferEntity {
   // Update fromJson method
   factory OfferEntity.fromJson(Map<String, dynamic> json) {
     // Define offer types and icons based on ID or title
-    final offerTypes = ['flights', 'gold', 'tours', 'invest'];
+    final offerTypes = ['flights', 'gold', 'tours', ''];
     final icons = [
       'assets/offers/flight.png',
       'assets/offers/gold.png', 
       'assets/offers/tours.png',
-      'assets/offers/invest.png'
+    //  'assets/offers/invest.png'
     ];
     
     final id = json['id']?.toString() ?? '0';

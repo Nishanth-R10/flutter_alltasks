@@ -2,7 +2,7 @@
 part of 'custom_offer_dialog.dart';
 
 extension CustomOfferDialogUI on _CustomOfferDialogState {
-  Widget _buildTitle() {
+  Widget _buildTitle(bool isDark) {
     return Padding(
       padding: EdgeInsets.only(
         left: MediaQueryUtils.w(4),
@@ -15,7 +15,7 @@ extension CustomOfferDialogUI on _CustomOfferDialogState {
           style: GoogleFonts.poppins(
             fontSize: MediaQueryUtils.sp(18),
             fontWeight: FontWeight.w700,
-            color: const Color(0xFF003D82),
+            color: isDark ? Colors.white : const Color(0xFF003D82), 
           ),
           textAlign: TextAlign.center,
           maxLines: 1,
@@ -82,6 +82,9 @@ extension CustomOfferDialogUI on _CustomOfferDialogState {
   }
 
   Widget _buildDescription() {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    
     return Expanded(
       child: Padding(
         padding: EdgeInsets.only(top: MediaQueryUtils.h(8)),
@@ -91,10 +94,10 @@ extension CustomOfferDialogUI on _CustomOfferDialogState {
             style: GoogleFonts.poppins(
               fontSize: MediaQueryUtils.sp(14),
               fontWeight: FontWeight.w400,
-              color: Colors.black,
+              color: isDark ? Colors.white : Colors.black, 
               height: 1.5,
             ),
-            children: _parseDescription(widget.description),
+            children: _parseDescription(widget.description, isDark),
           ),
         ),
       ),
