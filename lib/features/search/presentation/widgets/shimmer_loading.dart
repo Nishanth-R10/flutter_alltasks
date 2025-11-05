@@ -20,7 +20,10 @@ class _ShimmerLoadingState extends State<ShimmerLoading> with SingleTickerProvid
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 1500))..repeat();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500),
+    )..repeat();
   }
 
   @override
@@ -33,7 +36,9 @@ class _ShimmerLoadingState extends State<ShimmerLoading> with SingleTickerProvid
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     
-    if (!widget.isLoading) return widget.child;
+    if (!widget.isLoading) {
+      return widget.child;
+    }
 
     return AnimatedBuilder(
       animation: _controller,

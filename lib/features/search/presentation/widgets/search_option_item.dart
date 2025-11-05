@@ -1,6 +1,7 @@
+// TODO: UNCOMMENT WHEN ADDING RETURNING USER OPTION ITEMS
+/*
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tasks/core/utils/media_query_utils.dart';
 
 class SearchOptionItem extends StatelessWidget {
   final String option;
@@ -16,32 +17,37 @@ class SearchOptionItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    MediaQueryUtils.init(context);
-
+    final baseSize = MediaQuery.of(context).size.shortestSide * 0.01;
+    
     return Padding(
-      padding: EdgeInsets.only(bottom: MediaQueryUtils.h(8)),
+      padding: EdgeInsets.only(bottom: baseSize * 2),
       child: GestureDetector(
         onTap: onTap,
         child: Container(
           padding: EdgeInsets.symmetric(
-            horizontal: MediaQueryUtils.w(16),
-            vertical: MediaQueryUtils.h(12),
+            horizontal: baseSize * 4,
+            vertical: baseSize * 3,
           ),
           decoration: BoxDecoration(
             color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
-            borderRadius: BorderRadius.circular(MediaQueryUtils.r(12)),
-            border: Border.all(
-              color: isDark ? Colors.grey.shade700 : Colors.grey.shade300,
-            ),
+            borderRadius: BorderRadius.circular(baseSize * 3),
+            border: Border.all(color: isDark ? Colors.grey.shade700 : Colors.grey.shade300),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(option, style: _buildTextStyle(isDark)),
+              Text(
+                option,
+                style: GoogleFonts.poppins(
+                  fontSize: baseSize * 3.5,
+                  color: isDark ? Colors.white : Colors.black,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
               Icon(
                 Icons.north_east,
-                size: MediaQueryUtils.sp(16),
-                color: _getIconColor(isDark),
+                size: baseSize * 4,
+                color: isDark ? Colors.white : Colors.black,
               ),
             ],
           ),
@@ -49,16 +55,5 @@ class SearchOptionItem extends StatelessWidget {
       ),
     );
   }
-
-  TextStyle _buildTextStyle(bool isDark) {
-    return GoogleFonts.poppins(
-      fontSize: MediaQueryUtils.sp(14),
-      color: isDark ? Colors.white : const Color.fromARGB(255, 13, 13, 14),
-      fontWeight: FontWeight.w500,
-    );
-  }
-
-  Color _getIconColor(bool isDark) {
-    return isDark ? Colors.white : const Color.fromARGB(255, 3, 3, 3);
-  }
 }
+*/

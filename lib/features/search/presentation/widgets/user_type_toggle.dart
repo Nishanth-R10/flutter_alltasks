@@ -1,11 +1,17 @@
+// TODO: UNCOMMENT WHEN ADDING USER TYPE TOGGLE
+/*
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tasks/features/search/application/search_user_provider.dart';
+import '../controllers/search_controller.dart';
 
 class UserTypeToggle extends ConsumerWidget {
   final double baseSize;
-  const UserTypeToggle({super.key, required this.baseSize});
+
+  const UserTypeToggle({
+    super.key,
+    required this.baseSize,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,21 +27,40 @@ class UserTypeToggle extends ConsumerWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text("New User", style: _buildTextStyle(ref, UserType.newUser, isDark)),
-          Switch(value: ref.watch(userTypeProvider) == UserType.returningUser, onChanged: (value) {
-            ref.read(userTypeProvider.notifier).state = value ? UserType.returningUser : UserType.newUser;
-          }),
-          Text("Returning User", style: _buildTextStyle(ref, UserType.returningUser, isDark)),
+          Text(
+            "New User",
+            style: GoogleFonts.poppins(
+              fontSize: baseSize * 3,
+              color: ref.watch(userTypeProvider) == UserType.newUser 
+                  ? Colors.blue
+                  : isDark ? Colors.grey.shade400 : Colors.grey,
+              fontWeight: ref.watch(userTypeProvider) == UserType.newUser 
+                  ? FontWeight.w600 
+                  : FontWeight.normal,
+            ),
+          ),
+          Switch(
+            value: ref.watch(userTypeProvider) == UserType.returningUser,
+            onChanged: (value) {
+              ref.read(userTypeProvider.notifier).state = 
+                  value ? UserType.returningUser : UserType.newUser;
+            },
+          ),
+          Text(
+            "Returning User",
+            style: GoogleFonts.poppins(
+              fontSize: baseSize * 3,
+              color: ref.watch(userTypeProvider) == UserType.returningUser 
+                  ? Colors.blue
+                  : isDark ? Colors.grey.shade400 : Colors.grey,
+              fontWeight: ref.watch(userTypeProvider) == UserType.returningUser 
+                  ? FontWeight.w600 
+                  : FontWeight.normal,
+            ),
+          ),
         ],
       ),
     );
   }
-
-  TextStyle _buildTextStyle(WidgetRef ref, UserType type, bool isDark) {
-    return GoogleFonts.poppins(
-      fontSize: baseSize * 3,
-      color: ref.watch(userTypeProvider) == type ? Colors.blue : isDark ? Colors.grey.shade400 : Colors.grey,
-      fontWeight: ref.watch(userTypeProvider) == type ? FontWeight.w600 : FontWeight.normal,
-    );
-  }
 }
+*/

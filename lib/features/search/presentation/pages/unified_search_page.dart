@@ -1,13 +1,13 @@
-// lib/features/search/presentation/widgets/unified_searchscreen.dart
-
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tasks/features/search/application/search_user_provider.dart';
-import 'package:tasks/features/search/presentation/search_provider.dart';
-import 'search_content_manager.dart';
-import 'search_bar.dart';
-import 'user_type_toggle.dart';
+import 'package:tasks/features/search/presentation/controller/search_results_provider.dart';
+import 'package:tasks/features/search/presentation/controller/search_state_provider.dart';
+import '../widgets/search_content_manager.dart';
+import '../widgets/search_bar.dart';
+// import '../widgets/user_type_toggle.dart'; // COMMENTED FOR NOW
 
+@RoutePage()
 class UnifiedSearchScreen extends ConsumerStatefulWidget {
   const UnifiedSearchScreen({super.key});
 
@@ -34,8 +34,7 @@ class _UnifiedSearchScreenState extends ConsumerState<UnifiedSearchScreen> {
 
   void _onClearSearch() {
     _searchController.clear();
-    ref.read(newUserSearchQueryProvider.notifier).state = '';
-    ref.read(financialSearchQueryProvider.notifier).state = '';
+    ref.read(searchQueryProvider.notifier).state = '';
   }
 
   void _onCancelSearch() {
@@ -46,45 +45,42 @@ class _UnifiedSearchScreenState extends ConsumerState<UnifiedSearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final userType = ref.watch(userTypeProvider);
     final baseSize = MediaQuery.of(context).size.shortestSide * 0.01;
-    
-    // Watch the filtered results based on user type
-    final newUserResults = ref.watch(filteredNewUserServicesProvider);
-    final financialResults = ref.watch(filteredFinancialServicesProvider);
+    final searchResults = ref.watch(searchResultsProvider);
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        title: UserTypeToggle(baseSize: baseSize), // ← TOGGLE 
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: Colors.transparent,
+      //   elevation: 0,
+      //   automaticallyImplyLeading: false,
+      //  
+      // ),
       body: Padding(
-        padding: EdgeInsets.all(baseSize * 3),
+        padding: EdgeInsets.only(
+          top: baseSize * 9, //  padding to push search bar lower 
+          left: baseSize * 5,
+          right: baseSize * 2,
+          bottom: baseSize * 2,
+        ),
         child: Column(
           children: [
-            // Search Bar 
+            // Search bar positioned lower
             SearchBarWidget(
               controller: _searchController,
               onCancel: _onCancelSearch,
               onClear: _onClearSearch,
               baseSize: baseSize,
-              showSearchResults: _isSearching,
-              isNewUser: userType == UserType.newUser,
             ),
-            SizedBox(height: baseSize * 3),
+            SizedBox(height: baseSize * 4),
             
-            // Search Content
+            // Search content
             Expanded(
               child: SearchContentManager(
                 isSearching: _isSearching,
-                userType: userType,
                 baseSize: baseSize,
                 searchController: _searchController,
-                financialResults: financialResults,
-                newUserResults: newUserResults,
+                searchResults: searchResults,
               ),
             ),
           ],

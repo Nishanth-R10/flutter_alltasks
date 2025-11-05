@@ -1,48 +1,103 @@
 import 'package:flutter/material.dart';
-import 'package:tasks/features/search/application/search_user_provider.dart';
-import 'package:tasks/features/search/presentation/widgets/financial_services/financial_services_result.dart';
-import 'package:tasks/features/search/presentation/widgets/new_user/new_user_interface.dart';
-import 'package:tasks/features/search/presentation/widgets/new_user/new_user_search_results.dart';
-import 'package:tasks/features/search/presentation/widgets/returning_user/returning_user_interface.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'new_user_interface.dart';
+import 'new_user_search_results.dart';
+// import 'returning_user_interface.dart'; // COMMENTED FOR NOW
+// import 'financial_services_result.dart'; // COMMENTED FOR NOW
 
-class SearchContentManager extends StatelessWidget {
+class SearchContentManager extends ConsumerWidget {
   final bool isSearching;
-  final UserType userType;
   final double baseSize;
   final TextEditingController searchController;
-  final List<String> financialResults;
-  final List<String> newUserResults;
+  final AsyncValue<List<String>> searchResults;
 
   const SearchContentManager({
     super.key,
     required this.isSearching,
-    required this.userType,
     required this.baseSize,
     required this.searchController,
-    required this.financialResults,
-    required this.newUserResults,
+    required this.searchResults,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // TODO: UNCOMMENT WHEN ADDING USER TYPE TOGGLE LATER
+    // final userType = ref.watch(userTypeProvider);
+    
+    // For now, always show New User interface
+    const userType = UserType.newUser; // Hardcoded for now
+
     if (isSearching) {
+      // TODO: UNCOMMENT WHEN ADDING RETURNING USER LATER
+      /*
       if (userType == UserType.returningUser) {
-        return FinancialServicesResults(
-          searchResults: financialResults,
-          searchController: searchController,
-          baseSize: baseSize,
+        final returningResults = ref.watch(returningUserSearchResultsProvider);
+        return returningResults.when(
+          loading: () => _buildLoadingState(context),
+          error: (error, stack) => _buildErrorState(context, error),
+          data: (results) => FinancialServicesResults(
+            searchResults: results,
+            searchController: searchController,
+            baseSize: baseSize,
+          ),
         );
       } else {
-        return NewUserSearchResults(
-          searchResults: newUserResults,
-          searchController: searchController,
-          baseSize: baseSize,
+      */
+        return searchResults.when(
+          loading: () => _buildLoadingState(context),
+          error: (error, stack) => _buildErrorState(context, error),
+          data: (results) => NewUserSearchResults(
+            searchResults: results,
+            searchController: searchController,
+            baseSize: baseSize,
+          ),
         );
-      }
+      // } // COMMENTED FOR NOW
     } else {
+      // TODO: UNCOMMENT WHEN ADDING RETURNING USER LATER
+      /*
       return userType == UserType.newUser
           ? NewUserInterface(searchController: searchController)
           : ReturningUserInterface(searchController: searchController);
+      */
+      
+      // For now, always show New User interface
+      return NewUserInterface(searchController: searchController);
     }
   }
+
+  Widget _buildLoadingState(BuildContext context) {
+    return const Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+
+  Widget _buildErrorState(BuildContext context, Object error) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.error_outline,
+            size: baseSize * 15,
+            color: Colors.grey.shade400,
+          ),
+          SizedBox(height: baseSize * 2),
+          Text(
+            'Failed to load results',
+            style: TextStyle(
+              fontSize: baseSize * 4,
+              color: Colors.grey.shade600,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// TODO: MOVE TO SEPARATE FILE WHEN UNCOMMENTING USER TYPE TOGGLE
+enum UserType {
+  newUser,
+  returningUser,
 }

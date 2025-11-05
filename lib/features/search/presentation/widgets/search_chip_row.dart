@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tasks/core/utils/media_query_utils.dart';
 import 'search_chip_item.dart';
 
 class SearchChipRow extends StatelessWidget {
@@ -14,13 +13,19 @@ class SearchChipRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MediaQueryUtils.init(context);
+    final baseSize = MediaQuery.of(context).size.shortestSide * 0.01;
     
     return Row(
       children: [
-        SearchChipItem(title: titles[0], icon: icons[0]),
-        SizedBox(width: MediaQueryUtils.w(12)),
-        SearchChipItem(title: titles[1], icon: icons[1]),
+        SearchChipItem(
+          title: titles[0],
+          icon: icons[0],
+        ),
+        SizedBox(width: baseSize * 3),
+        SearchChipItem(
+          title: titles[1],
+          icon: icons[1],
+        ),
       ],
     );
   }

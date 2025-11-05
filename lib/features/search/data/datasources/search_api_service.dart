@@ -1,54 +1,73 @@
-// lib/features/search/data/datasources/search_api_service.dart
-
-import 'package:fpdart/fpdart.dart';
-import 'package:tasks/core/network/api_service.dart';
-
+// Static data service - No API calls
 class SearchApiService {
-  final ApiService _apiService;
+  // Static data for New User
+  static final List<String> newUserServices = [
+    "Mobile Recharge", "Track Billers", "Credit Card Bills", "Offers",
+    "Your Cheque Book", "Electricity Bill", "Water Bill", "Gas Bill",
+    "DTH Recharge", "Broadband Bill", "Insurance Premium", "Loan Payment",
+  ];
 
-  SearchApiService(this._apiService);
+  // TODO: UNCOMMENT FOR RETURNING USER LATER
+  /*
+  static final List<String> returningUserServices = [
+    "Home Finance", "Instant Finance", "Car Finance", "Personal Finance",
+    "Business Loans", "Investment Plans", "Loan Services", "Wealth Management",
+  ];
+  */
+
+  static final List<Map<String, dynamic>> whatsNewFeatures = [
+    {
+      'id': '1',
+      'title': 'Track Spends',
+      'description': 'Monitor your expenses in real-time',
+      'imagePath': 'assets/images/discovery.png',
+      'type': 'spending_tracker',
+    },
+    {
+      'id': '2',
+      'title': 'Track Forex',
+      'description': 'Live foreign exchange rates',
+      'imagePath': 'assets/images/discovery.png',
+      'type': 'forex_tracker',
+    },
+  ];
 
   // Get search suggestions
-  Future<Either<String, Map<String, dynamic>>> getSearchSuggestions(String query) async {
-    return _apiService.get(
-      '/search/suggestions',
-      queryParameters: {'q': query},
-      useFallback: true,
-    );
+  Future<List<String>> getSearchSuggestions(String query) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    if (query.isEmpty) return [];
+    final lowerQuery = query.toLowerCase();
+    return newUserServices.where((service) => 
+      service.toLowerCase().contains(lowerQuery)
+    ).toList();
   }
 
-  // Get search options based on user type
-  Future<Either<String, Map<String, dynamic>>> getSearchOptions(String userType) async {
-    return _apiService.get(
-      '/search/options',
-      queryParameters: {'user_type': userType},
-      useFallback: true,
-    );
+  // Get New User services
+  Future<List<String>> getNewUserServices() async {
+    await Future.delayed(const Duration(milliseconds: 200));
+    return newUserServices;
   }
 
   // Get "What's New" features
-  Future<Either<String, Map<String, dynamic>>> getWhatsNewFeatures() async {
-    return _apiService.get(
-      '/whats-new',
-      useFallback: true,
-    );
+  Future<List<Map<String, dynamic>>> getWhatsNewFeatures() async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    return whatsNewFeatures;
   }
 
-  // Search financial services
-  Future<Either<String, Map<String, dynamic>>> searchFinancialServices(String query) async {
-    return _apiService.get(
-      '/search/financial',
-      queryParameters: {'q': query},
-      useFallback: true,
-    );
+  // TODO: UNCOMMENT FOR RETURNING USER LATER
+  /*
+  Future<List<String>> getReturningUserServices() async {
+    await Future.delayed(const Duration(milliseconds: 200));
+    return returningUserServices;
   }
 
-  // Search new user services
-  Future<Either<String, Map<String, dynamic>>> searchNewUserServices(String query) async {
-    return _apiService.get(
-      '/search/new-user',
-      queryParameters: {'q': query},
-      useFallback: true,
-    );
+  Future<List<String>> getReturningUserSearchSuggestions(String query) async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    if (query.isEmpty) return [];
+    final lowerQuery = query.toLowerCase();
+    return returningUserServices.where((service) => 
+      service.toLowerCase().contains(lowerQuery)
+    ).toList();
   }
+  */
 }

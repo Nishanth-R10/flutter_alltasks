@@ -1,20 +1,25 @@
-// lib/features/search/domain/entities/whats_new_entity.dart
-import 'package:freezed_annotation/freezed_annotation.dart';
+class WhatsNewEntity {
+  final String id;
+  final String title;
+  final String description;
+  final String imagePath;
+  final String type;
 
-part 'whats_new_entity.freezed.dart';
-part 'whats_new_entity.g.dart';
+  const WhatsNewEntity({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.imagePath,
+    required this.type,
+  });
 
-@freezed
-class WhatsNewEntity with _$WhatsNewEntity {
-  const factory WhatsNewEntity({
-    required String id,
-    required String title,
-    required String description,
-  // ignore: invalid_annotation_target
-  @JsonKey(name: 'image_path') required String imagePath,
-    required String type,
-  }) = _WhatsNewEntity;
-
-  factory WhatsNewEntity.fromJson(Map<String, dynamic> json) =>
-      _$WhatsNewEntityFromJson(json);
+  factory WhatsNewEntity.fromJson(Map<String, dynamic> json) {
+    return WhatsNewEntity(
+      id: json['id']?.toString() ?? '',
+      title: json['title']?.toString() ?? '',
+      description: json['description']?.toString() ?? '',
+      imagePath: json['imagePath']?.toString() ?? '',
+      type: json['type']?.toString() ?? '',
+    );
+  }
 }

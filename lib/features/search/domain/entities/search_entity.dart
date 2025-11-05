@@ -1,20 +1,25 @@
-// lib/features/search/domain/entities/search_entity.dart
-import 'package:freezed_annotation/freezed_annotation.dart';
+class SearchEntity {
+  final String id;
+  final String title;
+  final String? description;
+  final String? type;
+  final String? imageUrl;
 
-part 'search_entity.freezed.dart';
-part 'search_entity.g.dart';
+  const SearchEntity({
+    required this.id,
+    required this.title,
+    this.description,
+    this.type,
+    this.imageUrl,
+  });
 
-@freezed
-class SearchEntity with _$SearchEntity {
-  const factory SearchEntity({
-    required String id,
-    required String title,
-    required String type,
-  // ignore: invalid_annotation_target
-  @JsonKey(name: 'image_path') String? imagePath,
-    String? description,
-  }) = _SearchEntity;
-
-  factory SearchEntity.fromJson(Map<String, dynamic> json) =>
-      _$SearchEntityFromJson(json);
+  factory SearchEntity.fromJson(Map<String, dynamic> json) {
+    return SearchEntity(
+      id: json['id']?.toString() ?? '',
+      title: json['title']?.toString() ?? '',
+      description: json['description']?.toString(),
+      type: json['type']?.toString(),
+      imageUrl: json['imageUrl']?.toString() ?? json['imagePath']?.toString(),
+    );
+  }
 }
