@@ -1,22 +1,24 @@
-// lib/features/search/presentation/search_provider.dart
+// lib/features/search/presentation/providers/search_providers.dart
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:tasks/core/network/api_service.dart';
 import 'package:tasks/features/search/data/repository/search_repository.dart';
-import '../domain/entities/search_entity.dart'; // ← ADD THIS IMPORT
-import '../domain/entities/whats_new_entity.dart'; // ← ADD THIS IMPORT
+import 'package:tasks/features/search/domain/entities/search_entity.dart';
+import 'package:tasks/features/search/domain/entities/whats_new_entity.dart';
+import '../data/datasources/search_api_service_provider.dart';
 
 // Repositories
 final searchRepositoryProvider = Provider<SearchRepository>((ref) {
-  final apiService = ref.read(apiServiceProvider);
-  return SearchRepositoryImpl(apiService);
+  final searchApiService = ref.read(searchApiServiceProvider);
+  return SearchRepositoryImpl(searchApiService);
 });
 
 final whatsNewRepositoryProvider = Provider<WhatsNewRepository>((ref) {
-  final apiService = ref.read(apiServiceProvider);
-  return WhatsNewRepositoryImpl(apiService);
+  final searchApiService = ref.read(searchApiServiceProvider);
+  return WhatsNewRepositoryImpl(searchApiService);
 });
+
 
 // Search State Providers
 final newUserSearchQueryProvider = StateProvider<String>((ref) => '');

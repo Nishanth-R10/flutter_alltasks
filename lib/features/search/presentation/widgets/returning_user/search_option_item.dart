@@ -17,23 +17,32 @@ class SearchOptionItem extends StatelessWidget {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     MediaQueryUtils.init(context);
-    
+
     return Padding(
       padding: EdgeInsets.only(bottom: MediaQueryUtils.h(8)),
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: MediaQueryUtils.w(16), vertical: MediaQueryUtils.h(12)),
+          padding: EdgeInsets.symmetric(
+            horizontal: MediaQueryUtils.w(16),
+            vertical: MediaQueryUtils.h(12),
+          ),
           decoration: BoxDecoration(
             color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
             borderRadius: BorderRadius.circular(MediaQueryUtils.r(12)),
-            border: Border.all(color: isDark ? Colors.grey.shade700 : Colors.grey.shade300),
+            border: Border.all(
+              color: isDark ? Colors.grey.shade700 : Colors.grey.shade300,
+            ),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(option, style: _buildTextStyle(isDark)),
-              Icon(Icons.north_east, size: MediaQueryUtils.sp(16), color: _getIconColor(isDark)),
+              Icon(
+                Icons.north_east,
+                size: MediaQueryUtils.sp(16),
+                color: _getIconColor(isDark),
+              ),
             ],
           ),
         ),
