@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tasks/core/utils/media_query_utils.dart';
 import 'package:tasks/features/offers/application/offer_provider.dart';
 import 'package:tasks/features/offers/application/offer_service.dart';
+import 'package:tasks/features/offers/presentation/conroller/custom_offer_dialog_provider.dart';
 
 part 'custom_offer_dialog_part2.dart';
 part 'custom_offer_dialog_part3.dart';

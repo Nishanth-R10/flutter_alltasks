@@ -5,6 +5,7 @@ extension CustomOfferDialogButtons on _CustomOfferDialogState {
   List<Widget> _buildDontShowAgainSection() {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
+    final customOfferDialogState = ref.watch(customOfferDialogProvider);
     
     return [
       Row(
@@ -14,22 +15,18 @@ extension CustomOfferDialogButtons on _CustomOfferDialogState {
             width: MediaQueryUtils.w(20),
             height: MediaQueryUtils.h(20),
             child: Checkbox(
-              value: _dontShowAgain,
+              value: customOfferDialogState.dontShowAgain,
               onChanged: (value) {
-                setState(() {
-                  _dontShowAgain = value ?? false;
-                });
-                if (_dontShowAgain) {
-                  ref.read(offerVisibilityProvider.notifier).state = {
-                    ...ref.read(offerVisibilityProvider),
-                    widget.offerId: true,
-                  };
-                } else {
-                  ref.read(offerVisibilityProvider.notifier).state = {
-                    ...ref.read(offerVisibilityProvider),
-                    widget.offerId: false,
-                  };
-                }
+                final newValue = value ?? false;
+                
+                // Update local state using provider
+                ref.read(customOfferDialogProvider.notifier).setDontShowAgain(newValue, widget.offerId);
+                
+                // Update offer visibility provider
+                ref.read(offerVisibilityProvider.notifier).state = {
+                  ...ref.read(offerVisibilityProvider),
+                  widget.offerId: newValue,
+                };
               },
               activeColor: const Color(0xFF003D82), 
               shape: RoundedRectangleBorder(
