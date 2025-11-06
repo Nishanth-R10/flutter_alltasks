@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:tasks/features/profile/data/repository/user_repository.dart';
+import 'package:tasks/features/profile/data/repositories/user_repository.dart';
 import 'package:tasks/features/profile/domain/entities/user_entity.dart';
 import 'package:tasks/features/profile/presentation/controller/user_state.dart';
 
