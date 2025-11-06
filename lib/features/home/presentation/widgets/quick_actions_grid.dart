@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tasks/core/constants/app_strings/default_string.dart';
 import 'package:tasks/core/utils/media_query_utils.dart';
 import 'package:tasks/core/providers/theme_provider.dart';
-import 'package:tasks/features/home/presentation/widgets/quick_action/gradient_border_painter.dart';
+import 'package:tasks/features/home/presentation/widgets/gradient_border_painter.dart';
 
 class QuickActionsGrid extends ConsumerWidget {
   const QuickActionsGrid({super.key});

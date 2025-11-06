@@ -1,5 +1,5 @@
 // lib/features/home/presentation/pages/home_screen_navigation.dart
-part of '../../home_screen.dart';
+part of 'home_screen.dart';
 
 extension HomeScreenNavigation on HomeScreenState {
   Widget _buildNavigationSection(BuildContext context) {

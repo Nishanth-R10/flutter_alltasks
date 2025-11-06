@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tasks/features/offers/domain/entities/offer_entity.dart';
 import 'package:tasks/core/providers/theme_provider.dart';
+import 'package:tasks/features/home/domain/entities/offer_entity.dart';
 
 class OfferItem extends ConsumerWidget {
   final dynamic offerView;
@@ -29,6 +29,11 @@ class OfferItem extends ConsumerWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     
+    // Handle both OfferEntity and Map types
+    final offer = offerView is OfferEntity 
+        ? offerView as OfferEntity
+        : OfferEntity.fromJson(offerView as Map<String, dynamic>);
+    
     return GestureDetector(
       onTap: onTap,
       child: SizedBox(
@@ -42,21 +47,21 @@ class OfferItem extends ConsumerWidget {
                 clipBehavior: Clip.none,
                 alignment: Alignment.center,
                 children: [
-                  _buildOfferCircle(context, ref),
-                  if ((offerView?.discountText as String?)?.isNotEmpty ?? false) 
-                    _buildDiscountBadge(context, ref),
+                  _buildOfferCircle(context, ref, offer),
+                  if (offer.discountText?.isNotEmpty ?? false) 
+                    _buildDiscountBadge(context, ref, offer),
                 ],
               ),
             ),
             SizedBox(height: screenHeight * 0.006),
-            _buildOfferTitle(context, ref),
+            _buildOfferTitle(context, ref, offer),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildOfferCircle(BuildContext context, WidgetRef ref) {
+  Widget _buildOfferCircle(BuildContext context, WidgetRef ref, OfferEntity offer) {
     final theme = ref.watch(themeProvider);
     final screenWidth = MediaQuery.of(context).size.width;
     
@@ -77,22 +82,21 @@ class OfferItem extends ConsumerWidget {
         ],
       ),
       child: ClipOval(
-        child: Builder(builder: (context) {
-          final entity = offerView?.entity as OfferEntity?;
-          final asset = offerView?.iconAsset ?? entity?.imageUrl ?? '';
-          if (asset.isNotEmpty) {
-            if (asset.startsWith('assets/')) {
-              return Image.asset(asset, fit: BoxFit.cover);
-            }
-            return Image.network(asset, fit: BoxFit.cover);
-          }
-          return const SizedBox.shrink();
-        }),
+        child: offer.iconAsset.isNotEmpty
+            ? Image.asset(offer.iconAsset, fit: BoxFit.cover)
+            : Container(
+                color: theme.colorScheme.primary.withOpacity(0.1),
+                child: Icon(
+                  Icons.local_offer,
+                  color: theme.colorScheme.primary,
+                  size: screenWidth * 0.06,
+                ),
+              ),
       ),
     );
   }
 
-  Widget _buildDiscountBadge(BuildContext context, WidgetRef ref) {
+  Widget _buildDiscountBadge(BuildContext context, WidgetRef ref, OfferEntity offer) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     
@@ -108,7 +112,7 @@ class OfferItem extends ConsumerWidget {
           borderRadius: BorderRadius.circular(12),
         ),
         child: Text(
-          (offerView?.discountText as String?) ?? '',
+          offer.discountText!,
           style: GoogleFonts.poppins(
             color: Colors.white,
             fontSize: screenWidth * 0.02,
@@ -119,14 +123,14 @@ class OfferItem extends ConsumerWidget {
     );
   }
 
-  Widget _buildOfferTitle(BuildContext context, WidgetRef ref) {
+  Widget _buildOfferTitle(BuildContext context, WidgetRef ref, OfferEntity offer) {
     final theme = ref.watch(themeProvider);
     final screenWidth = MediaQuery.of(context).size.width;
     
     return SizedBox(
       width: screenWidth * 0.2,
       child: Text(
-        _formatTitle((offerView?.entity?.title as String?) ?? ''),
+        _formatTitle(offer.title),
         textAlign: TextAlign.center,
         style: GoogleFonts.poppins(
           fontSize: screenWidth * 0.028,

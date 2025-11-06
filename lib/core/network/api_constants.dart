@@ -1,24 +1,15 @@
-// lib/core/network/api_constants.dart
 class ApiConstants {
-
+  // Base URLs
   static const String baseUrl = 'https://jsonplaceholder.typicode.com';
+  static const String dummyJsonBaseUrl = 'https://dummyjson.com';
   
- 
-  static const String searchApiBase = 'https://your-search-api.com/api';
-  static const String dummyJsonBase = 'https://dummyjson.com'; 
+  // Home Feature Endpoints
+  static const String homeOffers = '/home/offers';
+  static const String homeRewards = '/home/rewards';
+  static const String homeReferrals = '/home/referrals';
+  static const String homeQuickActions = '/home/quick-actions';
   
-  // JSONPlaceholder Endpoints
-  static const String posts = '/posts';
-  static const String users = '/users';
-  static const String comments = '/comments';
-  static const String albums = '/albums';
-  static const String photos = '/photos';
-  static const String todos = '/todos';
-  
-  // custom endpoints (if any)
-  static const String searchSuggestions = '/search/suggestions';
-  static const String whatsNew = '/whats-new';
-  
+  // Timeouts
   static const Duration connectTimeout = Duration(seconds: 30);
   static const Duration receiveTimeout = Duration(seconds: 30);
 }

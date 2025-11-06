@@ -1,15 +1,12 @@
-// lib/core/network/api_service.dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'api_service_base.dart';
 import 'api_service_impl.dart';
 
-// Just the provider - super simple
 final apiServiceProvider = Provider<ApiService>((ref) {
   return ApiService();
 });
 
-// Main class extends the base
 class ApiService extends ApiServiceBase {
   final ApiServiceImpl _impl;
 

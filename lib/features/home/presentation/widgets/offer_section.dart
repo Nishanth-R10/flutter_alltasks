@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
-import 'package:tasks/features/home/application/offer_provider.dart';
-import 'package:tasks/features/home/presentation/widgets/offer_section/shrimmer/shimmer_widget.dart';
-import 'package:tasks/features/home/presentation/widgets/offer_section/offer_item.dart';
 import 'package:tasks/core/providers/theme_provider.dart';
-
-// State provider for selected tab
-final selectedOfferTabProvider = StateProvider<int>((ref) => 0);
+import 'package:tasks/features/home/presentation/controller/home_providers.dart';
+import 'package:tasks/features/home/presentation/widgets/offer_item.dart';
+import 'package:tasks/features/home/presentation/widgets/shimmer_widget.dart';
 
 class OffersSection extends ConsumerWidget {
   const OffersSection({super.key});
@@ -15,7 +11,7 @@ class OffersSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
-    final offersAsync = ref.watch(offersViewProvider);
+    final offersAsync = ref.watch(offersFutureProvider);
     final selectedTab = ref.watch(selectedOfferTabProvider);
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
@@ -284,7 +280,7 @@ class OffersSection extends ConsumerWidget {
   }
 
   Widget _buildOriginalOffersSection(BuildContext context, WidgetRef ref) {
-    final offersAsync = ref.watch(offersViewProvider);
+    final offersAsync = ref.watch(offersFutureProvider);
     final screenHeight = MediaQuery.of(context).size.height;
 
     return SizedBox(

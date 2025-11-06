@@ -1,5 +1,5 @@
 // lib/features/home/presentation/pages/home_screen_content.dart
-part of '../../home_screen.dart';
+part of 'home_screen.dart';
 
 class HomeScreenState extends ConsumerState<HomeScreen> {
   bool _isLoadingApi = false;
