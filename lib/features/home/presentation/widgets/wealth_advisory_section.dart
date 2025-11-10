@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tasks/core/providers/theme_provider.dart';
+import 'package:tasks/core/constants/app_colors/default_colors.dart';
 
-class WealthAdvisorySection extends ConsumerWidget {
+class WealthAdvisorySection extends StatelessWidget {
   const WealthAdvisorySection({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(themeProvider);
+  Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
@@ -19,32 +17,30 @@ class WealthAdvisorySection extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Wealth Advisory',
+              "Wealth Advisory", // Hardcoded string
               style: TextStyle(
                 fontSize: screenWidth * 0.045,
                 fontWeight: FontWeight.w700,
-                color: theme.colorScheme.onSurface,
+                color: DefaultColors.black,
               ),
             ),
             InkWell(
-              onTap: () {
-                // Handle Learn More tap
-              },
+              onTap: () {},
               child: Row(
                 children: [
                   Text(
-                    'Learn More',
+                    "Learn More", // Hardcoded string
                     style: TextStyle(
-                      color: theme.colorScheme.primary,
+                      color: DefaultColors.blueLightBase,
                       fontWeight: FontWeight.w600,
                       fontSize: screenWidth * 0.035,
                     ),
                   ),
-                  const SizedBox(width: 4),
+                  SizedBox(width: screenWidth * 0.01),
                   Icon(
                     Icons.north_east,
                     size: screenWidth * 0.04,
-                    color: theme.colorScheme.primary,
+                    color: DefaultColors.blueLightBase,
                   ),
                 ],
               ),
@@ -57,14 +53,18 @@ class WealthAdvisorySection extends ConsumerWidget {
         // Two cards in a row
         Row(
           children: [
-            _buildAdvisoryCard(context, ref,
+            _buildAdvisoryCard(context,
               icon: Icons.work_outline,
-              title: 'Portfolio\nManagement',
+              title: "Portfolio\nManagement", // Hardcoded string
+              screenWidth: screenWidth,
+              screenHeight: screenHeight,
             ),
             SizedBox(width: screenWidth * 0.04),
-            _buildAdvisoryCard(context, ref,
+            _buildAdvisoryCard(context,
               icon: Icons.savings_outlined,
-              title: 'Mutual\nFunds',
+              title: "Mutual\nFunds", // Hardcoded string
+              screenWidth: screenWidth,
+              screenHeight: screenHeight,
             ),
           ],
         ),
@@ -72,16 +72,12 @@ class WealthAdvisorySection extends ConsumerWidget {
     );
   }
 
-  Widget _buildAdvisoryCard(BuildContext context, WidgetRef ref,
-      {required IconData icon, required String title}) {
-    final theme = ref.watch(themeProvider);
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-
+  Widget _buildAdvisoryCard(BuildContext context,
+      {required IconData icon, required String title, required double screenWidth, required double screenHeight}) {
     return Expanded(
       child: Container(
         decoration: BoxDecoration(
-          color: theme.cardTheme.color,
+          color: DefaultColors.white,
           borderRadius: BorderRadius.circular(14),
           boxShadow: [
             BoxShadow(
@@ -98,9 +94,7 @@ class WealthAdvisorySection extends ConsumerWidget {
             Container(
               height: screenHeight * 0.08,
               decoration: BoxDecoration(
-                color: theme.brightness == Brightness.dark 
-                    ? const Color(0xFF2A2A2A) 
-                    : const Color(0xFFECEFF1),
+                color: DefaultColors.grayF4,
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(14),
                   topRight: Radius.circular(14),
@@ -112,7 +106,7 @@ class WealthAdvisorySection extends ConsumerWidget {
                   alignment: Alignment.centerLeft,
                   child: Icon(
                     icon,
-                    color: theme.colorScheme.primary,
+                    color: DefaultColors.blueLightBase,
                     size: screenWidth * 0.08,
                   ),
                 ),
@@ -134,13 +128,13 @@ class WealthAdvisorySection extends ConsumerWidget {
                       style: TextStyle(
                         fontSize: screenWidth * 0.035,
                         fontWeight: FontWeight.w600,
-                        color: theme.colorScheme.onSurface,
+                        color: DefaultColors.black,
                       ),
                     ),
                   ),
                   Icon(
                     Icons.north_east,
-                    color: theme.colorScheme.onSurface.withOpacity(0.7),
+                    color: DefaultColors.black.withOpacity(0.7),
                     size: screenWidth * 0.04,
                   ),
                 ],

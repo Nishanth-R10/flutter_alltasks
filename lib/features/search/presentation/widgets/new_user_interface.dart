@@ -1,6 +1,8 @@
+// lib/features/search/presentation/widgets/new_user_interface.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../../core/constants/app_colors/default_colors.dart';
 import 'feature_container.dart';
 import 'search_chip_item.dart';
 import 'search_chip_row.dart';
@@ -15,8 +17,6 @@ class NewUserInterface extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
     final baseSize = MediaQuery.of(context).size.shortestSide * 0.01;
     
     return SingleChildScrollView(
@@ -28,7 +28,7 @@ class NewUserInterface extends ConsumerWidget {
             style: GoogleFonts.poppins(
               fontSize: baseSize * 4,
               fontWeight: FontWeight.w600,
-              color: isDark ? Colors.white : Colors.black,
+              color: DefaultColors.black,
             ),
           ),
           SizedBox(height: baseSize * 3),
@@ -56,7 +56,7 @@ class NewUserInterface extends ConsumerWidget {
             style: GoogleFonts.poppins(
               fontSize: baseSize * 4,
               fontWeight: FontWeight.w600,
-              color: isDark ? Colors.white : Colors.black,
+              color: DefaultColors.black,
             ),
           ),
           SizedBox(height: baseSize * 4),

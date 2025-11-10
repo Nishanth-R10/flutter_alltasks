@@ -1,38 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tasks/core/providers/theme_provider.dart';
-import 'package:tasks/features/home/domain/entities/offer_entity.dart';
+import 'package:tasks/core/constants/app_colors/default_colors.dart';
 
-class OfferItem extends ConsumerWidget {
-  final dynamic offerView;
+class OfferItem extends StatelessWidget {
+  final Map<String, dynamic> offerData; // Accept Map data directly
   final VoidCallback? onTap;
 
-  const OfferItem({super.key, required this.offerView, this.onTap});
-
-  String _formatTitle(String title) {
-    switch (title) {
-      case "Invest in Gold":
-        return "Invest\nin Gold";
-      case "Tours & Attractions":
-        return "Tours &\nAttractions";
-      case "Offers on Flight Booking":
-        return "Offers on\nFlight Booking";
-      default:
-        return title;
-    }
-  }
+  const OfferItem({super.key, required this.offerData, this.onTap});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(themeProvider);
+  Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    
-    // Handle both OfferEntity and Map types
-    final offer = offerView is OfferEntity 
-        ? offerView as OfferEntity
-        : OfferEntity.fromJson(offerView as Map<String, dynamic>);
     
     return GestureDetector(
       onTap: onTap,
@@ -47,31 +26,28 @@ class OfferItem extends ConsumerWidget {
                 clipBehavior: Clip.none,
                 alignment: Alignment.center,
                 children: [
-                  _buildOfferCircle(context, ref, offer),
-                  if (offer.discountText?.isNotEmpty ?? false) 
-                    _buildDiscountBadge(context, ref, offer),
+                  _buildOfferCircle(context, screenWidth),
+                  if (offerData['discountText'] != null && (offerData['discountText'] as String).isNotEmpty) 
+                    _buildDiscountBadge(context, screenWidth, screenHeight),
                 ],
               ),
             ),
             SizedBox(height: screenHeight * 0.006),
-            _buildOfferTitle(context, ref, offer),
+            _buildOfferTitle(context, screenWidth),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildOfferCircle(BuildContext context, WidgetRef ref, OfferEntity offer) {
-    final theme = ref.watch(themeProvider);
-    final screenWidth = MediaQuery.of(context).size.width;
-    
+  Widget _buildOfferCircle(BuildContext context, double screenWidth) {
     return Container(
       width: screenWidth * 0.15,
       height: screenWidth * 0.15,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(
-          color: theme.colorScheme.primary,
+          color: DefaultColors.blueLightBase,
           width: 2,
         ),
         boxShadow: [
@@ -82,13 +58,13 @@ class OfferItem extends ConsumerWidget {
         ],
       ),
       child: ClipOval(
-        child: offer.iconAsset.isNotEmpty
-            ? Image.asset(offer.iconAsset, fit: BoxFit.cover)
+        child: (offerData['iconAsset'] as String).isNotEmpty
+            ? Image.asset(offerData['iconAsset'] as String, fit: BoxFit.cover)
             : Container(
-                color: theme.colorScheme.primary.withOpacity(0.1),
+                color: DefaultColors.blueLightBase.withOpacity(0.1),
                 child: Icon(
                   Icons.local_offer,
-                  color: theme.colorScheme.primary,
+                  color: DefaultColors.blueLightBase,
                   size: screenWidth * 0.06,
                 ),
               ),
@@ -96,10 +72,7 @@ class OfferItem extends ConsumerWidget {
     );
   }
 
-  Widget _buildDiscountBadge(BuildContext context, WidgetRef ref, OfferEntity offer) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-    
+  Widget _buildDiscountBadge(BuildContext context, double screenWidth, double screenHeight) {
     return Positioned(
       bottom: 0,
       child: Container(
@@ -112,7 +85,7 @@ class OfferItem extends ConsumerWidget {
           borderRadius: BorderRadius.circular(12),
         ),
         child: Text(
-          offer.discountText!,
+          offerData['discountText'] as String,
           style: GoogleFonts.poppins(
             color: Colors.white,
             fontSize: screenWidth * 0.02,
@@ -123,19 +96,16 @@ class OfferItem extends ConsumerWidget {
     );
   }
 
-  Widget _buildOfferTitle(BuildContext context, WidgetRef ref, OfferEntity offer) {
-    final theme = ref.watch(themeProvider);
-    final screenWidth = MediaQuery.of(context).size.width;
-    
+  Widget _buildOfferTitle(BuildContext context, double screenWidth) {
     return SizedBox(
       width: screenWidth * 0.2,
       child: Text(
-        _formatTitle(offer.title),
+        offerData['title'] as String,
         textAlign: TextAlign.center,
         style: GoogleFonts.poppins(
           fontSize: screenWidth * 0.028,
           fontWeight: FontWeight.w600,
-          color: theme.colorScheme.onSurface,
+          color: DefaultColors.black,
           height: 1.4,
         ),
         maxLines: 2,

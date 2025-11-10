@@ -1,38 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tasks/core/providers/theme_provider.dart';
+import '../../../../core/constants/app_colors/default_colors.dart';
 
-class FeedbackCards extends ConsumerWidget {
+class FeedbackCards extends StatelessWidget {
   const FeedbackCards({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(themeProvider);
+  Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Column(
       children: [
-        // Rate the App Card
-        _buildRateAppCard(context, ref, screenWidth, screenHeight),
+        _buildRateAppCard(context, screenWidth, screenHeight),
         SizedBox(height: screenHeight * 0.02),
-        
-        // Questions Card
-        _buildQuestionsCard(context, ref, screenWidth, screenHeight),
+        _buildQuestionsCard(context, screenWidth, screenHeight),
       ],
     );
   }
 
-  Widget _buildRateAppCard(BuildContext context, WidgetRef ref, double screenWidth, double screenHeight) {
-    final theme = ref.watch(themeProvider);
-    
+  Widget _buildRateAppCard(BuildContext context, double screenWidth, double screenHeight) {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(screenWidth * 0.05),
       decoration: BoxDecoration(
-        color: theme.brightness == Brightness.dark 
-            ? const Color(0xFF2A2A2A) 
-            : const Color(0xFFFFF9E6),
+        color: DefaultColors.yellowBG,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -50,20 +41,20 @@ class FeedbackCards extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Love to hear your feedback.',
+                  "Love to hear your feedback.", // Hardcoded string
                   style: TextStyle(
                     fontSize: screenWidth * 0.035,
                     fontWeight: FontWeight.w400,
-                    color: theme.colorScheme.onSurface.withOpacity(0.8),
+                    color: DefaultColors.black.withOpacity(0.8),
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.005),
                 Text(
-                  'Rate the App!',
+                  "Rate the App!", // Hardcoded string
                   style: TextStyle(
                     fontSize: screenWidth * 0.045,
                     fontWeight: FontWeight.w700,
-                    color: theme.colorScheme.onSurface,
+                    color: DefaultColors.black,
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.015),
@@ -74,7 +65,7 @@ class FeedbackCards extends ConsumerWidget {
                       padding: EdgeInsets.only(right: screenWidth * 0.01),
                       child: Icon(
                         Icons.star,
-                        color: const Color(0xFFFFD700),
+                        color: DefaultColors.yellow14,
                         size: screenWidth * 0.08,
                       ),
                     ),
@@ -94,16 +85,12 @@ class FeedbackCards extends ConsumerWidget {
     );
   }
 
-  Widget _buildQuestionsCard(BuildContext context, WidgetRef ref, double screenWidth, double screenHeight) {
-    final theme = ref.watch(themeProvider);
-    
+  Widget _buildQuestionsCard(BuildContext context, double screenWidth, double screenHeight) {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(screenWidth * 0.05),
       decoration: BoxDecoration(
-        color: theme.brightness == Brightness.dark 
-            ? const Color(0xFF2A2A2A) 
-            : const Color(0xFFECEFF1),
+        color: DefaultColors.grayF4,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -121,42 +108,40 @@ class FeedbackCards extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Have any Questions?',
+                  "Have any Questions?", // Hardcoded string
                   style: TextStyle(
                     fontSize: screenWidth * 0.035,
                     fontWeight: FontWeight.w400,
-                    color: theme.colorScheme.onSurface.withOpacity(0.8),
+                    color: DefaultColors.black.withOpacity(0.8),
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.005),
                 Text(
-                  'Rashid is here to help you',
+                  "Rashid is here to help you", // Hardcoded string
                   style: TextStyle(
                     fontSize: screenWidth * 0.04,
                     fontWeight: FontWeight.w700,
-                    color: theme.colorScheme.onSurface,
+                    color: DefaultColors.black,
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.015),
                 InkWell(
-                  onTap: () {
-                    // Handle get help action
-                  },
+                  onTap: () {},
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'Get Help',
+                        "Get Help", // Hardcoded string
                         style: TextStyle(
                           fontSize: screenWidth * 0.035,
                           fontWeight: FontWeight.w600,
-                          color: theme.colorScheme.primary,
+                          color: DefaultColors.blueLightBase,
                         ),
                       ),
                       SizedBox(width: screenWidth * 0.01),
                       Icon(
                         Icons.north_east,
-                        color: theme.colorScheme.primary,
+                        color: DefaultColors.blueLightBase,
                         size: screenWidth * 0.04,
                       ),
                     ],

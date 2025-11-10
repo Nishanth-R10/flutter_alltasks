@@ -38,21 +38,21 @@ class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
   @override
   void didChangePlatformBrightness() {
     //  rebuild when system theme changes
-    ref.invalidate(themeProvider);
+ //   ref.invalidate(themeProvider);
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(themeProvider);
+   // final theme = ref.watch(themeProvider);
     
-    print('Current theme brightness: ${theme.brightness}'); 
+  //  print('Current theme brightness: ${theme.brightness}'); 
     
     return MaterialApp.router(
       title: 'Tasks App',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.light(), 
-      darkTheme: ThemeData.dark(),
-      themeMode: ThemeMode.system, 
+      // theme: ThemeData.light(), 
+      // darkTheme: ThemeData.dark(),
+    //  themeMode: ThemeMode.system, 
       routerConfig: widget._appRouter.config(),
     );
   }

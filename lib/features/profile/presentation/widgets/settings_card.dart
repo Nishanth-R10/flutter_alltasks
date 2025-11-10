@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tasks/features/profile/presentation/app_size.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:tasks/core/constants/app_colors/default_colors.dart';
 
 class SettingCard extends StatelessWidget {
   final String title;
@@ -20,28 +20,27 @@ class SettingCard extends StatelessWidget {
     this.bigCard = false,
     this.verticalLayout = false,
     this.icon,
-    this.fontScale = 14,
+    this.fontScale = 14.0,
     this.showCircle = false,
     this.isLoading = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
-    final horizontalPadding = AppSizes.s16;
-    final verticalPadding = bigCard ? AppSizes.s16 : AppSizes.s16;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final horizontalPadding = 16.0;
+    final verticalPadding = bigCard ? 16.0 : 16.0;
 
     if (isLoading) {
-      return _buildShimmerSettingCard(isDark, horizontalPadding, verticalPadding);
+      return _buildShimmerSettingCard(context, horizontalPadding, verticalPadding, screenWidth);
     }
 
     return Material(
-      color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
-      borderRadius: BorderRadius.circular(AppSizes.s16),
-      elevation: 1,
+      color: DefaultColors.white,
+      borderRadius: BorderRadius.circular(16.0),
+      elevation: 1.0,
       child: InkWell(
-        borderRadius: BorderRadius.circular(AppSizes.s16),
+        borderRadius: BorderRadius.circular(16.0),
         onTap: () {},
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: verticalPadding),
@@ -51,37 +50,37 @@ class SettingCard extends StatelessWidget {
             children: [
               if (showCircle)
                 Container(
-                  width: AppSizes.s24, 
-                  height: AppSizes.s24, 
+                  width: 24.0,
+                  height: 24.0,
                   decoration: BoxDecoration(
-                    color: isDark ? const Color(0xFF2A2A2A) : Colors.white,
+                    color: DefaultColors.white,
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: isDark ? Colors.grey.shade600 : Colors.grey.shade300, 
-                      width: 1.5
+                      color: DefaultColors.grayE6,
+                      width: 1.5,
                     ),
                   ),
                 ),
-              if (showCircle) const SizedBox(width: AppSizes.s16),
+              if (showCircle) const SizedBox(width: 16.0),
               if (icon != null) Icon(
                 icon, 
-                size: AppSizes.s24, 
-                color: isDark ? Colors.white : Colors.black87
+                size: 24.0, 
+                color: DefaultColors.black,
               ),
-              if (icon != null) const SizedBox(width: AppSizes.s8),
+              if (icon != null) const SizedBox(width: 8.0),
               Expanded(
                 child: Text(
                   title,
                   style: GoogleFonts.poppins(
                     fontSize: fontScale,
                     fontWeight: FontWeight.w600,
-                    color: const Color(0xFF4197CB),
+                    color: DefaultColors.dashboardBlue,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-              Icon(Icons.north_east, size: 16, color: const Color(0xFF4197CB)),
+              Icon(Icons.north_east, size: 16.0, color: DefaultColors.dashboardBlue),
             ],
           ),
         ),
@@ -89,14 +88,14 @@ class SettingCard extends StatelessWidget {
     );
   }
 
-  Widget _buildShimmerSettingCard(bool isDark, double horizontalPadding, double verticalPadding) {
+  Widget _buildShimmerSettingCard(BuildContext context, double horizontalPadding, double verticalPadding, double screenWidth) {
     return Shimmer.fromColors(
-      baseColor: isDark ? Colors.grey[800]! : Colors.grey[300]!,
-      highlightColor: isDark ? Colors.grey[700]! : Colors.grey[100]!,
+      baseColor: DefaultColors.grayE6,
+      highlightColor: DefaultColors.white,
       child: Material(
-        color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
-        borderRadius: BorderRadius.circular(AppSizes.s16),
-        elevation: 1,
+        color: DefaultColors.white,
+        borderRadius: BorderRadius.circular(16.0),
+        elevation: 1.0,
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: verticalPadding),
           child: Row(
@@ -104,28 +103,28 @@ class SettingCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                width: AppSizes.s24, 
-                height: AppSizes.s24, 
+                width: 24.0,
+                height: 24.0,
                 decoration: BoxDecoration(
-                  color: isDark ? Colors.grey[700] : Colors.white,
+                  color: DefaultColors.grayE6,
                   shape: BoxShape.circle,
                 ),
               ),
-              const SizedBox(width: AppSizes.s16),
+              const SizedBox(width: 16.0),
               Expanded(
                 child: Container(
                   height: fontScale,
                   decoration: BoxDecoration(
-                    color: isDark ? Colors.grey[700] : Colors.white,
-                    borderRadius: BorderRadius.circular(4),
+                    color: DefaultColors.grayE6,
+                    borderRadius: BorderRadius.circular(4.0),
                   ),
                 ),
               ),
               Container(
-                width: 16,
-                height: 16,
+                width: 16.0,
+                height: 16.0,
                 decoration: BoxDecoration(
-                  color: isDark ? Colors.grey[700] : Colors.white,
+                  color: DefaultColors.grayE6,
                   shape: BoxShape.circle,
                 ),
               ),

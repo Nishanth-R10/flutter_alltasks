@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tasks/features/profile/presentation/app_size.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:tasks/core/constants/app_colors/default_colors.dart';
 
 class GroupCard extends StatelessWidget {
   final List<String> titles;
@@ -16,16 +16,15 @@ class GroupCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
-    final borderRadius = AppSizes.s16;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final borderRadius = 16.0;
     
     if (isLoading) {
-      return _buildShimmerGroupCard(isDark, borderRadius);
+      return _buildShimmerGroupCard(context, borderRadius, screenWidth);
     }
     
     return Material(
-      color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+      color: DefaultColors.white,
       borderRadius: BorderRadius.circular(borderRadius),
       elevation: 0.5,
       child: Column(
@@ -41,37 +40,37 @@ class GroupCard extends StatelessWidget {
             onTap: () {},
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: AppSizes.s16,
-                vertical: AppSizes.s16,
+                horizontal: 16.0,
+                vertical: 16.0,
               ),
               child: Row(
                 children: [
                   Container(
-                    width: AppSizes.s24, 
-                    height: AppSizes.s24, 
+                    width: 24.0,
+                    height: 24.0,
                     decoration: BoxDecoration(
-                      color: isDark ? const Color(0xFF2A2A2A) : Colors.white,
+                      color: DefaultColors.white,
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: isDark ? Colors.grey.shade600 : Colors.grey.shade300, 
-                        width: 1.5
+                        color: DefaultColors.grayE6,
+                        width: 1.5,
                       ),
                     ),
                   ),
-                  const SizedBox(width: AppSizes.s16),
+                  const SizedBox(width: 16.0),
                   Expanded(
                     child: Text(
                       titles[index],
                       style: GoogleFonts.poppins(
                         fontSize: fontScale,
                         fontWeight: FontWeight.w600,
-                        color: const Color(0xFF4197CB),
+                        color: DefaultColors.dashboardBlue,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  Icon(Icons.north_east, size: 16, color: const Color(0xFF4197CB)),
+                  Icon(Icons.north_east, size: 16.0, color: DefaultColors.dashboardBlue),
                 ],
               ),
             ),
@@ -81,12 +80,12 @@ class GroupCard extends StatelessWidget {
     );
   }
 
-  Widget _buildShimmerGroupCard(bool isDark, double borderRadius) {
+  Widget _buildShimmerGroupCard(BuildContext context, double borderRadius, double screenWidth) {
     return Shimmer.fromColors(
-      baseColor: isDark ? Colors.grey[800]! : Colors.grey[300]!,
-      highlightColor: isDark ? Colors.grey[700]! : Colors.grey[100]!,
+      baseColor: DefaultColors.grayE6,
+      highlightColor: DefaultColors.white,
       child: Material(
-        color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+        color: DefaultColors.white,
         borderRadius: BorderRadius.circular(borderRadius),
         elevation: 0.5,
         child: Column(
@@ -94,34 +93,34 @@ class GroupCard extends StatelessWidget {
             final isLast = index == 2;
             return Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: AppSizes.s16,
-                vertical: AppSizes.s16,
+                horizontal: 16.0,
+                vertical: 16.0,
               ),
               child: Row(
                 children: [
                   Container(
-                    width: AppSizes.s24, 
-                    height: AppSizes.s24, 
+                    width: 24.0,
+                    height: 24.0,
                     decoration: BoxDecoration(
-                      color: isDark ? Colors.grey[700] : Colors.white,
+                      color: DefaultColors.grayE6,
                       shape: BoxShape.circle,
                     ),
                   ),
-                  const SizedBox(width: AppSizes.s16),
+                  const SizedBox(width: 16.0),
                   Expanded(
                     child: Container(
                       height: fontScale,
                       decoration: BoxDecoration(
-                        color: isDark ? Colors.grey[700] : Colors.white,
-                        borderRadius: BorderRadius.circular(4),
+                        color: DefaultColors.grayE6,
+                        borderRadius: BorderRadius.circular(4.0),
                       ),
                     ),
                   ),
                   Container(
-                    width: 16,
-                    height: 16,
+                    width: 16.0,
+                    height: 16.0,
                     decoration: BoxDecoration(
-                      color: isDark ? Colors.grey[700] : Colors.white,
+                      color: DefaultColors.grayE6,
                       shape: BoxShape.circle,
                     ),
                   ),

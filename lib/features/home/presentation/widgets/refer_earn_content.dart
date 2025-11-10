@@ -1,41 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tasks/core/constants/app_strings/default_string.dart';
-import 'package:tasks/core/utils/media_query_utils.dart';
-import 'package:tasks/core/providers/theme_provider.dart';
+import 'package:tasks/core/constants/app_colors/default_colors.dart';
 
-class ReferEarnContent extends ConsumerWidget {
+class ReferEarnContent extends StatelessWidget {
   const ReferEarnContent({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(themeProvider);
-    MediaQueryUtils.init(context);
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     
     return Stack(
       clipBehavior: Clip.none, 
       children: [
-        _buildContentCard(context, ref),
-        _buildGiftImage(),
+        _buildContentCard(context, screenWidth, screenHeight),
+        _buildGiftImage(screenWidth, screenHeight),
       ],
     );
   }
 
-  Widget _buildContentCard(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(themeProvider);
-    
+  Widget _buildContentCard(BuildContext context, double screenWidth, double screenHeight) {
     return Container(
-      padding: EdgeInsets.all(MediaQueryUtils.w(9)),
+      padding: EdgeInsets.all(screenWidth * 0.025),
       decoration: BoxDecoration(
-        color: theme.brightness == Brightness.dark 
-            ? const Color(0xFF2A2A2A) 
-            : const Color.fromARGB(255, 202, 208, 245),
-        borderRadius: BorderRadius.circular(MediaQueryUtils.r(15)),
+        color: DefaultColors.dashboardLightBlue,
+        borderRadius: BorderRadius.circular(screenWidth * 0.04),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.03), 
-            blurRadius: MediaQueryUtils.r(8)
+            blurRadius: screenWidth * 0.02
           ),
         ],
       ),
@@ -43,32 +36,30 @@ class ReferEarnContent extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: MediaQueryUtils.w(220),
-            child: _buildDescription(ref),
+            width: screenWidth * 0.6,
+            child: _buildDescription(screenWidth),
           ),
-          SizedBox(height: MediaQueryUtils.h(12)),
-          _buildReferralCodeSection(ref),
+          SizedBox(height: screenHeight * 0.015),
+          _buildReferralCodeSection(screenWidth),
         ],
       ),
     );
   }
 
-  Widget _buildDescription(WidgetRef ref) {
-    final theme = ref.watch(themeProvider);
-    
+  Widget _buildDescription(double screenWidth) {
     return SizedBox(
-      width: MediaQueryUtils.w(220),
+      width: screenWidth * 0.8,
       child: Column(
         children: [
           Text(  
-            DefaultString.instance.inviteFriends,
+            "Help your friends to grow with their wealth", // Hardcoded string
             style: TextStyle(
               fontFamily: 'Diodrum Arabic',
               fontWeight: FontWeight.w600,
-              fontSize: MediaQueryUtils.sp(15),
-              height: 1.3,
+              fontSize: screenWidth * 0.040,
+              height: 1.6,
               letterSpacing: 0,
-              color: theme.colorScheme.onSurface,
+              color: DefaultColors.black,
             ),
           ),
         ],
@@ -76,31 +67,29 @@ class ReferEarnContent extends ConsumerWidget {
     );
   }
 
-  Widget _buildReferralCodeSection(WidgetRef ref) {
+  Widget _buildReferralCodeSection(double screenWidth) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _buildReferralCode(ref),
+        _buildReferralCode(screenWidth),
       ],
     );
   }
 
-  Widget _buildReferralCode(WidgetRef ref) {
-    final theme = ref.watch(themeProvider);
-    
+  Widget _buildReferralCode(double screenWidth) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
           child: Text(
-            DefaultString.instance.yourReferralCode,
+            "A successful referral earns you 50 points!", // Hardcoded string
             style: TextStyle(
               fontFamily: 'Diodrum Arabic',
               fontWeight: FontWeight.w500,
-              fontSize: MediaQueryUtils.sp(12),
+              fontSize: screenWidth * 0.04,
               height: 1.2,
               letterSpacing: 0,
-              color: theme.colorScheme.onSurface,
+              color: DefaultColors.black,
             ),
           ),
         ),
@@ -109,10 +98,10 @@ class ReferEarnContent extends ConsumerWidget {
             Text(
               '',
               style: GoogleFonts.poppins(
-                fontSize: MediaQueryUtils.sp(14),
+                fontSize: screenWidth * 0.035,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 1.5,
-                color: theme.colorScheme.onSurface,
+                color: DefaultColors.black,
               ),
             ),
           ],
@@ -121,14 +110,14 @@ class ReferEarnContent extends ConsumerWidget {
     );
   }
 
-  Widget _buildGiftImage() {
+  Widget _buildGiftImage(double screenWidth, double screenHeight) {
     return Positioned(
-      top: MediaQueryUtils.h(-35),  
-      right: MediaQueryUtils.w(-40), 
+      top: -screenHeight * 0.08,  
+      right: -screenWidth * 0.1, 
       child: Image.asset(
         'assets/images/gift.png',
-        width: MediaQueryUtils.w(200), 
-        height: MediaQueryUtils.h(100), 
+        width: screenWidth * 0.6, 
+        height: screenHeight * 0.18, 
       ),
     );
   }

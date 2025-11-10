@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:tasks/core/utils/media_query_utils.dart';
+
+import '../../../../core/constants/app_colors/default_colors.dart';
 
 class OfferShimmer extends StatelessWidget {
   final double baseSize;
@@ -9,44 +10,44 @@ class OfferShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
-    MediaQueryUtils.init(context);
+    final mediaQuery = MediaQuery.of(context);
+    final screenWidth = mediaQuery.size.width;
+    final screenHeight = mediaQuery.size.height;
     
     return Dialog(
       backgroundColor: Colors.transparent,
-      insetPadding: EdgeInsets.symmetric(horizontal: MediaQueryUtils.w(24)),
+      insetPadding: EdgeInsets.symmetric(horizontal: screenWidth * 0.06), 
       child: Shimmer.fromColors(
-        baseColor: isDark ? Colors.grey[800]! : Colors.grey[300]!,
-        highlightColor: isDark ? Colors.grey[700]! : Colors.grey[100]!,
+        baseColor: DefaultColors.grayE6,
+        highlightColor: DefaultColors.grayFB,
         child: Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: isDark ? const Color(0xFF1E1E1E) : Colors.white, 
-            borderRadius: BorderRadius.circular(MediaQueryUtils.r(16)),
+            color: DefaultColors.white,
+            borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: MediaQueryUtils.r(20),
-                offset: Offset(0, MediaQueryUtils.h(10)),
+                color: DefaultColors.black.withOpacity(0.1),
+                blurRadius: 20,
+                offset: const Offset(0, 10),
               ),
             ],
           ),
           child: Padding(
-            padding: EdgeInsets.all(MediaQueryUtils.w(24)),
+            padding: EdgeInsets.all(screenWidth * 0.06), 
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 // Title Shimmer
                 Container(
-                  width: MediaQueryUtils.w(200),
-                  height: MediaQueryUtils.h(24),
+                  width: screenWidth * 0.5, 
+                  height: screenHeight * 0.03, 
                   decoration: BoxDecoration(
-                    color: isDark ? Colors.grey[700] : Colors.white,
-                    borderRadius: BorderRadius.circular(MediaQueryUtils.r(8)),
+                    color: DefaultColors.white,
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                SizedBox(height: MediaQueryUtils.h(20)),
+                SizedBox(height: screenHeight * 0.025), 
 
                 // Content Row Shimmer
                 Row(
@@ -54,40 +55,40 @@ class OfferShimmer extends StatelessWidget {
                   children: [
                     // Image Stack Shimmer
                     SizedBox(
-                      width: MediaQueryUtils.w(100),
-                      height: MediaQueryUtils.h(80),
+                      width: screenWidth * 0.25,
+                      height: screenHeight * 0.1, 
                       child: Stack(
                         children: [
                           // Background Card Shimmer
                           Positioned(
-                            right: MediaQueryUtils.w(0),
-                            top: MediaQueryUtils.h(0),
+                            right: 0,
+                            top: 0,
                             child: Container(
-                              width: MediaQueryUtils.w(75),
-                              height: MediaQueryUtils.h(50),
+                              width: screenWidth * 0.1875, 
+                              height: screenHeight * 0.0625, 
                               decoration: BoxDecoration(
-                                color: isDark ? Colors.grey[700] : Colors.white,
-                                borderRadius: BorderRadius.circular(MediaQueryUtils.r(8)),
+                                color: DefaultColors.white,
+                                borderRadius: BorderRadius.circular(8),
                               ),
                             ),
                           ),
                           // Foreground Card Shimmer
                           Positioned(
-                            left: MediaQueryUtils.w(15),
-                            top: MediaQueryUtils.h(15),
+                            left: screenWidth * 0.0375, 
+                            top: screenHeight * 0.01875, 
                             child: Container(
-                              width: MediaQueryUtils.w(75),
-                              height: MediaQueryUtils.h(50),
+                              width: screenWidth * 0.1875, 
+                              height: screenHeight * 0.0625, 
                               decoration: BoxDecoration(
-                                color: isDark ? Colors.grey[700] : Colors.white,
-                                borderRadius: BorderRadius.circular(MediaQueryUtils.r(8)),
+                                color: DefaultColors.white,
+                                borderRadius: BorderRadius.circular(8),
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(width: MediaQueryUtils.w(16)),
+                    SizedBox(width: screenWidth * 0.04), 
 
                     // Description Shimmer
                     Expanded(
@@ -96,28 +97,28 @@ class OfferShimmer extends StatelessWidget {
                         children: [
                           Container(
                             width: double.infinity,
-                            height: MediaQueryUtils.h(16),
+                            height: screenHeight * 0.02, 
                             decoration: BoxDecoration(
-                              color: isDark ? Colors.grey[700] : Colors.white,
-                              borderRadius: BorderRadius.circular(MediaQueryUtils.r(4)),
+                              color: DefaultColors.white,
+                              borderRadius: BorderRadius.circular(4),
                             ),
                           ),
-                          SizedBox(height: MediaQueryUtils.h(8)),
+                          SizedBox(height: screenHeight * 0.01), 
                           Container(
-                            width: MediaQueryUtils.w(150),
-                            height: MediaQueryUtils.h(16),
+                            width: screenWidth * 0.375, 
+                            height: screenHeight * 0.02, 
                             decoration: BoxDecoration(
-                              color: isDark ? Colors.grey[700] : Colors.white,
-                              borderRadius: BorderRadius.circular(MediaQueryUtils.r(4)),
+                              color: DefaultColors.white,
+                              borderRadius: BorderRadius.circular(4),
                             ),
                           ),
-                          SizedBox(height: MediaQueryUtils.h(8)),
+                          SizedBox(height: screenHeight * 0.01),
                           Container(
-                            width: MediaQueryUtils.w(120),
-                            height: MediaQueryUtils.h(16),
+                            width: screenWidth * 0.3, 
+                            height: screenHeight * 0.02, 
                             decoration: BoxDecoration(
-                              color: isDark ? Colors.grey[700] : Colors.white,
-                              borderRadius: BorderRadius.circular(MediaQueryUtils.r(4)),
+                              color: DefaultColors.white,
+                              borderRadius: BorderRadius.circular(4),
                             ),
                           ),
                         ],
@@ -125,50 +126,50 @@ class OfferShimmer extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: MediaQueryUtils.h(24)),
+                SizedBox(height: screenHeight * 0.03), 
 
                 // Checkbox Shimmer
                 Row(
                   children: [
                     Container(
-                      width: MediaQueryUtils.w(20),
-                      height: MediaQueryUtils.h(20),
+                      width: screenWidth * 0.05,
+                      height: screenHeight * 0.025, 
                       decoration: BoxDecoration(
-                        color: isDark ? Colors.grey[700] : Colors.white,
-                        borderRadius: BorderRadius.circular(MediaQueryUtils.r(4)),
+                        color: DefaultColors.white,
+                        borderRadius: BorderRadius.circular(4),
                       ),
                     ),
-                    SizedBox(width: MediaQueryUtils.w(8)),
+                    SizedBox(width: screenWidth * 0.02), 
                     Container(
-                      width: MediaQueryUtils.w(150),
-                      height: MediaQueryUtils.h(16),
+                      width: screenWidth * 0.375, 
+                      height: screenHeight * 0.02, 
                       decoration: BoxDecoration(
-                        color: isDark ? Colors.grey[700] : Colors.white,
-                        borderRadius: BorderRadius.circular(MediaQueryUtils.r(4)),
+                        color: DefaultColors.white,
+                        borderRadius: BorderRadius.circular(4),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: MediaQueryUtils.h(20)),
+                SizedBox(height: screenHeight * 0.025), 
 
                 // Buttons Shimmer
                 Column(
                   children: [
                     Container(
                       width: double.infinity,
-                      height: MediaQueryUtils.h(50),
+                      height: screenHeight * 0.0625, 
                       decoration: BoxDecoration(
-                        color: isDark ? Colors.grey[700] : Colors.white,
-                        borderRadius: BorderRadius.circular(MediaQueryUtils.r(25)),
+                        color: DefaultColors.white,
+                        borderRadius: BorderRadius.circular(25),
                       ),
                     ),
-                    SizedBox(height: MediaQueryUtils.h(12)),
+                    SizedBox(height: screenHeight * 0.015), 
                     Container(
                       width: double.infinity,
-                      height: MediaQueryUtils.h(50),
+                      height: screenHeight * 0.0625, 
                       decoration: BoxDecoration(
-                        color: isDark ? Colors.grey[700] : Colors.white,
-                        borderRadius: BorderRadius.circular(MediaQueryUtils.r(25)),
+                        color: DefaultColors.white,
+                        borderRadius: BorderRadius.circular(25),
                       ),
                     ),
                   ],

@@ -1,7 +1,9 @@
+// feature_container.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tasks/features/search/presentation/controller/whats_new_provider.dart';
+import 'package:tasks/core/constants/app_colors/default_colors.dart';
+import 'package:tasks/features/search/presentation/controller/search_provider.dart';
 import 'shimmer_loading.dart';
 
 class FeatureContainer extends ConsumerWidget {
@@ -9,8 +11,7 @@ class FeatureContainer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final baseSize = MediaQuery.of(context).size.shortestSide * 0.01;
     final whatsNewResult = ref.watch(whatsNewFeaturesProvider);
 
@@ -29,8 +30,8 @@ class FeatureContainer extends ConsumerWidget {
         Expanded(
           child: _buildFeatureContainer(
             context,
-            features[0].title,
-            features[0].imagePath,
+            features[0]['title'],
+            features[0]['imagePath'],
             isDark,
             baseSize,
           ),
@@ -40,8 +41,8 @@ class FeatureContainer extends ConsumerWidget {
           child: features.length > 1
               ? _buildFeatureContainer(
                   context,
-                  features[1].title,
-                  features[1].imagePath,
+                  features[1]['title'],
+                  features[1]['imagePath'],
                   isDark,
                   baseSize,
                 )
@@ -101,7 +102,7 @@ class FeatureContainer extends ConsumerWidget {
     return Container(
       padding: EdgeInsets.all(baseSize * 2),
       decoration: BoxDecoration(
-        color: isDark ? Colors.grey.shade800 : Colors.grey[300],
+        color: isDark ? DefaultColors.gray7D : DefaultColors.grayE6,
         borderRadius: BorderRadius.circular(baseSize * 3),
       ),
       child: Column(
@@ -111,7 +112,7 @@ class FeatureContainer extends ConsumerWidget {
             width: baseSize * 20,
             height: baseSize * 20,
             decoration: BoxDecoration(
-              color: isDark ? Colors.grey.shade700 : Colors.grey[400],
+              color: isDark ? DefaultColors.gray62 : DefaultColors.grayCA,
               borderRadius: BorderRadius.circular(baseSize * 2),
             ),
           ),
@@ -120,7 +121,7 @@ class FeatureContainer extends ConsumerWidget {
             width: double.infinity,
             height: baseSize * 4,
             decoration: BoxDecoration(
-              color: isDark ? Colors.grey.shade700 : Colors.grey[400],
+              color: isDark ? DefaultColors.gray62 : DefaultColors.grayCA,
               borderRadius: BorderRadius.circular(baseSize),
             ),
           ),
@@ -133,12 +134,12 @@ class FeatureContainer extends ConsumerWidget {
     return Container(
       padding: EdgeInsets.all(baseSize * 2),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+        color: isDark ? DefaultColors.black24 : DefaultColors.white,
         borderRadius: BorderRadius.circular(baseSize * 3),
-        border: Border.all(color: isDark ? Colors.grey.shade700 : Colors.grey.shade300),
+        border: Border.all(color: isDark ? DefaultColors.gray7D : DefaultColors.grayCA),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: DefaultColors.black.withOpacity(0.05),
             blurRadius: baseSize * 2,
             offset: Offset(0, baseSize),
           ),
@@ -159,13 +160,13 @@ class FeatureContainer extends ConsumerWidget {
                   width: baseSize * 20,
                   height: baseSize * 20,
                   decoration: BoxDecoration(
-                    color: isDark ? Colors.grey.shade800 : Colors.grey[200],
+                    color: isDark ? DefaultColors.gray7D : DefaultColors.grayE6,
                     borderRadius: BorderRadius.circular(baseSize * 2),
                   ),
                   child: Icon(
                     Icons.image,
                     size: baseSize * 10,
-                    color: isDark ? Colors.grey.shade600 : Colors.grey[400],
+                    color: isDark ? DefaultColors.gray62 : DefaultColors.grayCA,
                   ),
                 );
               },
@@ -181,7 +182,7 @@ class FeatureContainer extends ConsumerWidget {
                   title,
                   style: GoogleFonts.roboto(
                     fontSize: baseSize * 3.5,
-                    color: isDark ? Colors.white : Colors.black87,
+                    color: isDark ? DefaultColors.white : DefaultColors.black,
                     fontWeight: FontWeight.w600,
                   ),
                   maxLines: 2,
@@ -191,7 +192,7 @@ class FeatureContainer extends ConsumerWidget {
               Icon(
                 Icons.north_east,
                 size: baseSize * 3.5,
-                color: isDark ? Colors.white : Colors.black87,
+                color: isDark ? DefaultColors.white : DefaultColors.black,
               ),
             ],
           ),

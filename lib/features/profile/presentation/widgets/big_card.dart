@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tasks/features/profile/presentation/app_size.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:tasks/core/constants/app_colors/default_colors.dart';
 
 class BigCard extends StatelessWidget {
   final String title;
@@ -13,39 +13,37 @@ class BigCard extends StatelessWidget {
     super.key,
     required this.title,
     required this.imageAsset,
-    this.fontScale = 12,
+    this.fontScale = 12.0,
     this.isLoading = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
+    final screenWidth = MediaQuery.of(context).size.width;
 
     if (isLoading) {
-      return _buildShimmerBigCard(isDark);
+      return _buildShimmerBigCard(context, screenWidth);
     }
 
     return Material(
-      color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
-      borderRadius: BorderRadius.circular(AppSizes.s16),
-      elevation: 1,
+      color: DefaultColors.white,
+      borderRadius: BorderRadius.circular(16.0),
+      elevation: 1.0,
       child: InkWell(
-        borderRadius: BorderRadius.circular(AppSizes.s16),
+        borderRadius: BorderRadius.circular(16.0),
         onTap: () {},
         child: Container(
-          padding: const EdgeInsets.all(AppSizes.s12),
+          padding: const EdgeInsets.all(12.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Image with rounded corners - no background circle
               ClipRRect(
-                borderRadius: BorderRadius.circular(AppSizes.s8),
+                borderRadius: BorderRadius.circular(8.0),
                 child: Image.asset(
                   imageAsset,
-                  width: AppSizes.s80,
-                  height: AppSizes.s80,
+                  width: 80.0,
+                  height: 80.0,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -57,7 +55,7 @@ class BigCard extends StatelessWidget {
                     child: Text(
                       title,
                       style: GoogleFonts.poppins(
-                        color: const Color(0xFF4197CB),
+                        color: DefaultColors.dashboardBlue,
                         fontSize: fontScale,
                         fontWeight: FontWeight.w600,
                       ),
@@ -65,11 +63,11 @@ class BigCard extends StatelessWidget {
                       overflow: TextOverflow.visible,
                     ),
                   ),
-                  const SizedBox(width: AppSizes.s4),
+                  const SizedBox(width: 4.0),
                   Icon(
                     Icons.north_east,
-                    size: 14,
-                    color: const Color(0xFF4197CB),
+                    size: 14.0,
+                    color: DefaultColors.dashboardBlue,
                   ),
                 ],
               ),
@@ -80,29 +78,29 @@ class BigCard extends StatelessWidget {
     );
   }
 
-  Widget _buildShimmerBigCard(bool isDark) {
+  Widget _buildShimmerBigCard(BuildContext context, double screenWidth) {
     return Shimmer.fromColors(
-      baseColor: isDark ? Colors.grey[800]! : Colors.grey[300]!,
-      highlightColor: isDark ? Colors.grey[700]! : Colors.grey[100]!,
+      baseColor: DefaultColors.grayE6,
+      highlightColor: DefaultColors.white,
       child: Material(
-        color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
-        borderRadius: BorderRadius.circular(AppSizes.s16),
-        elevation: 1,
+        color: DefaultColors.white,
+        borderRadius: BorderRadius.circular(16.0),
+        elevation: 1.0,
         child: Container(
-          padding: const EdgeInsets.all(AppSizes.s12),
+          padding: const EdgeInsets.all(12.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                width: AppSizes.s80,
-                height: AppSizes.s80,
+                width: 80.0,
+                height: 80.0,
                 decoration: BoxDecoration(
-                  color: isDark ? Colors.grey[700] : Colors.white,
-                  borderRadius: BorderRadius.circular(AppSizes.s8),
+                  color: DefaultColors.grayE6,
+                  borderRadius: BorderRadius.circular(8.0),
                 ),
               ),
-              const SizedBox(height: AppSizes.s8),
+              const SizedBox(height: 8.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -110,17 +108,17 @@ class BigCard extends StatelessWidget {
                     child: Container(
                       height: fontScale,
                       decoration: BoxDecoration(
-                        color: isDark ? Colors.grey[700] : Colors.white,
-                        borderRadius: BorderRadius.circular(4),
+                        color: DefaultColors.grayE6,
+                        borderRadius: BorderRadius.circular(4.0),
                       ),
                     ),
                   ),
-                  const SizedBox(width: AppSizes.s4),
+                  const SizedBox(width: 4.0),
                   Container(
-                    width: 14,
-                    height: 14,
+                    width: 14.0,
+                    height: 14.0,
                     decoration: BoxDecoration(
-                      color: isDark ? Colors.grey[700] : Colors.white,
+                      color: DefaultColors.grayE6,
                       shape: BoxShape.circle,
                     ),
                   ),

@@ -1,3 +1,4 @@
+// search_chip_row.dart
 import 'package:flutter/material.dart';
 import 'search_chip_item.dart';
 

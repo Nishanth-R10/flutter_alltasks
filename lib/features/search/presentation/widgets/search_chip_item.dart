@@ -1,5 +1,7 @@
+// search_chip_item.dart
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../../core/constants/app_colors/default_colors.dart';
 
 class SearchChipItem extends StatelessWidget {
   final String title;
@@ -13,8 +15,7 @@ class SearchChipItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final baseSize = MediaQuery.of(context).size.shortestSide * 0.01;
     
     return Container(
@@ -23,10 +24,10 @@ class SearchChipItem extends StatelessWidget {
         vertical: baseSize * 2,
       ),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+        color: isDark ? DefaultColors.black24 : DefaultColors.white,
         borderRadius: BorderRadius.circular(baseSize * 6),
         border: Border.all(
-          color: Colors.blue,
+          color: DefaultColors.blue9D,
           width: 1.5,
         ),
       ),
@@ -36,7 +37,7 @@ class SearchChipItem extends StatelessWidget {
           Icon(
             icon,
             size: baseSize * 4,
-            color: Colors.blue,
+            color: DefaultColors.blue9D,
           ),
           SizedBox(width: baseSize * 2),
           Text(
@@ -44,7 +45,7 @@ class SearchChipItem extends StatelessWidget {
             style: GoogleFonts.poppins(
               fontSize: baseSize * 3,
               fontWeight: FontWeight.w500,
-              color: Colors.blue,
+              color: DefaultColors.blue9D,
             ),
           ),
         ],

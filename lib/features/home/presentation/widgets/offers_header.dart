@@ -1,27 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tasks/core/constants/app_strings/default_string.dart';
-import 'package:tasks/core/utils/media_query_utils.dart';
-import 'package:tasks/core/providers/theme_provider.dart';
+import 'package:tasks/core/constants/app_colors/default_colors.dart';
 
-class OffersHeader extends ConsumerWidget {
+class OffersHeader extends StatelessWidget {
   const OffersHeader({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(themeProvider);
-    MediaQueryUtils.init(context);
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     
     return Container(
-      width: MediaQueryUtils.w(343),
-      height: MediaQueryUtils.h(24), 
+      width: screenWidth * 0.9,
+      height: screenWidth * 0.06, 
       child: Text(
-        DefaultString.instance.offers,
+        "Offers", // Hardcoded string
         style: GoogleFonts.dmSans(
-          fontSize: MediaQueryUtils.sp(19),
+          fontSize: screenWidth * 0.048,
           fontWeight: FontWeight.w600,
-          color: theme.colorScheme.onSurface,
+          color: DefaultColors.black,
           letterSpacing: 0,
           height: 1.0, 
         ),

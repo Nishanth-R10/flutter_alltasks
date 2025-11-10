@@ -1,66 +1,62 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tasks/core/constants/app_strings/default_string.dart';
-import 'package:tasks/core/utils/media_query_utils.dart';
-import 'package:tasks/core/providers/theme_provider.dart';
+import 'package:tasks/core/constants/app_colors/default_colors.dart';
 
-class QuickActionsHeader extends ConsumerWidget {
+class QuickActionsHeader extends StatelessWidget {
   const QuickActionsHeader({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(themeProvider);
-    MediaQueryUtils.init(context);
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     
     return SizedBox(
-      width: MediaQueryUtils.w(343),
-      height: MediaQueryUtils.h(32),
+      width: screenWidth * 0.9,
+      height: screenWidth * 0.08,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            DefaultString.instance.quickActions,
+            "Quick Actions", // Hardcoded string
             style: GoogleFonts.dmSans(
-              fontSize: MediaQueryUtils.sp(19),
+              fontSize: screenWidth * 0.048,
               fontWeight: FontWeight.w600,
-              color: theme.colorScheme.onSurface,
+              color: DefaultColors.black,
               letterSpacing: 0,
               height: 1.2,
             ),
           ),
-          _buildCustomizeButton(context, ref),
+          _buildCustomizeButton(context),
         ],
       ),
     );
   }
 
-  Widget _buildCustomizeButton(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(themeProvider);
+  Widget _buildCustomizeButton(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: MediaQueryUtils.w(12),
-        vertical: MediaQueryUtils.h(6),
+        horizontal: screenWidth * 0.03,
+        vertical: screenWidth * 0.015,
       ),
       child: Row(
         children: [
           Text(
-            DefaultString.instance.customize,
+            "Customize", // Hardcoded string
             style: TextStyle(
               fontFamily: 'Diodrum Arabic',
               fontWeight: FontWeight.w600,
-              fontSize: MediaQueryUtils.sp(12),
-              color: theme.colorScheme.primary,
+              fontSize: screenWidth * 0.03,
+              color: DefaultColors.blueLightBase,
               height: 1.2,
               letterSpacing: 0,
             ),
           ),
-          SizedBox(width: MediaQueryUtils.w(4)),
+          SizedBox(width: screenWidth * 0.01),
           Icon(
             Icons.north_east,
-            size: MediaQueryUtils.sp(12),
-            color: theme.colorScheme.primary,
+            size: screenWidth * 0.03,
+            color: DefaultColors.blueLightBase,
           ),
         ],
       ),

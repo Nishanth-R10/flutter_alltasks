@@ -1,9 +1,11 @@
+// lib/features/search/presentation/widgets/search_bar.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tasks/features/search/presentation/controller/search_state_provider.dart';
+import 'package:tasks/features/search/presentation/controller/search_provider.dart';
+import '../../../../core/constants/app_colors/default_colors.dart';
 
-class SearchBarWidget extends ConsumerWidget {
+class SearchBarWidget extends ConsumerStatefulWidget {
   final TextEditingController controller;
   final VoidCallback onCancel;
   final VoidCallback onClear;
@@ -18,59 +20,97 @@ class SearchBarWidget extends ConsumerWidget {
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
-    
+  ConsumerState<SearchBarWidget> createState() => _SearchBarWidgetState();
+}
+
+class _SearchBarWidgetState extends ConsumerState<SearchBarWidget>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500),
+    )..repeat();
+
+    _animation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Curves.linear,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(child: _buildSearchContainer(context, isDark, ref)),
-        SizedBox(width: baseSize * 1),
+        Expanded(child: _buildSearchContainer(context)),
+        SizedBox(width: widget.baseSize * 1),
         _buildCancelButton(context),
       ],
     );
   }
 
-  Widget _buildSearchContainer(BuildContext context, bool isDark, WidgetRef ref) {
-    return Container(
-      height: baseSize * 12,
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.blue),
-        borderRadius: BorderRadius.circular(50),
-      ),
-      child: Row(
-        children: [
-          SizedBox(width: baseSize * 3),
-          Icon(
-            Icons.search,
-            size: baseSize * 5,
-            color: _getIconColor(isDark),
+  Widget _buildSearchContainer(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (context, child) {
+        return CustomPaint(
+          painter: AnimatedBorderPainter(
+            animationValue: _animation.value,
+            borderRadius: 50,
+            strokeWidth: 2.5,
           ),
-          SizedBox(width: baseSize * 2),
-          Expanded(child: _buildTextField(isDark, ref)),
-          _buildClearButton(context),
-          SizedBox(width: baseSize * 2),
-        ],
-      ),
+          child: Container(
+            height: widget.baseSize * 12,
+            decoration: BoxDecoration(
+              border: Border.all(color: DefaultColors.grayCA.withOpacity(0.3)),
+              borderRadius: BorderRadius.circular(50),
+            ),
+            child: Row(
+              children: [
+                SizedBox(width: widget.baseSize * 3),
+                Icon(
+                  Icons.search,
+                  size: widget.baseSize * 5,
+                  color: DefaultColors.gray62,
+                ),
+                SizedBox(width: widget.baseSize * 2),
+                Expanded(child: _buildTextField()),
+                _buildClearButton(context),
+                SizedBox(width: widget.baseSize * 2),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
-  Color _getIconColor(bool isDark) => isDark ? Colors.grey.shade400 : Colors.grey.shade600;
-
-  Widget _buildTextField(bool isDark, WidgetRef ref) {
+  Widget _buildTextField() {
     return TextField(
-      controller: controller,
+      controller: widget.controller,
       decoration: InputDecoration(
         border: InputBorder.none,
         hintText: "Search for services...",
         hintStyle: GoogleFonts.poppins(
-          fontSize: baseSize * 3.5,
-          color: _getHintColor(isDark),
+          fontSize: widget.baseSize * 3.5,
+          color: DefaultColors.gray7D,
         ),
       ),
       style: GoogleFonts.poppins(
-        fontSize: baseSize * 3.5,
-        color: _getTextColor(isDark),
+        fontSize: widget.baseSize * 3.5,
+        color: DefaultColors.black,
       ),
       onChanged: (value) {
         ref.read(searchQueryProvider.notifier).state = value;
@@ -78,21 +118,18 @@ class SearchBarWidget extends ConsumerWidget {
     );
   }
 
-  Color _getHintColor(bool isDark) => isDark ? Colors.grey.shade400 : Colors.grey.shade500;
-  Color _getTextColor(bool isDark) => isDark ? Colors.white : Colors.black;
-
   Widget _buildClearButton(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(baseSize),
-      width: baseSize * 8,
-      height: baseSize * 8,
+      margin: EdgeInsets.all(widget.baseSize),
+      width: widget.baseSize * 8,
+      height: widget.baseSize * 8,
       decoration: BoxDecoration(
-        color: const Color(0xFF818181),
+        color: DefaultColors.gray7D,
         shape: BoxShape.circle,
       ),
       child: IconButton(
-        icon: Icon(Icons.close, size: baseSize * 4, color: Colors.white),
-        onPressed: onClear,
+        icon: Icon(Icons.close, size: widget.baseSize * 4, color: DefaultColors.white),
+        onPressed: widget.onClear,
         padding: EdgeInsets.zero,
       ),
     );
@@ -100,15 +137,110 @@ class SearchBarWidget extends ConsumerWidget {
 
   Widget _buildCancelButton(BuildContext context) {
     return TextButton(
-      onPressed: onCancel,
+      onPressed: widget.onCancel,
       child: Text(
         "Cancel",
         style: GoogleFonts.poppins(
-          color: Colors.blue,
-          fontSize: baseSize * 3.5,
+          color: DefaultColors.blue9D,
+          fontSize: widget.baseSize * 3.5,
           fontWeight: FontWeight.w500,
         ),
       ),
     );
+  }
+}
+
+class AnimatedBorderPainter extends CustomPainter {
+  final double animationValue;
+  final double borderRadius;
+  final double strokeWidth;
+
+  AnimatedBorderPainter({
+    required this.animationValue,
+    required this.borderRadius,
+    required this.strokeWidth,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final rect = Rect.fromLTWH(0, 0, size.width, size.height);
+    final rrect = RRect.fromRectAndRadius(
+      rect,
+      Radius.circular(borderRadius),
+    );
+
+    final path = Path()..addRRect(rrect);
+    final pathMetrics = path.computeMetrics().first;
+    final totalLength = pathMetrics.length;
+
+    final width = size.width;
+    final height = size.height;
+    final topLength = width;
+    final rightLength = height;
+    final bottomLength = width;
+    
+    final currentPos = (animationValue * totalLength) % totalLength;
+    
+    Path? animatedPath;
+    
+    if (currentPos < topLength) {
+      final lineLength = topLength * 0.8;
+      final progress = currentPos / topLength;
+      
+      final lineCenter = progress * topLength;
+      final startPoint = (lineCenter - lineLength / 2).clamp(0.0, topLength);
+      final endPoint = (lineCenter + lineLength / 2).clamp(0.0, topLength);
+      
+      if (endPoint > startPoint) {
+        animatedPath = pathMetrics.extractPath(startPoint, endPoint);
+      }
+    }
+    else if (currentPos < topLength + rightLength) {
+      return;
+    }
+    else if (currentPos < topLength + rightLength + bottomLength) {
+      final bottomStart = topLength + rightLength;
+      final lineLength = bottomLength * 0.8;
+      final bottomProgress = (currentPos - bottomStart) / bottomLength;
+      
+      final lineCenter = bottomStart + (bottomProgress * bottomLength);
+      final startPoint = (lineCenter - lineLength / 2).clamp(bottomStart, bottomStart + bottomLength);
+      final endPoint = (lineCenter + lineLength / 2).clamp(bottomStart, bottomStart + bottomLength);
+      
+      if (endPoint > startPoint) {
+        animatedPath = pathMetrics.extractPath(startPoint, endPoint);
+      }
+    }
+    else {
+      return;
+    }
+
+    if (animatedPath == null) return;
+
+    final paint = Paint()
+      ..shader = LinearGradient(
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
+        colors: [
+          DefaultColors.blue9D.withOpacity(0.0),
+          DefaultColors.blue9D.withOpacity(0.4),
+          DefaultColors.blue9D.withOpacity(0.8),
+          DefaultColors.blue9D,
+          DefaultColors.blue9D.withOpacity(0.8),
+          DefaultColors.blue9D.withOpacity(0.4),
+          DefaultColors.blue9D.withOpacity(0.0),
+        ],
+        stops: const [0.0, 0.2, 0.35, 0.5, 0.65, 0.8, 1.0],
+      ).createShader(rect)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = strokeWidth
+      ..strokeCap = StrokeCap.round;
+
+    canvas.drawPath(animatedPath, paint);
+  }
+
+  @override
+  bool shouldRepaint(AnimatedBorderPainter oldDelegate) {
+    return oldDelegate.animationValue != animationValue;
   }
 }

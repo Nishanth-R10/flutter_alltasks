@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tasks/core/utils/media_query_utils.dart';
 import 'quick_actions_header.dart';
 import 'quick_actions_grid.dart';
 
@@ -8,11 +7,13 @@ class QuickActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const QuickActionsHeader(),
-        SizedBox(height: MediaQueryUtils.h(16)),
+        SizedBox(height: screenHeight * 0.02),
         const QuickActionsGrid(),
       ],
     );

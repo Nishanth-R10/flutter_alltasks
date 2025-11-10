@@ -1,14 +1,9 @@
-// lib/features/offers/widgets/custom_offer_dialog.dart
+// lib/features/offers/presentation/widgets/custom_offer_dialog.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tasks/core/utils/media_query_utils.dart';
-import 'package:tasks/features/offers/application/offer_provider.dart';
-import 'package:tasks/features/offers/application/offer_service.dart';
-import 'package:tasks/features/offers/presentation/conroller/custom_offer_dialog_provider.dart';
-
-part 'custom_offer_dialog_part2.dart';
-part 'custom_offer_dialog_part3.dart';
+import 'package:tasks/features/offers/presentation/conroller/offer_provider.dart';
+import '../../../../core/constants/app_colors/default_colors.dart';
 
 class CustomOfferDialog extends ConsumerStatefulWidget {
   final String offerId;
@@ -41,91 +36,305 @@ class CustomOfferDialog extends ConsumerStatefulWidget {
 class _CustomOfferDialogState extends ConsumerState<CustomOfferDialog> {
   bool _dontShowAgain = false;
 
-  // ignore: unused_element
-  static Future<void> showDfcCreditCardPromotion(BuildContext context, WidgetRef ref) async {
-    final apiResult = ref.read(dfcCreditCardPromotionProvider);
-    
-    await apiResult.when(
-      loading: () async {
-        await showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CircularProgressIndicator(),
-                SizedBox(height: 16),
-                Text('Loading your special offer...'),
-              ],
-            ),
-          ),
-        );
-      },
-      error: (error, stack) async {
-        print('API Error: $error');
-        OfferService.showCreditCardOffer(context, ref);
-      },
-      data: (result) async {
-        result.fold(
-          (error) {
-            print('API Error: $error');
-            OfferService.showCreditCardOffer(context, ref);
-          },
-          (apiData) {
-            OfferService.showCreditCardOffer(context, ref);
-          },
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    MediaQueryUtils.init(context);
+    final mediaQuery = MediaQuery.of(context);
+    final screenWidth = mediaQuery.size.width;
+    final screenHeight = mediaQuery.size.height;
+    
     return Dialog(
-      backgroundColor: Colors.transparent,
-      insetPadding: EdgeInsets.symmetric(horizontal: MediaQueryUtils.w(24)),
-      child: _buildDialogContent(),
+      backgroundColor: DefaultColors.transparent,
+      insetPadding: EdgeInsets.symmetric(horizontal: screenWidth * 0.06), 
+      child: _buildDialogContent(context),
     );
   }
 
-  Widget _buildDialogContent() {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
+  Widget _buildDialogContent(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final screenWidth = mediaQuery.size.width;
+    final screenHeight = mediaQuery.size.height;
     
     return Container(
       width: double.infinity,
-      decoration: _buildDialogDecoration(isDark),
+      decoration: _buildDialogDecoration(),
       child: Padding(
-        padding: EdgeInsets.all(MediaQueryUtils.w(24)),
+        padding: EdgeInsets.all(screenWidth * 0.06), 
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _buildTitle(isDark),
-            SizedBox(height: MediaQueryUtils.h(20)),
-            _buildContentRow(),
-            SizedBox(height: MediaQueryUtils.h(24)),
-            if (widget.showDontShowAgain) ..._buildDontShowAgainSection(),
-            _buildPrimaryButton(),
-            SizedBox(height: MediaQueryUtils.h(12)),
-            _buildSecondaryButton(),
+            _buildTitle(context),
+            SizedBox(height: screenHeight * 0.025), 
+            _buildContentRow(context),
+            SizedBox(height: screenHeight * 0.03), 
+            if (widget.showDontShowAgain) ..._buildDontShowAgainSection(context),
+            _buildPrimaryButton(context),
+            SizedBox(height: screenHeight * 0.015), 
+            _buildSecondaryButton(context),
           ],
         ),
       ),
     );
   }
 
-  BoxDecoration _buildDialogDecoration(bool isDark) {
+  BoxDecoration _buildDialogDecoration() {
     return BoxDecoration(
-      color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
-      borderRadius: BorderRadius.circular(MediaQueryUtils.r(16)),
+      color: DefaultColors.white,
+      borderRadius: BorderRadius.circular(16),
       boxShadow: [
         BoxShadow(
-          color: Colors.black.withOpacity(0.1),
-          blurRadius: MediaQueryUtils.r(20),
-          offset: Offset(0, MediaQueryUtils.h(10)),
+          color: DefaultColors.black.withOpacity(0.1),
+          blurRadius: 20,
+          offset: const Offset(0, 10),
         ),
       ],
+    );
+  }
+
+  Widget _buildTitle(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final screenWidth = mediaQuery.size.width;
+    
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.01), 
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Text(
+          widget.title,
+          style: GoogleFonts.poppins(
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
+            color: DefaultColors.blue9D,
+          ),
+          textAlign: TextAlign.center,
+          maxLines: 1,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildContentRow(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final screenWidth = mediaQuery.size.width;
+    
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildImageStack(context),
+        SizedBox(width: screenWidth * 0.04), 
+        _buildDescription(context),
+      ],
+    );
+  }
+
+  Widget _buildImageStack(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final screenWidth = mediaQuery.size.width;
+    final screenHeight = mediaQuery.size.height;
+    
+    return SizedBox(
+      width: screenWidth * 0.25, 
+      height: screenHeight * 0.1125, 
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          // Background rotated card 
+          Positioned(
+            right: 0,
+            top: screenHeight * 0.03125, 
+            child: Transform.rotate(
+              angle: -0.2,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.asset(
+                  widget.imagePath,
+                  width: screenWidth * 0.225, 
+                  height: screenHeight * 0.06875,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+          ),
+          
+          Positioned(
+            left: screenWidth * 0.0125, 
+            top: screenHeight * 0.05,
+            child: Transform.rotate(
+              angle: 0,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.asset(
+                  'assets/images/visa.png',
+                  width: screenWidth * 0.225, 
+                  height: screenHeight * 0.0625, 
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDescription(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final screenHeight = mediaQuery.size.height;
+    
+    return Expanded(
+      child: Padding(
+        padding: EdgeInsets.only(top: screenHeight * 0.01),
+        child: RichText(
+          textAlign: TextAlign.left,
+          text: TextSpan(
+            style: GoogleFonts.poppins(
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              color: DefaultColors.black,
+              height: 1.5,
+            ),
+            children: _parseDescription(),
+          ),
+        ),
+      ),
+    );
+  }
+
+  List<TextSpan> _parseDescription() {
+    final words = widget.description.split(' ');
+    List<TextSpan> spans = [];
+
+    for (int i = 0; i < words.length; i++) {
+      String word = words[i];
+      bool isBold = word.contains(RegExp(r'\d')) ||
+          word.toLowerCase().contains('maximum') ||
+          word.toLowerCase().contains('limit') ||
+          word.toLowerCase().contains('upto');
+
+      spans.add(
+        TextSpan(
+          text: word + (i < words.length - 1 ? ' ' : ''),
+          style: GoogleFonts.poppins(
+            fontWeight: isBold ? FontWeight.w700 : FontWeight.w400,
+            color: DefaultColors.black,
+          ),
+        ),
+      );
+    }
+    return spans;
+  }
+
+  List<Widget> _buildDontShowAgainSection(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final screenWidth = mediaQuery.size.width;
+    final screenHeight = mediaQuery.size.height;
+    
+    return [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: screenWidth * 0.05, 
+            height: screenHeight * 0.025,
+            child: Checkbox(
+              value: _dontShowAgain,
+              onChanged: (value) {
+                setState(() {
+                  _dontShowAgain = value ?? false;
+                });
+                if (_dontShowAgain) {
+                  ref.read(offerVisibilityProvider.notifier).state = {
+                    ...ref.read(offerVisibilityProvider),
+                    widget.offerId: true,
+                  };
+                } else {
+                  ref.read(offerVisibilityProvider.notifier).state = {
+                    ...ref.read(offerVisibilityProvider),
+                    widget.offerId: false,
+                  };
+                }
+              },
+              activeColor: DefaultColors.blue9D,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4),
+              ),
+            ),
+          ),
+          SizedBox(width: screenWidth * 0.02),
+          Flexible(
+            child: Text(
+              "Don't Show this offer again!",
+              style: GoogleFonts.poppins(
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+                color: DefaultColors.gray71,
+              ),
+            ),
+          ),
+        ],
+      ),
+      SizedBox(height: screenHeight * 0.025), 
+    ];
+  }
+
+  Widget _buildPrimaryButton(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final screenHeight = mediaQuery.size.height;
+    
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: widget.onPrimaryButtonPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: DefaultColors.blue9D,
+          foregroundColor: DefaultColors.white,
+          padding: EdgeInsets.symmetric(vertical: screenHeight * 0.0175), 
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25),
+          ),
+          elevation: 0,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              widget.primaryButtonText,
+              style: GoogleFonts.poppins(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            SizedBox(width: 8),
+            Icon(Icons.north_east, size: 18),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSecondaryButton(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final screenHeight = mediaQuery.size.height;
+    
+    return SizedBox(
+      width: double.infinity,
+      child: OutlinedButton(
+        onPressed: widget.onSecondaryButtonPressed,
+        style: OutlinedButton.styleFrom(
+          padding: EdgeInsets.symmetric(vertical: screenHeight * 0.0175), 
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25),
+          ),
+          side: BorderSide(color: DefaultColors.blue9D, width: 1.5),
+        ),
+        child: Text(
+          widget.secondaryButtonText,
+          style: GoogleFonts.poppins(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: DefaultColors.blue9D,
+          ),
+        ),
+      ),
     );
   }
 }

@@ -1,12 +1,12 @@
-import 'package:tasks/core/constants/app_strings/i18n_keys.dart';
+// import 'package:tasks/core/constants/app_strings/i18n_keys.dart';
 
-part 'parts/all_strings.dart';
+// part 'parts/all_strings.dart';
 
-class DefaultString {
-  DefaultString._();
-  static final DefaultString instance = DefaultString._();
+// class DefaultString {
+//   DefaultString._();
+//   static final DefaultString instance = DefaultString._();
 
-  String _getString(String key, {required String fallback}) {
-    return fallback;
-  }
-}
+//   String _getString(String key, {required String fallback}) {
+//     return fallback;
+//   }
+// }

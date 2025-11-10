@@ -1,5 +1,7 @@
+// new_user_search_results.dart
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../../core/constants/app_colors/default_colors.dart';
 
 class NewUserSearchResults extends StatelessWidget {
   final List<String> searchResults;
@@ -15,8 +17,7 @@ class NewUserSearchResults extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     
     if (searchController.text.isEmpty) {
       return _buildEmptyState(context, isDark);
@@ -34,7 +35,7 @@ class NewUserSearchResults extends StatelessWidget {
           style: GoogleFonts.poppins(
             fontSize: baseSize * 4.2,
             fontWeight: FontWeight.w600,
-            color: isDark ? Colors.white : Colors.black,
+            color: isDark ? DefaultColors.white : DefaultColors.black,
           ),
         ),
         SizedBox(height: baseSize * 2),
@@ -57,9 +58,9 @@ class NewUserSearchResults extends StatelessWidget {
       margin: EdgeInsets.only(bottom: baseSize * 2),
       padding: EdgeInsets.all(baseSize * 3),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+        color: isDark ? DefaultColors.black24 : DefaultColors.white,
         borderRadius: BorderRadius.circular(baseSize * 2),
-        border: Border.all(color: isDark ? Colors.grey.shade700 : Colors.grey.shade300),
+        border: Border.all(color: isDark ? DefaultColors.gray7D : DefaultColors.grayCA),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -72,7 +73,7 @@ class NewUserSearchResults extends StatelessWidget {
           Icon(
             Icons.north_east,
             size: baseSize * 7,
-            color: Colors.blue.shade900,
+            color: DefaultColors.blueBase,
           ),
         ],
       ),
@@ -85,7 +86,7 @@ class NewUserSearchResults extends StatelessWidget {
       style: GoogleFonts.poppins(
         fontSize: baseSize * 3.5,
         fontWeight: FontWeight.w500,
-        color: Colors.blue,
+        color: DefaultColors.blue9D,
       ),
     );
   }
@@ -103,7 +104,7 @@ class NewUserSearchResults extends StatelessWidget {
           style: GoogleFonts.poppins(
             fontSize: baseSize * 3.5,
             fontWeight: FontWeight.w500,
-            color: Colors.blue,
+            color: DefaultColors.blue9D,
           ),
         ));
       }
@@ -113,7 +114,7 @@ class NewUserSearchResults extends StatelessWidget {
         style: GoogleFonts.poppins(
           fontSize: baseSize * 3.5,
           fontWeight: FontWeight.w600,
-          color: Colors.blue.shade900,
+          color: DefaultColors.blueBase,
         ),
       ));
       
@@ -126,7 +127,7 @@ class NewUserSearchResults extends StatelessWidget {
         style: GoogleFonts.poppins(
           fontSize: baseSize * 3.5,
           fontWeight: FontWeight.w500,
-          color: Colors.blue,
+          color: DefaultColors.blue9D,
         ),
       ));
     }
@@ -142,14 +143,14 @@ class NewUserSearchResults extends StatelessWidget {
           Icon(
             Icons.search,
             size: baseSize * 20,
-            color: isDark ? Colors.grey.shade600 : Colors.grey.shade300,
+            color: isDark ? DefaultColors.gray62 : DefaultColors.grayCA,
           ),
           SizedBox(height: baseSize * 3),
           Text(
             "Search for services",
             style: GoogleFonts.poppins(
               fontSize: baseSize * 4,
-              color: isDark ? Colors.grey.shade400 : Colors.grey.shade600,
+              color: isDark ? DefaultColors.grayB0 : DefaultColors.gray62,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -158,7 +159,7 @@ class NewUserSearchResults extends StatelessWidget {
             "Try 'Mobile', 'Bills', 'Offers'",
             style: GoogleFonts.poppins(
               fontSize: baseSize * 3.2,
-              color: isDark ? Colors.grey.shade500 : Colors.grey.shade500,
+              color: isDark ? DefaultColors.gray7D : DefaultColors.gray7D,
             ),
           ),
         ],
@@ -174,14 +175,14 @@ class NewUserSearchResults extends StatelessWidget {
           Icon(
             Icons.search_off,
             size: baseSize * 15,
-            color: isDark ? Colors.grey.shade500 : Colors.grey.shade400,
+            color: isDark ? DefaultColors.gray7D : DefaultColors.grayCA,
           ),
           SizedBox(height: baseSize * 2),
           Text(
             "No results found for '${searchController.text}'",
             style: GoogleFonts.poppins(
               fontSize: baseSize * 4,
-              color: isDark ? Colors.grey.shade400 : Colors.grey.shade600,
+              color: isDark ? DefaultColors.grayB0 : DefaultColors.gray62,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -190,7 +191,7 @@ class NewUserSearchResults extends StatelessWidget {
             "Try different keywords or check spelling",
             style: GoogleFonts.poppins(
               fontSize: baseSize * 3.2,
-              color: isDark ? Colors.grey.shade500 : Colors.grey.shade500,
+              color: isDark ? DefaultColors.gray7D : DefaultColors.gray7D,
             ),
           ),
         ],

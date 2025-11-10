@@ -1,12 +1,11 @@
+// lib/features/search/presentation/pages/unified_search_page.dart
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tasks/features/search/presentation/controller/search_results_provider.dart';
-import 'package:tasks/features/search/presentation/controller/search_state_provider.dart';
-import '../widgets/search_content_manager.dart';
+import 'package:tasks/core/constants/app_colors/default_colors.dart';
+import 'package:tasks/features/search/presentation/controller/search_provider.dart';
 import '../widgets/search_bar.dart';
-// import '../widgets/user_type_toggle.dart'; // COMMENTED FOR NOW
-
+import '../widgets/search_content_manager.dart';
 @RoutePage()
 class UnifiedSearchScreen extends ConsumerStatefulWidget {
   const UnifiedSearchScreen({super.key});
@@ -49,23 +48,16 @@ class _UnifiedSearchScreenState extends ConsumerState<UnifiedSearchScreen> {
     final searchResults = ref.watch(searchResultsProvider);
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      // appBar: AppBar(
-      //   backgroundColor: Colors.transparent,
-      //   elevation: 0,
-      //   automaticallyImplyLeading: false,
-      //  
-      // ),
+      backgroundColor: DefaultColors.white,
       body: Padding(
         padding: EdgeInsets.only(
-          top: baseSize * 9, //  padding to push search bar lower 
+          top: baseSize * 9,
           left: baseSize * 5,
           right: baseSize * 2,
           bottom: baseSize * 2,
         ),
         child: Column(
           children: [
-            // Search bar positioned lower
             SearchBarWidget(
               controller: _searchController,
               onCancel: _onCancelSearch,
@@ -74,7 +66,6 @@ class _UnifiedSearchScreenState extends ConsumerState<UnifiedSearchScreen> {
             ),
             SizedBox(height: baseSize * 4),
             
-            // Search content
             Expanded(
               child: SearchContentManager(
                 isSearching: _isSearching,
