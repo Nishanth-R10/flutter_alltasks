@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:tasks/core/constants/app_colors/default_colors.dart';
-
+import '../../../../core/constants/app_colors/default_colors.dart';
 class QuickActionsHeader extends StatelessWidget {
   const QuickActionsHeader({super.key});
 
@@ -11,18 +9,16 @@ class QuickActionsHeader extends StatelessWidget {
     
     return SizedBox(
       width: screenWidth * 0.9,
-      height: screenWidth * 0.08,
+      height: 32,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            "Quick Actions", // Hardcoded string
-            style: GoogleFonts.dmSans(
-              fontSize: screenWidth * 0.048,
+          const Text(
+            "Quick Actions",
+            style: TextStyle(
+              fontSize: 19,
               fontWeight: FontWeight.w600,
               color: DefaultColors.black,
-              letterSpacing: 0,
-              height: 1.2,
             ),
           ),
           _buildCustomizeButton(context),
@@ -32,30 +28,21 @@ class QuickActionsHeader extends StatelessWidget {
   }
 
   Widget _buildCustomizeButton(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    
     return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: screenWidth * 0.03,
-        vertical: screenWidth * 0.015,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       child: Row(
         children: [
           Text(
-            "Customize", // Hardcoded string
-            style: TextStyle(
-              fontFamily: 'Diodrum Arabic',
+            "Customize",
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
               fontWeight: FontWeight.w600,
-              fontSize: screenWidth * 0.03,
               color: DefaultColors.blueLightBase,
-              height: 1.2,
-              letterSpacing: 0,
             ),
           ),
-          SizedBox(width: screenWidth * 0.01),
+          const SizedBox(width: 4),
           Icon(
             Icons.north_east,
-            size: screenWidth * 0.03,
+            size: 16,
             color: DefaultColors.blueLightBase,
           ),
         ],

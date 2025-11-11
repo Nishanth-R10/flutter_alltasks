@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:tasks/core/constants/app_colors/default_colors.dart';
-
+import '../../../../core/constants/app_colors/default_colors.dart';
 class ReferEarnContent extends StatelessWidget {
   const ReferEarnContent({super.key});
 
@@ -21,14 +19,14 @@ class ReferEarnContent extends StatelessWidget {
 
   Widget _buildContentCard(BuildContext context, double screenWidth, double screenHeight) {
     return Container(
-      padding: EdgeInsets.all(screenWidth * 0.025),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: DefaultColors.dashboardLightBlue,
-        borderRadius: BorderRadius.circular(screenWidth * 0.04),
+        borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.03), 
-            blurRadius: screenWidth * 0.02
+            blurRadius: 8,
           ),
         ],
       ),
@@ -37,28 +35,25 @@ class ReferEarnContent extends StatelessWidget {
         children: [
           SizedBox(
             width: screenWidth * 0.6,
-            child: _buildDescription(screenWidth),
+            child: _buildDescription(),
           ),
-          SizedBox(height: screenHeight * 0.015),
-          _buildReferralCodeSection(screenWidth),
+          const SizedBox(height: 12),
+          _buildReferralCodeSection(),
         ],
       ),
     );
   }
 
-  Widget _buildDescription(double screenWidth) {
-    return SizedBox(
-      width: screenWidth * 0.8,
+  Widget _buildDescription() {
+    return const SizedBox(
       child: Column(
         children: [
           Text(  
-            "Help your friends to grow with their wealth", // Hardcoded string
+            "Help your friends to grow with their wealth",
             style: TextStyle(
-              fontFamily: 'Diodrum Arabic',
+              fontSize: 16,
               fontWeight: FontWeight.w600,
-              fontSize: screenWidth * 0.040,
               height: 1.6,
-              letterSpacing: 0,
               color: DefaultColors.black,
             ),
           ),
@@ -67,45 +62,30 @@ class ReferEarnContent extends StatelessWidget {
     );
   }
 
-  Widget _buildReferralCodeSection(double screenWidth) {
+  Widget _buildReferralCodeSection() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _buildReferralCode(screenWidth),
+        _buildReferralCode(),
       ],
     );
   }
 
-  Widget _buildReferralCode(double screenWidth) {
-    return Column(
+  Widget _buildReferralCode() {
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
           child: Text(
-            "A successful referral earns you 50 points!", // Hardcoded string
+            "A successful referral earns you 50 points!",
             style: TextStyle(
-              fontFamily: 'Diodrum Arabic',
+              fontSize: 14,
               fontWeight: FontWeight.w500,
-              fontSize: screenWidth * 0.04,
               height: 1.2,
-              letterSpacing: 0,
               color: DefaultColors.black,
             ),
           ),
         ),
-        Row(
-          children: [
-            Text(
-              '',
-              style: GoogleFonts.poppins(
-                fontSize: screenWidth * 0.035,
-                fontWeight: FontWeight.w600,
-                letterSpacing: 1.5,
-                color: DefaultColors.black,
-              ),
-            ),
-          ],
-        ),  
       ],
     );
   }

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:tasks/core/constants/app_colors/default_colors.dart';
-
+import '../../../../core/constants/app_colors/default_colors.dart';
 class ReferEarnHeader extends StatelessWidget {
   const ReferEarnHeader({super.key});
 
@@ -11,15 +9,13 @@ class ReferEarnHeader extends StatelessWidget {
     
     return SizedBox(
       width: screenWidth * 0.9,
-      height: screenWidth * 0.08,
-      child: Text(
-        "Refer & Earn", // Hardcoded string
-        style: GoogleFonts.dmSans(
-          fontSize: screenWidth * 0.048,
+      height: 32,
+      child: const Text(
+        "Refer & Earn",
+        style: TextStyle(
+          fontSize: 19,
           fontWeight: FontWeight.w600,
           color: DefaultColors.black,
-          letterSpacing: 0,
-          height: 1.2,
         ),
       ),
     );

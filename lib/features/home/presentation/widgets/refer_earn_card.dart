@@ -12,7 +12,7 @@ class ReferEarnCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-         ReferEarnHeader(),
+        const ReferEarnHeader(),
         SizedBox(height: screenHeight * 0.01),
         const ReferEarnContent(),
       ],

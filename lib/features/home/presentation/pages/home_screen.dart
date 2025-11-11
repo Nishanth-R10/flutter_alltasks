@@ -1,21 +1,21 @@
-import 'package:flutter/material.dart';
+
+
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tasks/core/constants/app_strings/default_string.dart';
-import 'package:tasks/core/routes/app_route.gr.dart';
-import 'package:tasks/features/home/presentation/widgets/customize_dashboard_card.dart';
-import 'package:tasks/features/home/presentation/widgets/feedback_cards.dart';
-import 'package:tasks/features/home/presentation/widgets/offer_section.dart';
-import 'package:tasks/features/home/presentation/widgets/quick_action.dart';
-import 'package:tasks/features/home/presentation/widgets/refer_earn_card.dart';
-import 'package:tasks/features/home/presentation/widgets/rewards_section.dart';
-import 'package:tasks/features/home/presentation/widgets/wealth_advisory_section.dart';
-import 'package:tasks/features/offers/presentation/conroller/offer_provider.dart';
-import 'package:tasks/features/offers/presentation/widgets/custom_offer_dialog.dart';
-import 'package:tasks/features/offers/presentation/widgets/offer_shimmer.dart';
 
 import '../../../../core/constants/app_colors/default_colors.dart';
+import '../../../../core/routes/app_route.gr.dart';
+import '../../../offers/presentation/conroller/offer_provider.dart';
+import '../../../offers/presentation/widgets/custom_offer_dialog.dart';
+import '../widgets/customize_dashboard_card.dart';
+import '../widgets/feedback_cards.dart';
+import '../widgets/offer_section.dart';
+import '../widgets/quick_action.dart';
+import '../widgets/refer_earn_card.dart';
+import '../widgets/rewards_section.dart';
+import '../widgets/wealth_advisory_section.dart';
 
 @RoutePage()
 class HomeScreen extends ConsumerStatefulWidget {
@@ -48,11 +48,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     _offerShown = true;
 
     // Show shimmer first
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => OfferShimmer(baseSize: 4.0),
-    );
+    // showDialog(
+    //   context: context,
+    //   barrierDismissible: false,
+    //   builder: (context) => OfferShimmer(baseSize: 4.0),
+    // );
 
     // After delay, show actual offer
     Future.delayed(Duration(seconds: 2), () {
@@ -167,7 +167,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 context: context,
                 title: "Search",
                 icon: Icons.search,
-                onTap: () => context.pushRoute(const ProfileRoute()),
+                onTap: () => context.pushRoute(const UnifiedSearchRoute()),
               ),
             ),
             const SizedBox(width: 12),

@@ -15,10 +15,10 @@ class RewardsSection extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const RewardsHeader(),
-        SizedBox(height: screenHeight * 0.01),
+        const SizedBox(height: 10),
         const RewardsCard(),
-        SizedBox(height: screenHeight * 0.015),
-        const ProgressCard(), 
+        const SizedBox(height: 15),
+        const ProgressCard(),
       ],
     );
   }
