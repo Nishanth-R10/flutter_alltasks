@@ -1,7 +1,4 @@
-
-
 import 'package:flutter/material.dart';
-
 import '../../../../core/constants/app_colors/default_colors.dart';
 
 class CustomizeDashboardCard extends StatelessWidget {
@@ -10,11 +7,10 @@ class CustomizeDashboardCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
 
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(screenWidth * 0.04),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: DefaultColors.dashboardGray,
         borderRadius: BorderRadius.circular(12),
@@ -29,7 +25,7 @@ class CustomizeDashboardCard extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            padding: EdgeInsets.all(screenWidth * 0.03),
+            padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
               color: DefaultColors.white,
               borderRadius: BorderRadius.circular(8),
@@ -37,27 +33,25 @@ class CustomizeDashboardCard extends StatelessWidget {
             child: Icon(
               Icons.dashboard_customize_outlined,
               color: DefaultColors.blueLightBase,
-              size: screenWidth * 0.08,
+              size: 32,
             ),
           ),
-          SizedBox(width: screenWidth * 0.04),
+          const SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Customise your dashboard", // Hardcoded string
-                  style: TextStyle(
-                    fontSize: screenWidth * 0.04,
+                  "Customise your dashboard",
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.w700,
                     color: DefaultColors.blueLightBase,
                   ),
                 ),
-                SizedBox(height: screenHeight * 0.005),
+                const SizedBox(height: 4),
                 Text(
-                  "Explore more banking features", // Hardcoded string
-                  style: TextStyle(
-                    fontSize: screenWidth * 0.032,
+                  "Explore more banking features",
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     fontWeight: FontWeight.w400,
                     color: DefaultColors.blueLightBase.withOpacity(0.8),
                   ),

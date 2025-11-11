@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:tasks/core/constants/app_colors/default_colors.dart';
-
+import '../../../../core/constants/app_colors/default_colors.dart';
 class OfferItem extends StatelessWidget {
-  final Map<String, dynamic> offerData; // Accept Map data directly
+  final Map<String, dynamic> offerData;
   final VoidCallback? onTap;
 
   const OfferItem({super.key, required this.offerData, this.onTap});
@@ -16,7 +14,7 @@ class OfferItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: SizedBox(
-        width: screenWidth * 0.2,
+        width: 80,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -28,12 +26,12 @@ class OfferItem extends StatelessWidget {
                 children: [
                   _buildOfferCircle(context, screenWidth),
                   if (offerData['discountText'] != null && (offerData['discountText'] as String).isNotEmpty) 
-                    _buildDiscountBadge(context, screenWidth, screenHeight),
+                    _buildDiscountBadge(context),
                 ],
               ),
             ),
-            SizedBox(height: screenHeight * 0.006),
-            _buildOfferTitle(context, screenWidth),
+            const SizedBox(height: 6),
+            _buildOfferTitle(context),
           ],
         ),
       ),
@@ -42,8 +40,8 @@ class OfferItem extends StatelessWidget {
 
   Widget _buildOfferCircle(BuildContext context, double screenWidth) {
     return Container(
-      width: screenWidth * 0.15,
-      height: screenWidth * 0.15,
+      width: 60,
+      height: 60,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(
@@ -65,30 +63,26 @@ class OfferItem extends StatelessWidget {
                 child: Icon(
                   Icons.local_offer,
                   color: DefaultColors.blueLightBase,
-                  size: screenWidth * 0.06,
+                  size: 24,
                 ),
               ),
       ),
     );
   }
 
-  Widget _buildDiscountBadge(BuildContext context, double screenWidth, double screenHeight) {
+  Widget _buildDiscountBadge(BuildContext context) {
     return Positioned(
       bottom: 0,
       child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: screenWidth * 0.02,
-          vertical: screenHeight * 0.004,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
         decoration: BoxDecoration(
           color: const Color(0xFFC321DC),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Text(
           offerData['discountText'] as String,
-          style: GoogleFonts.poppins(
+          style: Theme.of(context).textTheme.labelSmall?.copyWith(
             color: Colors.white,
-            fontSize: screenWidth * 0.02,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -96,14 +90,13 @@ class OfferItem extends StatelessWidget {
     );
   }
 
-  Widget _buildOfferTitle(BuildContext context, double screenWidth) {
+  Widget _buildOfferTitle(BuildContext context) {
     return SizedBox(
-      width: screenWidth * 0.2,
+      width: 80,
       child: Text(
         offerData['title'] as String,
         textAlign: TextAlign.center,
-        style: GoogleFonts.poppins(
-          fontSize: screenWidth * 0.028,
+        style: Theme.of(context).textTheme.bodySmall?.copyWith(
           fontWeight: FontWeight.w600,
           color: DefaultColors.black,
           height: 1.4,

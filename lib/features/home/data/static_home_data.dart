@@ -1,5 +1,4 @@
 class StaticHomeData {
-  // Hardcoded offers data as simple Maps
   static List<Map<String, dynamic>> get offersData {
     return [
       {
@@ -32,7 +31,6 @@ class StaticHomeData {
     ];
   }
 
-  // Hardcoded referral data as simple Map
   static Map<String, dynamic> get referralData {
     return {
       'referralCode': 'FRIEND100',
@@ -42,7 +40,6 @@ class StaticHomeData {
     };
   }
 
-  // Hardcoded rewards data as simple Map
   static Map<String, dynamic> get rewardsData {
     return {
       'totalPoints': 1000,

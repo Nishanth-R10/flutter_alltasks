@@ -4,8 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/constants/app_colors/default_colors.dart';
 
 class ProgressCard extends ConsumerStatefulWidget {
- 
-const ProgressCard({super.key});
+  const ProgressCard({super.key});
 
   @override
   ConsumerState<ProgressCard> createState() => _ProgressCardState();
@@ -67,7 +66,6 @@ class _ProgressCardState extends ConsumerState<ProgressCard>
       height: screenHeight * 0.18,
       child: Row(
         children: [
-          /// FIRST CARD
           Expanded(
             child: AnimatedBuilder(
               animation: Listenable.merge([_shineAnimation, _fillAnimation]),
@@ -78,11 +76,11 @@ class _ProgressCardState extends ConsumerState<ProgressCard>
                     opacity: _fillAnimation.value,
                     child: Container(
                       height: screenHeight * 0.2,
-                      padding: EdgeInsets.only(
-                        top: screenHeight * 0.025,
-                        right: screenWidth * 0.03,
-                        bottom: screenHeight * 0.015,
-                        left: screenWidth * 0.03,
+                      padding: const EdgeInsets.only(
+                        top: 20,
+                        right: 12,
+                        bottom: 12,
+                        left: 12,
                       ),
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(
@@ -95,15 +93,14 @@ class _ProgressCardState extends ConsumerState<ProgressCard>
                             Color.fromARGB(255, 102, 165, 248),
                           ],
                         ),
-                        borderRadius: BorderRadius.circular(screenWidth * 0.04),
+                        borderRadius: BorderRadius.circular(16),
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             'Start your reward Journey',
-                            style: GoogleFonts.poppins(
-                              fontSize: screenWidth * 0.035,
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               fontWeight: FontWeight.w600,
                               color: Colors.white,
                               height: 1.3,
@@ -116,21 +113,18 @@ class _ProgressCardState extends ConsumerState<ProgressCard>
                               children: [
                                 Container(
                                   width: double.infinity,
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: screenWidth * 0.05,
-                                    vertical: screenHeight * 0.012,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 20,
+                                    vertical: 8,
                                   ),
                                   decoration: BoxDecoration(
                                     color: DefaultColors.black,
-                                    borderRadius: BorderRadius.circular(
-                                      screenWidth * 0.06,
-                                    ),
+                                    borderRadius: BorderRadius.circular(24),
                                   ),
                                   alignment: Alignment.center,
                                   child: Text(
                                     'Start now',
-                                    style: GoogleFonts.poppins(
-                                      fontSize: screenWidth * 0.03,
+                                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                       fontWeight: FontWeight.w500,
                                       color: Colors.white,
                                     ),
@@ -139,9 +133,7 @@ class _ProgressCardState extends ConsumerState<ProgressCard>
 
                                 Positioned.fill(
                                   child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(
-                                      screenWidth * 0.06,
-                                    ),
+                                    borderRadius: BorderRadius.circular(24),
                                     child: AnimatedBuilder(
                                       animation: _shineAnimation,
                                       builder: (_, __) {
@@ -168,54 +160,51 @@ class _ProgressCardState extends ConsumerState<ProgressCard>
 
           SizedBox(width: screenWidth * 0.08 ),
 
-/// SECOND CARD
-Expanded(
-  child: Container(
-    height: screenHeight * 0.80,
-    padding: EdgeInsets.only(
-      top: screenHeight * 0.025,
-      right: screenWidth * 0.045,
-      bottom: screenHeight * 0.012,
-      left: screenWidth * 0.03,
-    ),
-    decoration: BoxDecoration(
-      color: DefaultColors.whiteF3,
-      borderRadius: BorderRadius.circular(screenWidth * 0.04),
-    ),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          '300 Cashbonus Earned', // Hardcoded 
-          style: GoogleFonts.poppins(
-            fontSize: screenWidth * 0.035,
-            fontWeight: FontWeight.w600,
-            color: DefaultColors.black,
-            height: 1.3,
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: screenWidth * 0.05,
-            vertical: screenHeight * 0.014,
-          ),
-          decoration: BoxDecoration(
-            color: DefaultColors.black24,
-            borderRadius: BorderRadius.circular(screenWidth * 0.06),
-          ),
-          child: Text(
-            'Collect now',
-            style: GoogleFonts.poppins(
-              fontSize: screenWidth * 0.03,
-              fontWeight: FontWeight.w500,
-              color:DefaultColors.white,
+          Expanded(
+            child: Container(
+              height: screenHeight * 0.80,
+              padding: const EdgeInsets.only(
+                top: 20,
+                right: 18,
+                bottom: 10,
+                left: 12,
+              ),
+              decoration: BoxDecoration(
+                color: DefaultColors.whiteF3,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '300 Cashbonus Earned',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: DefaultColors.black,
+                      height: 1.3,
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 10,
+                    ),
+                    decoration: BoxDecoration(
+                      color: DefaultColors.black24,
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    child: Text(
+                      'Collect now',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: DefaultColors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
-    ),
-  ),
-),
         ],
       ),
     );

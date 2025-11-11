@@ -1,9 +1,11 @@
-// feature_container.dart
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tasks/core/constants/app_colors/default_colors.dart';
-import 'package:tasks/features/search/presentation/controller/search_provider.dart';
+
+import '../../../../core/constants/app_colors/default_colors.dart';
+import '../controller/search_provider.dart';
 import 'shimmer_loading.dart';
 
 class FeatureContainer extends ConsumerWidget {
@@ -11,20 +13,19 @@ class FeatureContainer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final baseSize = MediaQuery.of(context).size.shortestSide * 0.01;
+    final screenWidth = MediaQuery.of(context).size.width;
     final whatsNewResult = ref.watch(whatsNewFeaturesProvider);
 
     return whatsNewResult.when(
-      loading: () => _buildShimmerFeatures(context, isDark, baseSize),
-      error: (error, stack) => _buildFallbackFeatures(context, isDark, baseSize),
+      loading: () => _buildShimmerFeatures(context, screenWidth),
+      error: (error, stack) => _buildFallbackFeatures(context, screenWidth),
       data: (features) => features.isEmpty 
-          ? _buildFallbackFeatures(context, isDark, baseSize)
-          : _buildFeaturesFromData(context, features, isDark, baseSize),
+          ? _buildFallbackFeatures(context, screenWidth)
+          : _buildFeaturesFromData(context, features, screenWidth),
     );
   }
 
-  Widget _buildFeaturesFromData(BuildContext context, List features, bool isDark, double baseSize) {
+  Widget _buildFeaturesFromData(BuildContext context, List features, double screenWidth) {
     return Row(
       children: [
         Expanded(
@@ -32,19 +33,17 @@ class FeatureContainer extends ConsumerWidget {
             context,
             features[0]['title'],
             features[0]['imagePath'],
-            isDark,
-            baseSize,
+            screenWidth,
           ),
         ),
-        SizedBox(width: baseSize * 3),
+        SizedBox(width: screenWidth * 0.03),
         Expanded(
           child: features.length > 1
               ? _buildFeatureContainer(
                   context,
                   features[1]['title'],
                   features[1]['imagePath'],
-                  isDark,
-                  baseSize,
+                  screenWidth,
                 )
               : Container(),
         ),
@@ -52,7 +51,7 @@ class FeatureContainer extends ConsumerWidget {
     );
   }
 
-  Widget _buildFallbackFeatures(BuildContext context, bool isDark, double baseSize) {
+  Widget _buildFallbackFeatures(BuildContext context, double screenWidth) {
     return Row(
       children: [
         Expanded(
@@ -60,69 +59,69 @@ class FeatureContainer extends ConsumerWidget {
             context,
             'Track Spends',
             'assets/images/discovery.png',
-            isDark,
-            baseSize,
+            screenWidth,
           ),
         ),
-        SizedBox(width: baseSize * 3),
+        SizedBox(width: screenWidth * 0.03),
         Expanded(
           child: _buildFeatureContainer(
             context,
             'Track Forex',
             'assets/images/discovery.png',
-            isDark,
-            baseSize,
+            screenWidth,
           ),
         ),
       ],
     );
   }
 
-  Widget _buildShimmerFeatures(BuildContext context, bool isDark, double baseSize) {
+  Widget _buildShimmerFeatures(BuildContext context, double screenWidth) {
     return Row(
       children: [
         Expanded(
           child: ShimmerLoading(
             isLoading: true,
-            child: _buildShimmerContainer(context, isDark, baseSize),
+            child: _buildShimmerContainer(context, screenWidth),
           ),
         ),
-        SizedBox(width: baseSize * 3),
+        SizedBox(width: screenWidth * 0.03),
         Expanded(
           child: ShimmerLoading(
             isLoading: true,
-            child: _buildShimmerContainer(context, isDark, baseSize),
+            child: _buildShimmerContainer(context, screenWidth),
           ),
         ),
       ],
     );
   }
 
-  Widget _buildShimmerContainer(BuildContext context, bool isDark, double baseSize) {
+  Widget _buildShimmerContainer(BuildContext context, double screenWidth) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    
     return Container(
-      padding: EdgeInsets.all(baseSize * 2),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: isDark ? DefaultColors.gray7D : DefaultColors.grayE6,
-        borderRadius: BorderRadius.circular(baseSize * 3),
+        color: DefaultColors.grayE6,
+        borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: baseSize * 20,
-            height: baseSize * 20,
+            width: screenWidth * 0.2,
+            height: screenWidth * 0.2,
             decoration: BoxDecoration(
-              color: isDark ? DefaultColors.gray62 : DefaultColors.grayCA,
-              borderRadius: BorderRadius.circular(baseSize * 2),
+              color: DefaultColors.grayCA,
+              borderRadius: BorderRadius.circular(8),
             ),
           ),
-          SizedBox(height: baseSize * 2),
+          const SizedBox(height: 8),
           Container(
             width: double.infinity,
-            height: baseSize * 4,
+            height: screenHeight * 0.02,
             decoration: BoxDecoration(
-              color: isDark ? DefaultColors.gray62 : DefaultColors.grayCA,
-              borderRadius: BorderRadius.circular(baseSize),
+              color: DefaultColors.grayCA,
+              borderRadius: BorderRadius.circular(4),
             ),
           ),
         ],
@@ -130,18 +129,20 @@ class FeatureContainer extends ConsumerWidget {
     );
   }
 
-  Widget _buildFeatureContainer(BuildContext context, String title, String imagePath, bool isDark, double baseSize) {
+  Widget _buildFeatureContainer(BuildContext context, String title, String imagePath, double screenWidth) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    
     return Container(
-      padding: EdgeInsets.all(baseSize * 2),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: isDark ? DefaultColors.black24 : DefaultColors.white,
-        borderRadius: BorderRadius.circular(baseSize * 3),
-        border: Border.all(color: isDark ? DefaultColors.gray7D : DefaultColors.grayCA),
+        color: DefaultColors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: DefaultColors.grayCA),
         boxShadow: [
           BoxShadow(
             color: DefaultColors.black.withOpacity(0.05),
-            blurRadius: baseSize * 2,
-            offset: Offset(0, baseSize),
+            blurRadius: screenWidth * 0.02,
+            offset: Offset(0, screenWidth * 0.01),
           ),
         ],
       ),
@@ -149,30 +150,30 @@ class FeatureContainer extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(baseSize * 2),
+            borderRadius: BorderRadius.circular(8),
             child: Image.asset(
               imagePath,
-              width: baseSize * 20,
-              height: baseSize * 20,
+              width: screenWidth * 0.2,
+              height: screenWidth * 0.2,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
                 return Container(
-                  width: baseSize * 20,
-                  height: baseSize * 20,
+                  width: screenWidth * 0.2,
+                  height: screenWidth * 0.2,
                   decoration: BoxDecoration(
-                    color: isDark ? DefaultColors.gray7D : DefaultColors.grayE6,
-                    borderRadius: BorderRadius.circular(baseSize * 2),
+                    color: DefaultColors.grayE6,
+                    borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
                     Icons.image,
-                    size: baseSize * 10,
-                    color: isDark ? DefaultColors.gray62 : DefaultColors.grayCA,
+                    size: screenWidth * 0.1,
+                    color: DefaultColors.grayCA,
                   ),
                 );
               },
             ),
           ),
-          SizedBox(height: baseSize * 2),
+          const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -181,8 +182,8 @@ class FeatureContainer extends ConsumerWidget {
                 child: Text(
                   title,
                   style: GoogleFonts.roboto(
-                    fontSize: baseSize * 3.5,
-                    color: isDark ? DefaultColors.white : DefaultColors.black,
+                    fontSize: 14,
+                    color: DefaultColors.black,
                     fontWeight: FontWeight.w600,
                   ),
                   maxLines: 2,
@@ -191,8 +192,8 @@ class FeatureContainer extends ConsumerWidget {
               ),
               Icon(
                 Icons.north_east,
-                size: baseSize * 3.5,
-                color: isDark ? DefaultColors.white : DefaultColors.black,
+                size: screenWidth * 0.035,
+                color: DefaultColors.black,
               ),
             ],
           ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tasks/core/constants/app_colors/default_colors.dart';
-
+import '../../../../core/constants/app_colors/default_colors.dart';
 class QuickActionsGrid extends ConsumerStatefulWidget {
   const QuickActionsGrid({super.key});
 
@@ -47,24 +46,24 @@ class _QuickActionsGridState extends ConsumerState<QuickActionsGrid>
         return CustomPaint(
           painter: AnimatedBorderPainter(
             animationValue: _animation.value,
-            borderRadius: screenWidth * 0.04,
-            strokeWidth: screenWidth * 0.007,
+            borderRadius: 16,
+            strokeWidth: 2,
           ),
           child: Container(
             width: screenWidth * 0.9,
             height: screenHeight * 0.12,
-            padding: EdgeInsets.all(screenWidth * 0.035),
+            padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
               color: DefaultColors.whiteF3,
-              borderRadius: BorderRadius.circular(screenWidth * 0.04),
+              borderRadius: BorderRadius.circular(16),
               border: Border.all(
                 color: DefaultColors.grayCA,
-                width: screenWidth * 0.003,
+                width: 1,
               ),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.03),
-                  blurRadius: screenWidth * 0.02,
+                  blurRadius: 8,
                   offset: const Offset(0, 2),
                 ),
               ],
@@ -72,10 +71,10 @@ class _QuickActionsGridState extends ConsumerState<QuickActionsGrid>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _actionButton(context, icon: Icons.swap_horiz, label: "Transfer"), // Hardcoded
-                _actionButton(context, icon: Icons.list, label: "Request"), // Hardcoded
-                _actionButton(context, icon: Icons.trending_up, label: "Stocks"), // Hardcoded
-                _actionButton(context, icon: Icons.auto_awesome, label: "Products"), // Hardcoded
+                _actionButton(context, icon: Icons.swap_horiz, label: "Transfer"),
+                _actionButton(context, icon: Icons.list, label: "Request"),
+                _actionButton(context, icon: Icons.trending_up, label: "Stocks"),
+                _actionButton(context, icon: Icons.auto_awesome, label: "Products"),
               ],
             ),
           ),
@@ -86,7 +85,6 @@ class _QuickActionsGridState extends ConsumerState<QuickActionsGrid>
 
   Widget _actionButton(BuildContext context, {required IconData icon, required String label}) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
     
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -96,7 +94,7 @@ class _QuickActionsGridState extends ConsumerState<QuickActionsGrid>
           height: screenWidth * 0.12,
           decoration: BoxDecoration(
             color: DefaultColors.blue_0,
-            borderRadius: BorderRadius.circular(screenWidth * 0.03),
+            borderRadius: BorderRadius.circular(12),
           ),
           child: Center(
             child: Icon(
@@ -106,19 +104,16 @@ class _QuickActionsGridState extends ConsumerState<QuickActionsGrid>
             ),
           ),
         ),
-        SizedBox(height: screenHeight * 0.005),
+        const SizedBox(height: 4),
         SizedBox(
           width: screenWidth * 0.15,
           child: Text(
             label,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontFamily: 'Diodrum Arabic',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
               fontWeight: FontWeight.w500,
-              fontSize: screenWidth * 0.028,
-              height: 1.2,
-              letterSpacing: 0,
               color: DefaultColors.black,
+              height: 1.2,
             ),
           ),
         ),

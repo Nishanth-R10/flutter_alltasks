@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tasks/core/constants/app_colors/default_colors.dart';
-import 'package:tasks/features/home/data/static_home_data.dart' show StaticHomeData;
-import 'package:tasks/features/home/presentation/controller/home_providers.dart';
+import '../../../../core/constants/app_colors/default_colors.dart';
+import '../../data/static_home_data.dart';
+import '../controller/home_providers.dart';
 import 'offer_item.dart';
 
 class OffersSection extends ConsumerWidget {
@@ -18,26 +18,24 @@ class OffersSection extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        /// HEADER
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.02),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8),
           child: Text(
             "Offers",
             style: TextStyle(
-              fontSize: screenWidth * 0.05,
+              fontSize: 20,
               fontWeight: FontWeight.w700,
               color: DefaultColors.black,
             ),
           ),
         ),
-        SizedBox(height: screenHeight * 0.015),
+        const SizedBox(height: 12),
 
-        /// FIRST CARD LIST
         SizedBox(
           height: screenHeight * 0.22,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.only(left: screenWidth * 0.01),
+            padding: const EdgeInsets.only(left: 4),
             itemCount: 3,
             itemBuilder: (context, _) {
               return _buildOfferCard(context, screenWidth, screenHeight);
@@ -45,12 +43,11 @@ class OffersSection extends ConsumerWidget {
           ),
         ),
 
-        SizedBox(height: screenHeight * 0.03),
+        const SizedBox(height: 24),
 
-        /// SECOND CONTAINER
         Container(
-          margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.01),
-          padding: EdgeInsets.all(screenWidth * 0.05),
+          margin: const EdgeInsets.symmetric(horizontal: 4),
+          padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: DefaultColors.white,
             borderRadius: BorderRadius.circular(16),
@@ -65,8 +62,8 @@ class OffersSection extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildToggleButtons(context, ref, selectedTab, screenWidth, screenHeight),
-              SizedBox(height: screenHeight * 0.02),
+              _buildToggleButtons(context, ref, selectedTab),
+              const SizedBox(height: 16),
               _buildOffersList(context, offers, screenWidth, screenHeight),
             ],
           ),
@@ -79,13 +76,12 @@ class OffersSection extends ConsumerWidget {
     return Container(
       width: screenWidth * 0.85,
       height: screenHeight * 0.22,
-      margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.01),
+      margin: const EdgeInsets.symmetric(horizontal: 4),
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          /// MAIN CARD
           Container(
-            padding: EdgeInsets.all(screenWidth * 0.06),
+            padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
               color: DefaultColors.white,
               borderRadius: BorderRadius.circular(16),
@@ -103,24 +99,22 @@ class OffersSection extends ConsumerWidget {
               children: [
                 Text(
                   "A new dimension of benefits and\nRewards",
-                  style: TextStyle(
-                    fontSize: screenWidth * 0.042,
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.w700,
                     color: DefaultColors.black,
                     height: 1.2,
                   ),
                 ),
-                SizedBox(height: screenHeight * 0.005),
+                const SizedBox(height: 4),
                 Text(
                   "With Dukhan Bank VIA Infinite Credit Card.",
-                  style: TextStyle(
-                    fontSize: screenWidth * 0.03,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     fontWeight: FontWeight.w400,
                     color: DefaultColors.black.withOpacity(0.7),
                     height: 1.3,
                   ),
                 ),
-                SizedBox(height: screenHeight * 0.02),
+                const SizedBox(height: 16),
 
                 Align(
                   alignment: Alignment.centerRight,
@@ -128,10 +122,7 @@ class OffersSection extends ConsumerWidget {
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
                       backgroundColor: DefaultColors.blueLightBase,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: screenWidth * 0.045,
-                        vertical: screenHeight * 0.011,
-                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(24),
                       ),
@@ -142,17 +133,16 @@ class OffersSection extends ConsumerWidget {
                       children: [
                         Text(
                           "Learn More",
-                          style: TextStyle(
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             color: Colors.white,
-                            fontSize: screenWidth * 0.032,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        SizedBox(width: screenWidth * 0.012),
+                        const SizedBox(width: 4),
                         Icon(
                           Icons.north_east,
                           color: Colors.white,
-                          size: screenWidth * 0.038,
+                          size: 18,
                         ),
                       ],
                     ),
@@ -186,7 +176,7 @@ class OffersSection extends ConsumerWidget {
     );
   }
 
-  Widget _buildToggleButtons(BuildContext context, WidgetRef ref, int selectedTab, double screenWidth, double screenHeight) {
+  Widget _buildToggleButtons(BuildContext context, WidgetRef ref, int selectedTab) {
     return Row(
       children: [
         Expanded(
@@ -197,9 +187,7 @@ class OffersSection extends ConsumerWidget {
             style: ElevatedButton.styleFrom(
               backgroundColor: selectedTab == 0 ? DefaultColors.blueLightBase : Colors.transparent,
               foregroundColor: selectedTab == 0 ? Colors.white : DefaultColors.black.withOpacity(0.6),
-              padding: EdgeInsets.symmetric(
-                vertical: screenHeight * 0.015,
-              ),
+              padding: const EdgeInsets.symmetric(vertical: 12),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(24),
                 side: selectedTab == 0
@@ -210,14 +198,13 @@ class OffersSection extends ConsumerWidget {
             ),
             child: Text(
               "Instant Discounts",
-              style: TextStyle(
-                fontSize: screenWidth * 0.035,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.w600,
               ),
             ),
           ),
         ),
-        SizedBox(width: screenWidth * 0.02),
+        const SizedBox(width: 8),
         Expanded(
           child: OutlinedButton(
             onPressed: () {
@@ -226,9 +213,7 @@ class OffersSection extends ConsumerWidget {
             style: OutlinedButton.styleFrom(
               backgroundColor: selectedTab == 1 ? DefaultColors.blueLightBase : Colors.transparent,
               foregroundColor: selectedTab == 1 ? Colors.white : DefaultColors.black.withOpacity(0.6),
-              padding: EdgeInsets.symmetric(
-                vertical: screenHeight * 0.01,
-              ),
+              padding: const EdgeInsets.symmetric(vertical: 8),
               side: selectedTab == 1
                   ? BorderSide.none
                   : BorderSide(color: DefaultColors.grayCA, width: 1),
@@ -241,23 +226,21 @@ class OffersSection extends ConsumerWidget {
               children: [
                 Text(
                   "Cash Bonus",
-                  style: TextStyle(
-                    fontSize: screenWidth * 0.035,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                SizedBox(width: screenWidth * 0.01),
+                const SizedBox(width: 4),
                 Container(
-                  padding: EdgeInsets.all(screenWidth * 0.01),
+                  padding: const EdgeInsets.all(4),
                   decoration: BoxDecoration(
                     color: DefaultColors.redDB,
                     shape: BoxShape.circle,
                   ),
                   child: Text(
                     "3",
-                    style: TextStyle(
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Colors.white,
-                      fontSize: screenWidth * 0.025,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -270,7 +253,6 @@ class OffersSection extends ConsumerWidget {
     );
   }
 
-  // CHANGE THIS METHOD - Use Map instead of OfferEntity
   Widget _buildOffersList(BuildContext context, List<Map<String, dynamic>> offers, double screenWidth, double screenHeight) {
     final totalItems = offers.length + 1;
 
@@ -279,15 +261,15 @@ class OffersSection extends ConsumerWidget {
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: totalItems,
-        separatorBuilder: (_, __) => SizedBox(width: screenWidth * 0.02),
+        separatorBuilder: (_, __) => const SizedBox(width: 8),
         itemBuilder: (context, index) {
           if (index == offers.length) {
-            return _buildViewMoreItem(context, screenWidth, screenHeight);
+            return _buildViewMoreItem(context);
           }
 
           final offer = offers[index];
           return OfferItem(
-            offerData: offer, // Pass Map data
+            offerData: offer,
             onTap: () {},
           );
         },
@@ -295,14 +277,14 @@ class OffersSection extends ConsumerWidget {
     );
   }
 
-  Widget _buildViewMoreItem(BuildContext context, double screenWidth, double screenHeight) {
+  Widget _buildViewMoreItem(BuildContext context) {
     return SizedBox(
-      width: screenWidth * 0.2,
+      width: 80,
       child: Column(
         children: [
           Container(
-            width: screenWidth * 0.15,
-            height: screenWidth * 0.15,
+            width: 60,
+            height: 60,
             decoration: BoxDecoration(
               color: DefaultColors.blueLightBase.withOpacity(0.1),
               shape: BoxShape.circle,
@@ -310,15 +292,14 @@ class OffersSection extends ConsumerWidget {
             child: Icon(
               Icons.north_east,
               color: DefaultColors.blueLightBase,
-              size: screenWidth * 0.07,
+              size: 28,
             ),
           ),
-          SizedBox(height: screenHeight * 0.008),
+          const SizedBox(height: 6),
           Text(
             "View\nMore",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: screenWidth * 0.028,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
               fontWeight: FontWeight.w500,
               color: DefaultColors.black,
               height: 1.2,

@@ -1,22 +1,21 @@
-// lib/features/search/presentation/widgets/search_bar.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tasks/features/search/presentation/controller/search_provider.dart';
 import '../../../../core/constants/app_colors/default_colors.dart';
+import '../controller/search_provider.dart';
 
 class SearchBarWidget extends ConsumerStatefulWidget {
   final TextEditingController controller;
   final VoidCallback onCancel;
   final VoidCallback onClear;
-  final double baseSize;
+  final double screenWidth;
 
   const SearchBarWidget({
     super.key,
     required this.controller,
     required this.onCancel,
     required this.onClear,
-    required this.baseSize,
+    required this.screenWidth,
   });
 
   @override
@@ -55,7 +54,7 @@ class _SearchBarWidgetState extends ConsumerState<SearchBarWidget>
     return Row(
       children: [
         Expanded(child: _buildSearchContainer(context)),
-        SizedBox(width: widget.baseSize * 1),
+        SizedBox(width: widget.screenWidth * 0.01),
         _buildCancelButton(context),
       ],
     );
@@ -72,23 +71,23 @@ class _SearchBarWidgetState extends ConsumerState<SearchBarWidget>
             strokeWidth: 2.5,
           ),
           child: Container(
-            height: widget.baseSize * 12,
+            height: widget.screenWidth * 0.12,
             decoration: BoxDecoration(
               border: Border.all(color: DefaultColors.grayCA.withOpacity(0.3)),
               borderRadius: BorderRadius.circular(50),
             ),
             child: Row(
               children: [
-                SizedBox(width: widget.baseSize * 3),
+                const SizedBox(width: 12),
                 Icon(
                   Icons.search,
-                  size: widget.baseSize * 5,
+                  size: widget.screenWidth * 0.05,
                   color: DefaultColors.gray62,
                 ),
-                SizedBox(width: widget.baseSize * 2),
+                SizedBox(width: widget.screenWidth * 0.02),
                 Expanded(child: _buildTextField()),
                 _buildClearButton(context),
-                SizedBox(width: widget.baseSize * 2),
+                const SizedBox(width: 8),
               ],
             ),
           ),
@@ -104,12 +103,12 @@ class _SearchBarWidgetState extends ConsumerState<SearchBarWidget>
         border: InputBorder.none,
         hintText: "Search for services...",
         hintStyle: GoogleFonts.poppins(
-          fontSize: widget.baseSize * 3.5,
+          fontSize: 14,
           color: DefaultColors.gray7D,
         ),
       ),
       style: GoogleFonts.poppins(
-        fontSize: widget.baseSize * 3.5,
+        fontSize: 14,
         color: DefaultColors.black,
       ),
       onChanged: (value) {
@@ -120,15 +119,15 @@ class _SearchBarWidgetState extends ConsumerState<SearchBarWidget>
 
   Widget _buildClearButton(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(widget.baseSize),
-      width: widget.baseSize * 8,
-      height: widget.baseSize * 8,
+      margin: const EdgeInsets.all(4),
+      width: widget.screenWidth * 0.08,
+      height: widget.screenWidth * 0.08,
       decoration: BoxDecoration(
         color: DefaultColors.gray7D,
         shape: BoxShape.circle,
       ),
       child: IconButton(
-        icon: Icon(Icons.close, size: widget.baseSize * 4, color: DefaultColors.white),
+        icon: Icon(Icons.close, size: widget.screenWidth * 0.04, color: DefaultColors.white),
         onPressed: widget.onClear,
         padding: EdgeInsets.zero,
       ),
@@ -142,7 +141,7 @@ class _SearchBarWidgetState extends ConsumerState<SearchBarWidget>
         "Cancel",
         style: GoogleFonts.poppins(
           color: DefaultColors.blue9D,
-          fontSize: widget.baseSize * 3.5,
+          fontSize: 14,
           fontWeight: FontWeight.w500,
         ),
       ),

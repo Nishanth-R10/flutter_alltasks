@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:tasks/core/constants/app_colors/default_colors.dart';
+import '../../../../core/constants/app_colors/default_colors.dart';
 
 class BigCard extends StatelessWidget {
   final String title;
@@ -21,33 +21,36 @@ class BigCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
+    const cardRadius = 16.0; // ❌ fixed radius
+    const padding = 12.0;
+
     if (isLoading) {
-      return _buildShimmerBigCard(context, screenWidth);
+      return _buildShimmerBigCard(screenWidth, cardRadius, padding);
     }
 
     return Material(
       color: DefaultColors.white,
-      borderRadius: BorderRadius.circular(16.0),
+      borderRadius: BorderRadius.circular(cardRadius),
       elevation: 1.0,
       child: InkWell(
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(cardRadius),
         onTap: () {},
-        child: Container(
-          padding: const EdgeInsets.all(12.0),
+        child: Padding(
+          padding: const EdgeInsets.all(padding),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
+                borderRadius: BorderRadius.circular(8.0), // ❌ fixed radius
                 child: Image.asset(
                   imageAsset,
-                  width: 80.0,
-                  height: 80.0,
+                  width: screenWidth * 0.25,
+                  height: screenWidth * 0.25,
                   fit: BoxFit.cover,
                 ),
               ),
-              
+              SizedBox(height: screenWidth * 0.02),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -56,19 +59,14 @@ class BigCard extends StatelessWidget {
                       title,
                       style: GoogleFonts.poppins(
                         color: DefaultColors.dashboardBlue,
-                        fontSize: fontScale,
+                        fontSize: fontScale, // ❌ fixed font size
                         fontWeight: FontWeight.w600,
                       ),
                       maxLines: 1,
-                      overflow: TextOverflow.visible,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  const SizedBox(width: 4.0),
-                  Icon(
-                    Icons.north_east,
-                    size: 14.0,
-                    color: DefaultColors.dashboardBlue,
-                  ),
+                  Icon(Icons.north_east, size: screenWidth * 0.04, color: DefaultColors.dashboardBlue),
                 ],
               ),
             ],
@@ -78,46 +76,45 @@ class BigCard extends StatelessWidget {
     );
   }
 
-  Widget _buildShimmerBigCard(BuildContext context, double screenWidth) {
+  Widget _buildShimmerBigCard(double screenWidth, double cardRadius, double padding) {
     return Shimmer.fromColors(
       baseColor: DefaultColors.grayE6,
       highlightColor: DefaultColors.white,
       child: Material(
         color: DefaultColors.white,
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(cardRadius),
         elevation: 1.0,
-        child: Container(
-          padding: const EdgeInsets.all(12.0),
+        child: Padding(
+          padding:  EdgeInsets.all(padding),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                width: 80.0,
-                height: 80.0,
+                width: screenWidth * 0.25,
+                height: screenWidth * 0.25,
                 decoration: BoxDecoration(
                   color: DefaultColors.grayE6,
                   borderRadius: BorderRadius.circular(8.0),
                 ),
               ),
-              const SizedBox(height: 8.0),
+              SizedBox(height: screenWidth * 0.02),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
                     child: Container(
-                      height: fontScale,
+                      height: 12.0,
                       decoration: BoxDecoration(
                         color: DefaultColors.grayE6,
                         borderRadius: BorderRadius.circular(4.0),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 4.0),
                   Container(
-                    width: 14.0,
-                    height: 14.0,
-                    decoration: BoxDecoration(
+                    width: screenWidth * 0.04,
+                    height: screenWidth * 0.04,
+                    decoration: const BoxDecoration(
                       color: DefaultColors.grayE6,
                       shape: BoxShape.circle,
                     ),

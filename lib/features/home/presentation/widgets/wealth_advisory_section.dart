@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tasks/core/constants/app_colors/default_colors.dart';
-
+import '../../../../core/constants/app_colors/default_colors.dart';
 class WealthAdvisorySection extends StatelessWidget {
   const WealthAdvisorySection({super.key});
 
@@ -12,14 +11,12 @@ class WealthAdvisorySection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Header Row
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Wealth Advisory", // Hardcoded string
-              style: TextStyle(
-                fontSize: screenWidth * 0.045,
+              "Wealth Advisory",
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
                 fontWeight: FontWeight.w700,
                 color: DefaultColors.black,
               ),
@@ -29,17 +26,16 @@ class WealthAdvisorySection extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    "Learn More", // Hardcoded string
-                    style: TextStyle(
+                    "Learn More",
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: DefaultColors.blueLightBase,
                       fontWeight: FontWeight.w600,
-                      fontSize: screenWidth * 0.035,
                     ),
                   ),
-                  SizedBox(width: screenWidth * 0.01),
+                  const SizedBox(width: 4),
                   Icon(
                     Icons.north_east,
-                    size: screenWidth * 0.04,
+                    size: 20,
                     color: DefaultColors.blueLightBase,
                   ),
                 ],
@@ -50,19 +46,18 @@ class WealthAdvisorySection extends StatelessWidget {
 
         SizedBox(height: screenHeight * 0.02),
 
-        // Two cards in a row
         Row(
           children: [
             _buildAdvisoryCard(context,
               icon: Icons.work_outline,
-              title: "Portfolio\nManagement", // Hardcoded string
+              title: "Portfolio\nManagement",
               screenWidth: screenWidth,
               screenHeight: screenHeight,
             ),
-            SizedBox(width: screenWidth * 0.04),
+            const SizedBox(width: 16),
             _buildAdvisoryCard(context,
               icon: Icons.savings_outlined,
-              title: "Mutual\nFunds", // Hardcoded string
+              title: "Mutual\nFunds",
               screenWidth: screenWidth,
               screenHeight: screenHeight,
             ),
@@ -90,7 +85,6 @@ class WealthAdvisorySection extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Top gray section (icon aligned to left)
             Container(
               height: screenHeight * 0.08,
               decoration: BoxDecoration(
@@ -100,33 +94,29 @@ class WealthAdvisorySection extends StatelessWidget {
                   topRight: Radius.circular(14),
                 ),
               ),
-              child: Padding(
-                padding: EdgeInsets.only(left: screenWidth * 0.04),
+              child: const Padding(
+                padding: EdgeInsets.only(left: 16),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Icon(
-                    icon,
+                    Icons.work_outline,
                     color: DefaultColors.blueLightBase,
-                    size: screenWidth * 0.08,
+                    size: 32,
                   ),
                 ),
               ),
             ),
 
-            // Bottom text section
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: screenWidth * 0.04,
-                vertical: screenHeight * 0.015,
-              ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
                     child: Text(
-                      title,
+                      "Portfolio\nManagement",
                       style: TextStyle(
-                        fontSize: screenWidth * 0.035,
+                        fontSize: 14,
                         fontWeight: FontWeight.w600,
                         color: DefaultColors.black,
                       ),
@@ -134,8 +124,8 @@ class WealthAdvisorySection extends StatelessWidget {
                   ),
                   Icon(
                     Icons.north_east,
-                    color: DefaultColors.black.withOpacity(0.7),
-                    size: screenWidth * 0.04,
+                    color: DefaultColors.black,
+                    size: 16,
                   ),
                 ],
               ),
