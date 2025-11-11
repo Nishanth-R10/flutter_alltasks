@@ -1,9 +1,9 @@
-// lib/features/offers/presentation/widgets/custom_offer_dialog.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tasks/features/offers/presentation/conroller/offer_provider.dart';
+
 import '../../../../core/constants/app_colors/default_colors.dart';
+import '../conroller/offer_provider.dart';
 
 class CustomOfferDialog extends ConsumerStatefulWidget {
   final String offerId;
@@ -38,37 +38,34 @@ class _CustomOfferDialogState extends ConsumerState<CustomOfferDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-    final screenWidth = mediaQuery.size.width;
-    final screenHeight = mediaQuery.size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     
     return Dialog(
       backgroundColor: DefaultColors.transparent,
-      insetPadding: EdgeInsets.symmetric(horizontal: screenWidth * 0.06), 
+      insetPadding: const EdgeInsets.symmetric(horizontal: 24),
       child: _buildDialogContent(context),
     );
   }
 
   Widget _buildDialogContent(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-    final screenWidth = mediaQuery.size.width;
-    final screenHeight = mediaQuery.size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     
     return Container(
       width: double.infinity,
       decoration: _buildDialogDecoration(),
-      child: Padding(
-        padding: EdgeInsets.all(screenWidth * 0.06), 
+      child:  Padding(
+        padding: EdgeInsets.all(24),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             _buildTitle(context),
-            SizedBox(height: screenHeight * 0.025), 
+            SizedBox(height: 16),
             _buildContentRow(context),
-            SizedBox(height: screenHeight * 0.03), 
+            SizedBox(height: 20),
             if (widget.showDontShowAgain) ..._buildDontShowAgainSection(context),
             _buildPrimaryButton(context),
-            SizedBox(height: screenHeight * 0.015), 
+            SizedBox(height: 12),
             _buildSecondaryButton(context),
           ],
         ),
@@ -91,11 +88,8 @@ class _CustomOfferDialogState extends ConsumerState<CustomOfferDialog> {
   }
 
   Widget _buildTitle(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-    final screenWidth = mediaQuery.size.width;
-    
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.01), 
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       child: FittedBox(
         fit: BoxFit.scaleDown,
         child: Text(
@@ -113,41 +107,38 @@ class _CustomOfferDialogState extends ConsumerState<CustomOfferDialog> {
   }
 
   Widget _buildContentRow(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-    final screenWidth = mediaQuery.size.width;
+    final screenWidth = MediaQuery.of(context).size.width;
     
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildImageStack(context),
-        SizedBox(width: screenWidth * 0.04), 
+        SizedBox(width: screenWidth * 0.04),
         _buildDescription(context),
       ],
     );
   }
 
   Widget _buildImageStack(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-    final screenWidth = mediaQuery.size.width;
-    final screenHeight = mediaQuery.size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     
     return SizedBox(
-      width: screenWidth * 0.25, 
-      height: screenHeight * 0.1125, 
+      width: screenWidth * 0.25,
+      height: screenHeight * 0.1125,
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          // Background rotated card 
           Positioned(
             right: 0,
-            top: screenHeight * 0.03125, 
+            top: screenHeight * 0.03125,
             child: Transform.rotate(
               angle: -0.2,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image.asset(
                   widget.imagePath,
-                  width: screenWidth * 0.225, 
+                  width: screenWidth * 0.225,
                   height: screenHeight * 0.06875,
                   fit: BoxFit.contain,
                 ),
@@ -156,7 +147,7 @@ class _CustomOfferDialogState extends ConsumerState<CustomOfferDialog> {
           ),
           
           Positioned(
-            left: screenWidth * 0.0125, 
+            left: screenWidth * 0.0125,
             top: screenHeight * 0.05,
             child: Transform.rotate(
               angle: 0,
@@ -164,8 +155,8 @@ class _CustomOfferDialogState extends ConsumerState<CustomOfferDialog> {
                 borderRadius: BorderRadius.circular(10),
                 child: Image.asset(
                   'assets/images/visa.png',
-                  width: screenWidth * 0.225, 
-                  height: screenHeight * 0.0625, 
+                  width: screenWidth * 0.225,
+                  height: screenHeight * 0.0625,
                   fit: BoxFit.contain,
                 ),
               ),
@@ -177,12 +168,9 @@ class _CustomOfferDialogState extends ConsumerState<CustomOfferDialog> {
   }
 
   Widget _buildDescription(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-    final screenHeight = mediaQuery.size.height;
-    
     return Expanded(
       child: Padding(
-        padding: EdgeInsets.only(top: screenHeight * 0.01),
+        padding: const EdgeInsets.only(top: 8),
         child: RichText(
           textAlign: TextAlign.left,
           text: TextSpan(
@@ -224,17 +212,15 @@ class _CustomOfferDialogState extends ConsumerState<CustomOfferDialog> {
   }
 
   List<Widget> _buildDontShowAgainSection(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-    final screenWidth = mediaQuery.size.width;
-    final screenHeight = mediaQuery.size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     
     return [
       Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(
-            width: screenWidth * 0.05, 
-            height: screenHeight * 0.025,
+            width: screenWidth * 0.05,
+            height: screenWidth * 0.05,
             child: Checkbox(
               value: _dontShowAgain,
               onChanged: (value) {
@@ -272,13 +258,12 @@ class _CustomOfferDialogState extends ConsumerState<CustomOfferDialog> {
           ),
         ],
       ),
-      SizedBox(height: screenHeight * 0.025), 
+      const SizedBox(height: 20),
     ];
   }
 
   Widget _buildPrimaryButton(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-    final screenHeight = mediaQuery.size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     
     return SizedBox(
       width: double.infinity,
@@ -287,7 +272,7 @@ class _CustomOfferDialogState extends ConsumerState<CustomOfferDialog> {
         style: ElevatedButton.styleFrom(
           backgroundColor: DefaultColors.blue9D,
           foregroundColor: DefaultColors.white,
-          padding: EdgeInsets.symmetric(vertical: screenHeight * 0.0175), 
+          padding: const EdgeInsets.symmetric(vertical: 16),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25),
           ),
@@ -303,7 +288,7 @@ class _CustomOfferDialogState extends ConsumerState<CustomOfferDialog> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            SizedBox(width: 8),
+            SizedBox(width: screenWidth * 0.02),
             Icon(Icons.north_east, size: 18),
           ],
         ),
@@ -312,15 +297,14 @@ class _CustomOfferDialogState extends ConsumerState<CustomOfferDialog> {
   }
 
   Widget _buildSecondaryButton(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-    final screenHeight = mediaQuery.size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     
     return SizedBox(
       width: double.infinity,
       child: OutlinedButton(
         onPressed: widget.onSecondaryButtonPressed,
         style: OutlinedButton.styleFrom(
-          padding: EdgeInsets.symmetric(vertical: screenHeight * 0.0175), 
+          padding: const EdgeInsets.symmetric(vertical: 16),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25),
           ),
