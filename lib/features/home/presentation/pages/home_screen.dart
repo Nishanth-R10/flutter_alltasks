@@ -1,14 +1,12 @@
 
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../../../core/constants/app_colors/default_colors.dart';
-import '../../../../core/routes/app_route.gr.dart';
-import '../../../offers/presentation/conroller/offer_provider.dart';
-import '../../../offers/presentation/widgets/custom_offer_dialog.dart';
+//import '../../../../core/routes/app_route.gr.dart';
+//import '../../../offers/presentation/conroller/offer_provider.dart';
+//import '../../../offers/presentation/widgets/custom_offer_dialog.dart';
 import '../widgets/customize_dashboard_card.dart';
 import '../widgets/feedback_cards.dart';
 import '../widgets/offer_section.dart';
@@ -26,76 +24,76 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-  bool _isLoadingApi = false;
-  bool _offerShown = false;
+ // bool _isLoadingApi = false;
+ // bool _offerShown = false;
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _showCreditCardOffer();
-    });
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     _showCreditCardOffer();
+  //   });
+  // }
 
-  void _showCreditCardOffer() {
-    if (_offerShown) return; // Prevent multiple calls
+  // void _showCreditCardOffer() {
+  //   if (_offerShown) return; // Prevent multiple calls
     
-    final offerData = ref.read(creditCardOfferProvider);
-    final shouldShow = ref.read(shouldShowOfferProvider(offerData['id']));
+  //   final offerData = ref.read(creditCardOfferProvider);
+  //   final shouldShow = ref.read(shouldShowOfferProvider(offerData['id']));
     
-    if (!shouldShow) return;
+  //   if (!shouldShow) return;
 
-    _offerShown = true;
+  //   _offerShown = true;
 
-    // Show shimmer first
-    // showDialog(
-    //   context: context,
-    //   barrierDismissible: false,
-    //   builder: (context) => OfferShimmer(baseSize: 4.0),
-    // );
+  //   // Show shimmer first
+  //   // showDialog(
+  //   //   context: context,
+  //   //   barrierDismissible: false,
+  //   //   builder: (context) => OfferShimmer(baseSize: 4.0),
+  //   // );
 
-    // After delay, show actual offer
-    Future.delayed(Duration(seconds: 2), () {
-      // Close shimmer
-      if (Navigator.canPop(context)) {
-        Navigator.of(context).pop();
-      }
+  //   // After delay, show actual offer
+  //   Future.delayed(Duration(seconds: 2), () {
+  //     // Close shimmer
+  //     if (Navigator.canPop(context)) {
+  //       Navigator.of(context).pop();
+  //     }
       
-      // Show actual offer
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => CustomOfferDialog(
-          offerId: offerData['id'],
-          title: offerData['title'],
-          imagePath: offerData['imagePath'],
-          description: offerData['description'],
-          primaryButtonText: offerData['primaryButtonText'],
-          secondaryButtonText: offerData['secondaryButtonText'],
-          showDontShowAgain: offerData['showDontShowAgain'],
-          onPrimaryButtonPressed: () {
-            Navigator.of(context).pop();
-            _handlePrimaryAction(context, offerData);
-          },
-          onSecondaryButtonPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      );
-    });
-  }
+  //     // Show actual offer
+  //     showDialog(
+  //       context: context,
+  //       barrierDismissible: false,
+  //       builder: (context) => CustomOfferDialog(
+  //         offerId: offerData['id'],
+  //         title: offerData['title'],
+  //         imagePath: offerData['imagePath'],
+  //         description: offerData['description'],
+  //         primaryButtonText: offerData['primaryButtonText'],
+  //         secondaryButtonText: offerData['secondaryButtonText'],
+  //         showDontShowAgain: offerData['showDontShowAgain'],
+  //         onPrimaryButtonPressed: () {
+  //           Navigator.of(context).pop();
+  //           _handlePrimaryAction(context, offerData);
+  //         },
+  //         onSecondaryButtonPressed: () {
+  //           Navigator.of(context).pop();
+  //         },
+  //       ),
+  //     );
+  //   });
+  // }
 
-  void _handlePrimaryAction(BuildContext context, Map<String, dynamic> offerData) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Starting ${offerData['cardType']} application!'),
-        backgroundColor: Colors.green,
-        duration: Duration(seconds: 2),
-      ),
-    );
-    // You can add navigation to application screen here
-    // context.pushRoute(const CreditCardApplicationRoute());
-  }
+  // void _handlePrimaryAction(BuildContext context, Map<String, dynamic> offerData) {
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     SnackBar(
+  //       content: Text('Starting ${offerData['cardType']} application!'),
+  //       backgroundColor: Colors.green,
+  //       duration: Duration(seconds: 2),
+  //     ),
+  //   );
+  //   // You can add navigation to application screen here
+  //   // context.pushRoute(const CreditCardApplicationRoute());
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +128,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               WealthAdvisorySection(),
               const SizedBox(height: 40),
 
-              _buildNavigationSection(context),
+            //  _buildNavigationSection(context),
               const SizedBox(height: 20),
             ],
           ),
@@ -139,50 +137,50 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  Widget _buildNavigationSection(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
+  // Widget _buildNavigationSection(BuildContext context) {
+  //   final screenWidth = MediaQuery.of(context).size.width;
     
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: screenWidth * 0.9,
-          height: 24,
-          child: Text(
-            "Navigate To Features", 
-            style: GoogleFonts.poppins(
-              fontSize: 19,
-              fontWeight: FontWeight.w600,
-              color: DefaultColors.black,
-            ),
-          ),
-        ),
-        const SizedBox(height: 12),
+    // return Column(
+    //   crossAxisAlignment: CrossAxisAlignment.start,
+    //   children: [
+    //     SizedBox(
+    //       width: screenWidth * 0.9,
+    //       height: 24,
+    //       child: Text(
+    //         "Navigate To Features", 
+    //         style: GoogleFonts.poppins(
+    //           fontSize: 19,
+    //           fontWeight: FontWeight.w600,
+    //           color: DefaultColors.black,
+    //         ),
+    //       ),
+    //     ),
+    //     const SizedBox(height: 12),
 
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: _navigationButton(
-                context: context,
-                title: "Search",
-                icon: Icons.search,
-                onTap: () => context.pushRoute(const UnifiedSearchRoute()),
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: _navigationButton(
-                context: context,
-                title: "Profile",
-                icon: Icons.person,
-                onTap: () => context.pushRoute(const ProfileRoute()),
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
+    //     Row(
+    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //       children: [
+    //         Expanded(
+    //           child: _navigationButton(
+    //             context: context,
+    //             title: "Search",
+    //             icon: Icons.search,
+    //             onTap: () => context.pushRoute(const UnifiedSearchRoute()),
+    //           ),
+    //         ),
+    //         const SizedBox(width: 12),
+    //         Expanded(
+    //           child: _navigationButton(
+    //             context: context,
+    //             title: "Profile",
+    //             icon: Icons.person,
+    //             onTap: () => context.pushRoute(const ProfileRoute()),
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    //   ],
+    // );
   }
 
   Widget _navigationButton({
@@ -223,4 +221,3 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       ),
     );
   }
-}
