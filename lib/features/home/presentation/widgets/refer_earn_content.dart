@@ -1,5 +1,7 @@
+
 import 'package:flutter/material.dart';
 import '../../../../core/constants/app_colors/default_colors.dart';
+
 class ReferEarnContent extends StatelessWidget {
   const ReferEarnContent({super.key});
 
@@ -25,7 +27,7 @@ class ReferEarnContent extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.03), 
+            color: Colors.black.withOpacity(0.03),
             blurRadius: 8,
           ),
         ],
@@ -47,13 +49,14 @@ class ReferEarnContent extends StatelessWidget {
   Widget _buildDescription() {
     return const SizedBox(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(  
-            "Help your friends to grow with their wealth",
+          Text(
+            "Help your friends grow\ntheir wealth",
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
-              height: 1.6,
+              height: 1.4,
               color: DefaultColors.black,
             ),
           ),
@@ -64,7 +67,7 @@ class ReferEarnContent extends StatelessWidget {
 
   Widget _buildReferralCodeSection() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         _buildReferralCode(),
       ],
@@ -77,7 +80,7 @@ class ReferEarnContent extends StatelessWidget {
       children: [
         SizedBox(
           child: Text(
-            "A successful referral earns you 50 points!",
+            "A successful referral earns you 50 points.",
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w500,
@@ -92,12 +95,13 @@ class ReferEarnContent extends StatelessWidget {
 
   Widget _buildGiftImage(double screenWidth, double screenHeight) {
     return Positioned(
-      top: -screenHeight * 0.08,  
-      right: -screenWidth * 0.1, 
+      top: -screenHeight * 0.07,     // moved slightly down
+      right: -screenWidth * 0.09,    // slight right
       child: Image.asset(
         'assets/images/gift.png',
-        width: screenWidth * 0.6, 
-        height: screenHeight * 0.18, 
+        width: screenWidth * 0.55,
+        height: screenHeight * 0.18,
+        fit: BoxFit.contain,
       ),
     );
   }

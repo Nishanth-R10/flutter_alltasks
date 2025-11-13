@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/constants/app_colors/default_colors.dart';
+
 class QuickActionsGrid extends ConsumerStatefulWidget {
   const QuickActionsGrid({super.key});
 
@@ -8,8 +9,9 @@ class QuickActionsGrid extends ConsumerStatefulWidget {
   ConsumerState<QuickActionsGrid> createState() => _QuickActionsGridState();
 }
 
-class _QuickActionsGridState extends ConsumerState<QuickActionsGrid> 
+class _QuickActionsGridState extends ConsumerState<QuickActionsGrid>
     with SingleTickerProviderStateMixin {
+
   late AnimationController _animationController;
   late Animation<double> _animation;
 
@@ -20,7 +22,7 @@ class _QuickActionsGridState extends ConsumerState<QuickActionsGrid>
       vsync: this,
       duration: const Duration(milliseconds: 2500),
     )..repeat();
-    
+
     _animation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _animationController,
@@ -37,22 +39,22 @@ class _QuickActionsGridState extends ConsumerState<QuickActionsGrid>
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
+    final screenWidth  = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    
+
     return AnimatedBuilder(
       animation: _animation,
       builder: (context, child) {
         return CustomPaint(
           painter: AnimatedBorderPainter(
             animationValue: _animation.value,
-            borderRadius: 16,
-            strokeWidth: 2,
+            borderRadius: 16,        // radius stays constant
+            strokeWidth: 2,          // border thickness stays constant
           ),
           child: Container(
-            width: screenWidth * 0.9,
+            width: screenWidth * 0.90,
             height: screenHeight * 0.12,
-            padding: const EdgeInsets.all(14),
+            padding: const EdgeInsets.all(14),  // static padding
             decoration: BoxDecoration(
               color: DefaultColors.whiteF3,
               borderRadius: BorderRadius.circular(16),
@@ -85,7 +87,7 @@ class _QuickActionsGridState extends ConsumerState<QuickActionsGrid>
 
   Widget _actionButton(BuildContext context, {required IconData icon, required String label}) {
     final screenWidth = MediaQuery.of(context).size.width;
-    
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -94,24 +96,26 @@ class _QuickActionsGridState extends ConsumerState<QuickActionsGrid>
           height: screenWidth * 0.12,
           decoration: BoxDecoration(
             color: DefaultColors.blue_0,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(12), // static radius
           ),
           child: Center(
             child: Icon(
               icon,
-              size: screenWidth * 0.06,
+              size: screenWidth * 0.06, // MEDIAQUERY applied
               color: DefaultColors.black,
             ),
           ),
         ),
-        const SizedBox(height: 4),
+
+        const SizedBox(height: 6), // static padding
+
         SizedBox(
           width: screenWidth * 0.15,
           child: Text(
             label,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w500,  
               color: DefaultColors.black,
               height: 1.2,
             ),
@@ -135,7 +139,9 @@ class AnimatedBorderPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    
     final rect = Rect.fromLTWH(0, 0, size.width, size.height);
+
     final rrect = RRect.fromRectAndRadius(
       rect,
       Radius.circular(borderRadius),
@@ -147,8 +153,9 @@ class AnimatedBorderPainter extends CustomPainter {
 
     final segmentLength = totalLength * 0.25;
     final centerPoint = (animationValue * totalLength) % totalLength;
+
     final startPoint = (centerPoint - segmentLength / 2) % totalLength;
-    final endPoint = (centerPoint + segmentLength / 2) % totalLength;
+    final endPoint   = (centerPoint + segmentLength / 2) % totalLength;
 
     Path animatedPath;
     if (endPoint > startPoint) {
@@ -160,20 +167,14 @@ class AnimatedBorderPainter extends CustomPainter {
 
     final tangent = pathMetrics.getTangentForOffset(centerPoint);
     final centerPos = tangent?.position ?? Offset.zero;
-    
-    final gradientStart = Offset(
-      centerPos.dx - segmentLength / 2,
-      centerPos.dy - segmentLength / 2,
-    );
-    final gradientEnd = Offset(
-      centerPos.dx + segmentLength / 2,
-      centerPos.dy + segmentLength / 2,
-    );
+
+    final gradientStart = Offset(centerPos.dx - segmentLength / 2, centerPos.dy);
+    final gradientEnd   = Offset(centerPos.dx + segmentLength / 2, centerPos.dy);
 
     final paint = Paint()
       ..shader = LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
         colors: [
           DefaultColors.blueLightBase.withOpacity(0.0),
           DefaultColors.blueLightBase.withOpacity(0.4),
@@ -183,7 +184,7 @@ class AnimatedBorderPainter extends CustomPainter {
           DefaultColors.blueLightBase.withOpacity(0.4),
           DefaultColors.blueLightBase.withOpacity(0.0),
         ],
-        stops: const [0.0, 0.2, 0.35, 0.5, 0.65, 0.8, 1.0],
+        stops: const [0, 0.15, 0.3, 0.5, 0.7, 0.85, 1],
       ).createShader(Rect.fromPoints(gradientStart, gradientEnd))
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth
@@ -193,7 +194,7 @@ class AnimatedBorderPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(AnimatedBorderPainter oldDelegate) {
+  bool shouldRepaint(covariant AnimatedBorderPainter oldDelegate) {
     return oldDelegate.animationValue != animationValue;
   }
 }
