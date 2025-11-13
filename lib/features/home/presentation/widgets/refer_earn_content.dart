@@ -95,8 +95,8 @@ class ReferEarnContent extends StatelessWidget {
 
   Widget _buildGiftImage(double screenWidth, double screenHeight) {
     return Positioned(
-      top: -screenHeight * 0.07,     // moved slightly down
-      right: -screenWidth * 0.09,    // slight right
+      top: -screenHeight * 0.07,     
+      right: -screenWidth * 0.09,    
       child: Image.asset(
         'assets/images/gift.png',
         width: screenWidth * 0.55,
