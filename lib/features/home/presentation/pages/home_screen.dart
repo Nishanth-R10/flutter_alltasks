@@ -130,7 +130,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               WealthAdvisorySection(),
               const SizedBox(height: 40),
 
-              _buildNavigationSection(context),
+            //  _buildNavigationSection(context),
               const SizedBox(height: 20),
             ],
           ),
@@ -139,88 +139,87 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  Widget _buildNavigationSection(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
+  // Widget _buildNavigationSection(BuildContext context) {
+  //   final screenWidth = MediaQuery.of(context).size.width;
     
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: screenWidth * 0.9,
-          height: 24,
-          child: Text(
-            "Navigate To Features", 
-            style: GoogleFonts.poppins(
-              fontSize: 19,
-              fontWeight: FontWeight.w600,
-              color: DefaultColors.black,
-            ),
-          ),
-        ),
-        const SizedBox(height: 12),
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       SizedBox(
+  //         width: screenWidth * 0.9,
+  //         height: 24,
+  //         child: Text(
+  //           "Navigate To Features", 
+  //           style: GoogleFonts.poppins(
+  //             fontSize: 19,
+  //             fontWeight: FontWeight.w600,
+  //             color: DefaultColors.black,
+  //           ),
+  //         ),
+  //       ),
+  //       const SizedBox(height: 12),
 
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: _navigationButton(
-                context: context,
-                title: "Search",
-                icon: Icons.search,
-                onTap: () => context.pushRoute(const UnifiedSearchRoute()),
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: _navigationButton(
-                context: context,
-                title: "Profile",
-                icon: Icons.person,
-                onTap: () => context.pushRoute(const ProfileRoute()),
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
+  //       Row(
+  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //         children: [
+  //           Expanded(
+  //             child: _navigationButton(
+  //               context: context,
+  //               title: "Search",
+  //               icon: Icons.search,
+  //               onTap: () => context.pushRoute(const UnifiedSearchRoute()),
+  //             ),
+  //           ),
+  //           const SizedBox(width: 12),
+  //           Expanded(
+  //             child: _navigationButton(
+  //               context: context,
+  //               title: "Profile",
+  //               icon: Icons.person,
+  //               onTap: () => context.pushRoute(const ProfileRoute()),
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     ],
+  //   );
+  // }
 
-  Widget _navigationButton({
-    required BuildContext context,
-    required String title,
-    required IconData icon,
-    required VoidCallback onTap,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: DefaultColors.whiteF3,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: DefaultColors.black.withOpacity(0.03), // FIXED: Using DefaultColors
-              blurRadius: 6,
-            ),
-          ],
-        ),
-        child: Column(
-          children: [
-            Icon(icon, size: 24, color: DefaultColors.blueLightBase),
-            const SizedBox(height: 8),
-            Text(
-              title,
-              style: GoogleFonts.poppins(
-                fontWeight: FontWeight.w600,
-                fontSize: 14,
-                color: DefaultColors.black,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-      ),
-    );
+  // Widget _navigationButton({
+  //   required BuildContext context,
+  //   required String title,
+  //   required IconData icon,
+  //   required VoidCallback onTap,
+  // }) {
+  //   return GestureDetector(
+  //     onTap: onTap,
+  //     child: Container(
+  //       padding: const EdgeInsets.all(16),
+  //       decoration: BoxDecoration(
+  //         color: DefaultColors.whiteF3,
+  //         borderRadius: BorderRadius.circular(12),
+  //         boxShadow: [
+  //           BoxShadow(
+  //             color: DefaultColors.black.withOpacity(0.03), // FIXED: Using DefaultColors
+  //             blurRadius: 6,
+  //           ),
+  //         ],
+  //       ),
+  //       child: Column(
+  //         children: [
+  //           Icon(icon, size: 24, color: DefaultColors.blueLightBase),
+  //           const SizedBox(height: 8),
+  //           Text(
+  //             title,
+  //             style: GoogleFonts.poppins(
+  //               fontWeight: FontWeight.w600,
+  //               fontSize: 14,
+  //               color: DefaultColors.black,
+  //             ),
+  //             textAlign: TextAlign.center,
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
   }
-}
